@@ -1,5 +1,5 @@
-FROM node
-MAINTAINER jaga santagostino <kandros5591@gmail.com>
+FROM node:6.9.1
+MAINTAINER jirat onaree <jirat.onaree@gmail.com>
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
