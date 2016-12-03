@@ -55,7 +55,6 @@ export class App extends Component {
           />
           <div className={styles.container}>
             {this.props.children}
-            asdfjklasdjfdlsfk
           </div>
           <Footer />
         </div>
