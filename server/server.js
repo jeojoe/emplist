@@ -74,7 +74,7 @@ const renderFullPage = (html, initialState) => {
         ${head.meta.toString()}
         ${head.link.toString()}
         ${head.script.toString()}
-
+        <meta name="google-site-verification" content="2vjAlFV_HN6QWysSom046BOF4zyvr2bl0zaL3QWWeCs" />
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
       </head>
