@@ -1,40 +1,54 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-// Import Style
-
 // Import Components
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
-
+import Navbar from './components/Navbar';
+// Import Style
 // Import Actions
 
-const App = ({ children, dispatch }) => (
-  <div>
-    {process.env.NODE_ENV === 'development' && <DevTools />}
-    <div>
-      {/* titleTemplate="%s - Blog App" */}
-      <Helmet
-        title="emplist : simple finding jobs"
-        meta={[
-          { charset: 'utf-8' },
-          {
-            'http-equiv': 'X-UA-Compatible',
-            content: 'IE=edge',
-          },
-          {
-            name: 'viewport',
-            content: 'width=device-width, initial-scale=1',
-          },
-        ]}
-      />
+export class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isMounted: false };
+  }
+
+  componentDidMount() {
+    this.setState({isMounted: true}); // eslint-disable-line
+  }
+
+  render() {
+    return (
       <div>
-        {children}
-        yooo
+        {this.state.isMounted &&
+          !window.devToolsExtension &&
+          process.env.NODE_ENV === 'development' &&
+          <DevTools />}
+        <div>
+          {/* titleTemplate="%s - Blog App" */}
+          <Helmet
+            title="emplist : simple finding jobs"
+            meta={[
+              { charset: 'utf-8' },
+              {
+                'http-equiv': 'X-UA-Compatible',
+                content: 'IE=edge',
+              },
+              {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1',
+              },
+            ]}
+          />
+          <Navbar />
+          <div>
+            {this.props.children}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+}
 
 App.propTypes = {
   children: PropTypes.object.isRequired,

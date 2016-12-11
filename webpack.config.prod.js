@@ -4,6 +4,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
+var postcssNested = require('postcss-nested');
 var postcssReporter = require('postcss-reporter');
 var cssnano = require('cssnano');
 
@@ -86,6 +87,7 @@ module.exports = {
 
   postcss: () => [
     postcssFocus(),
+    postcssNested(),
     cssnext({
       browsers: ['last 2 versions', 'IE > 10'],
     }),

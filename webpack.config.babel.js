@@ -1,5 +1,6 @@
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
+var postcssNested = require('postcss-nested');
 var postcssReporter = require('postcss-reporter');
 
 var cssModulesIdentName = '[name]__[local]__[hash:base64:5]';
@@ -34,6 +35,7 @@ module.exports = {
   },
   postcss: () => [
     postcssFocus(),
+    postcssNested(),
     cssnext({
       browsers: ['last 2 versions', 'IE > 10'],
     }),
