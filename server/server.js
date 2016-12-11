@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 /* SSR Import begins here */
 // React And Redux Setup
 // import IntlWrapper from '../client/modules/intl/IntlWrapper';
-import { configureStore } from '../client/store';
+import { configureStore } from '../client/modules/store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
