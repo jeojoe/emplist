@@ -4,7 +4,7 @@ import { actionTest } from 'redux-ava';
 import {
   SWITCH_LANGUAGE,
   switchLanguage,
-} from '../IntlActions';
+} from '../intlActions';
 import { localizationData } from '../../../../Intl/setup';
 
 const lang = 'en';

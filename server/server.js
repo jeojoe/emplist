@@ -3,7 +3,6 @@ import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import IntlWrapper from '../client/modules/Intl/IntlWrapper';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -21,7 +20,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(webpackHotMiddleware(compiler));
 }
 
+/* SSR Import begins here */
 // React And Redux Setup
+// import IntlWrapper from '../client/modules/intl/IntlWrapper';
 import { configureStore } from '../client/store';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -32,6 +33,7 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
+
 import posts from './routes/post.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
@@ -56,6 +58,8 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/api', posts);
+
+/* SSR Begins here */
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
@@ -120,11 +124,16 @@ app.use((req, res, next) => {
 
     return fetchComponentData(store, renderProps.components, renderProps.params)
       .then(() => {
+        // const initialView = renderToString(
+        //   <Provider store={store}>
+        //     <IntlWrapper>
+        //       <RouterContext {...renderProps} />
+        //     </IntlWrapper>
+        //   </Provider>
+        // );
         const initialView = renderToString(
           <Provider store={store}>
-            <IntlWrapper>
               <RouterContext {...renderProps} />
-            </IntlWrapper>
           </Provider>
         );
         const finalState = store.getState();
