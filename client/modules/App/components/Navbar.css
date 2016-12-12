@@ -1,0 +1,14 @@
+#navbar {
+  margin: 50px 0 10px;
+}
+
+.after-logo {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 40px;
+  padding-top: 10px;
+  h6 {
+    margin: 0;
+    font-size: 18px;
+  }
+}
