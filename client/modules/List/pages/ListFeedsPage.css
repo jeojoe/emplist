@@ -1,3 +1,11 @@
-.list-feeds-page {
-  
+.filter {
+  padding-top: 20px;
+}
+
+.filter-link {
+  margin-left: 15px;
+  text-decoration: none;
+  &.active {
+    text-decoration: underline;
+  }
 }
