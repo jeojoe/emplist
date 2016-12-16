@@ -16,14 +16,15 @@ class ListFeedsPage extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     callApi('/lists?filter=bangkok', 'get').then((res, err) => {
       if (err) {
         alert('Failed loading lists !');
         return;
       }
-      this.setState({ fetching: false, lists: res.lists });
+      this.setState({ lists: res.lists });
     });
+    setTimeout(() => this.setState({ fetching: false }), 1000);
   }
 
   changeFilter = filter => {
@@ -43,7 +44,7 @@ class ListFeedsPage extends Component {
     return (
       <div className="container">
         <HeaderDescription />
-        <Link to="/post" className="button button-primary" >Request your list</Link>
+        <Link to="/request" className="button button-primary" >Request your list</Link>
         {/*
           Filter
         */}

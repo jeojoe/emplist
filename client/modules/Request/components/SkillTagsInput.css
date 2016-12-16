@@ -1,0 +1,27 @@
+:global(.ReactTags__tagInput) {
+  display: inline-block;
+}
+
+.skill {
+  color: #D35400;
+  background-color: #FFE8D3;
+  border: 1px solid #FFD1A1;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-weight: 700;
+  margin-right: 12px;
+  cursor: move;
+}
+
+.remove {
+  cursor: pointer;
+  margin-left: 5px;
+  color: #D35400;
+  &:hover {
+    color: #D35400;
+  }
+}
+
+.hide-input {
+  display: none;
+}

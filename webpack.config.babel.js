@@ -23,8 +23,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
+        test: /raw\.css$/,
         exclude: /node_modules/,
+        loader: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.css$/,
+        exclude: [/node_modules/, /raw\.css$/],
         loader: 'style-loader!css-loader?localIdentName=' + cssModulesIdentName + '&modules&importLoaders=1&sourceMap!postcss-loader',
       },
       {
