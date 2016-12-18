@@ -38,6 +38,10 @@ class ListFeedsPage extends Component {
     this.fetchLists(this.state.lastIndex + 1, NUM_ITEMS_PER_FETCH);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
   handleScroll() {
     // if reach bottom, load more
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 40) {
