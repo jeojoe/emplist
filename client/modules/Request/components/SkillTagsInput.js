@@ -38,6 +38,7 @@ class SkillTagsInput extends Component {
         handleDelete={this.handleDelete}
         handleAddition={this.handleAddition}
         handleDrag={this.handleDrag}
+        placeholder=""
         classNames={{
           tag: s.skill,
           remove: s.remove,

@@ -1,0 +1,17 @@
+:global(.rdw-colorpicker-modal) {
+  width: 205px;
+  height: 215px;
+}
+
+:global(.rdw-editor-main) {
+  height: 600px !important;
+  overflow: scroll;
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.yo {
+  color: #333;
+}
