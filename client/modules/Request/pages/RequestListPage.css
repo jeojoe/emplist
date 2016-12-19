@@ -107,3 +107,7 @@
 .inputAlert {
   border-color: red !important;
 }
+
+.requiredSign {
+  color: red;
+}

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { EditorState } from 'draft-js';
+import { Link } from 'react-router';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
 import DetailsEditor from '../components/DetailsEditor';
@@ -30,6 +32,8 @@ class RequestListPage extends Component {
       password: '',
       password_confirm: '',
       additional_note: '',
+      submitting: false,
+      error: true,
     };
   }
 
@@ -63,15 +67,56 @@ class RequestListPage extends Component {
   }
 
   submitRequest = () => {
-    // validate FIRST!!
-    console.log(this.state);
+    const { submitting } = this.state;
+    if (!submitting) {
+      this.setState({ submitting: true });
+      const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note } = this.state;
+      const details = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+
+      if (!title || !tags) {
+        this.setState({ submitting: false });
+        alert('Please check Title or Skills field again.');
+        return;
+      } else if (exp_condition === 'between' && (!exp_between_min || !exp_between_max)) {
+        this.setState({ submitting: false });
+        alert('Please check Experience field again (errors on "Between" condition).');
+        return;
+      } else if (exp_condition === 'more_than' && (!exp_between_min || !exp_between_max)) {
+        this.setState({ submitting: false });
+        alert('Please check Experience field again (errors on "More than" condition).');
+        return;
+      } else if (!editorState.getCurrentContent().hasText()) {
+        this.setState({ submitting: false });
+        alert('Please fill some details.');
+        return;
+      } else if (!how_to_apply) {
+        this.setState({ submitting: false });
+        alert('Please specify how to apply.');
+        return;
+      } else if (!company_name) {
+        this.setState({ submitting: false });
+        alert('Please specify your company\'s name.');
+        return;
+      } else if (!logo_preview_url || !logo_image_file) {
+        this.setState({ submitting: false });
+        alert('Please reinsert your company\'s logo.');
+        return;
+      } else if (!email) {
+        this.setState({ submitting: false });
+        alert('Please specify your email.');
+        return;
+      } else if (!password || !password_confirm) {
+        this.setState({ submitting: false });
+        alert('Please specify your password or password confirmation.');
+        return;
+      }
+    }
   }
 
   render() {
-    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_preview_url, remote_check, email, password, password_confirm, additional_note } = this.state;
+    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_preview_url, remote_check, email, password, password_confirm, additional_note, submitting } = this.state;
 
     const notSamePassword = password !== password_confirm;
-    console.log(notSamePassword);
     return (
       <div className="container">
         <HeaderText />
@@ -80,7 +125,7 @@ class RequestListPage extends Component {
             Title
           */}
           <div className={s.row}>
-            <label className={s.label} htmlFor="exampleEmailInput">List title</label>
+            <label className={s.label} htmlFor="exampleEmailInput">List title<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>Use your creativity freely to create company’s emplist title ! (up to 120 chars.)</p>
             <input
               className="u-full-width" type="text" maxLength={120}
@@ -92,8 +137,8 @@ class RequestListPage extends Component {
             Skills
           */}
           <div className={s.row}>
-            <label className={s.label}>Skills</label>
-            <p className={s['sub-label']}>All skills required. e.g. Javascript, PHP (up to 6 skills)</p>
+            <label className={s.label}>Skills<span className={s.requiredSign}>*</span></label>
+            <p className={s['sub-label']}>All skills required. e.g. Javascript, PHP (at least 1, up to 6 skills)</p>
             <SkillTagsInput
               tags={tags}
               suggestions={suggestions}
@@ -104,7 +149,7 @@ class RequestListPage extends Component {
             Experience
           */}
           <div className={s.row}>
-            <label className={s.label}>Experience</label>
+            <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>Experience rage of all your company's jobs.</p>
             <select
               value={exp_condition}
@@ -160,6 +205,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.row}>
             <label className={s.label}>Salary Range</label>
+            <p className={s['sub-label']}>optional, but preferred for competitiveness.</p>
             <div>
               <input
                 type="number" min={0} max={99} placeholder="min"
@@ -181,7 +227,7 @@ class RequestListPage extends Component {
             Details - Draft.js
           */}
           <div className={s.rowFull}>
-            <label className={s.label}>Details</label>
+            <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>e.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
             <DetailsEditor
               editorState={editorState}
@@ -192,7 +238,7 @@ class RequestListPage extends Component {
             Details - Draft.js
           */}
           <div className={s.rowFull}>
-            <label className={s.label}>How to apply</label>
+            <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>e.g. send resume to email, go to company’s jobs site or Workable link.</p>
             <textarea
               value={how_to_apply}
@@ -204,7 +250,7 @@ class RequestListPage extends Component {
             Company's name
           */}
           <div className={s.row}>
-            <label className={s.label}>Company's Name</label>
+            <label className={s.label}>Company's Name<span className={s.requiredSign}>*</span></label>
             <input
               type="text" maxLength={120}
               value={company_name}
@@ -215,7 +261,7 @@ class RequestListPage extends Component {
             Company's logo
           */}
           <div className={s.row}>
-            <label className={s.label}>Company's Logo</label>
+            <label className={s.label}>Company's Logo<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>1 : 1 regtangle</p>
             <input
               type="file" accept="image/*"
@@ -255,13 +301,14 @@ class RequestListPage extends Component {
             Email & Password
           */}
           <div className={c(s.row, s.emailRow)}>
-            <label className={s.label}>Email</label>
+            <label className={s.label}>Email<span className={s.requiredSign}>*</span></label>
+            <p className={s['sub-label']}>in case we need to contact you.</p>
             <input
               className="u-full-width" type="email"
               value={email}
               onChange={(e) => this.setState({ email: e.target.value })}
             />
-            <label className={s.label}>Password</label>
+            <label className={s.label}>Password<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>For editing list in the next 30 days displaying period.</p>
             <input
               className="u-full-width" type="password"
@@ -290,8 +337,11 @@ class RequestListPage extends Component {
             <button
               className={c('button-primary', s.submitButton)}
               onClick={this.submitRequest}
-            >Submit list request</button>
-            <p className={c(s['sub-label'], s.coc)}>All jobs on this site disregard of gender, disability and ethnic</p>
+            >
+              {submitting ? 'Submitting..' : 'Submit list request'}
+            </button>
+            <p className={c(s['sub-label'], s.coc)}>By clicking submit you agree that your job(s) disregard(s) of gender, disability, ethnic and agree to our&nbsp;<Link to="/">Terms</Link>.
+            </p>
           </div>
         </div>
       </div>
