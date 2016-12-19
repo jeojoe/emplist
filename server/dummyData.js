@@ -77,7 +77,6 @@ function insertDummyData() {
     // *delete id, else it will be duplicated and cannot insert properly.
     delete listCopied._id;
     listCopied.title = `Copy (${n}) ${list2.title}`;
-    listCopied.company_image = `http://lorempixel.com/180/100?random=${n}`;
     return listCopied;
   });
 
