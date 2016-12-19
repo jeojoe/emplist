@@ -6,6 +6,9 @@
 .row {
   max-width: 850px;
   margin: 0 0 6px;
+  &.emailRow {
+    max-width: 300px;
+  }
 }
 
 .rowFull {
@@ -47,4 +50,60 @@
   width: 100%;
   min-width: 100%;
   max-width: 100%;
+}
+
+.country {
+  display: inline-block;
+  vertical-align: top;
+  width: 100px;
+}
+
+.city {
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  p {
+    margin: 0
+  }
+  .sub-label {
+    margin-bottom: 15px;
+  }
+}
+
+.submitButton {
+  margin-bottom: 20px;
+}
+
+.coc {
+  margin-bottom: 70px;
+}
+
+.logoImageInput {
+  width: 215px;
+  vertical-align: middle;
+}
+
+.logoPreview {
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+  margin-bottom: 14px;
+}
+
+.logoPreviewBlank {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #ddd;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 36px;
+  margin-bottom: 14px;
+  color: #999;
+  cursor: default;
+}
+
+.inputAlert {
+  border-color: red !important;
 }

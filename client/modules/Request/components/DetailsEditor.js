@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import s from './DetailsEditor.css';
 
 class DetailsEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(),
-    };
   }
 
   // componentDidMount() {
@@ -19,10 +15,6 @@ class DetailsEditor extends Component {
   //   window.removeEventListener('scroll', this.handleScroll);
   // }
 
-  onEditorStateChange = (editorState) => {
-    this.setState({ editorState });
-  }
-
   // handleScroll = (event) => {
   //   console.log(window.scrollY);
   //   const toolbar = document.getElementsByClassName('rdw-editor-toolbar')[0]
@@ -31,7 +23,7 @@ class DetailsEditor extends Component {
   // }
 
   render() {
-    const { editorState } = this.state;
+    const { editorState, onEditorStateChange } = this.props;
     const toolbar = {
       options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'history'],
       inline: {
@@ -42,7 +34,7 @@ class DetailsEditor extends Component {
       <div>
         <Editor
           editorState={editorState}
-          onEditorStateChange={this.onEditorStateChange}
+          onEditorStateChange={onEditorStateChange}
           toolbar={toolbar}
           placeholder="Enter text..."
         />
