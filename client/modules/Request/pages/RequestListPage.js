@@ -340,7 +340,7 @@ class RequestListPage extends Component {
             >
               {submitting ? 'Submitting..' : 'Submit list request'}
             </button>
-            <p className={c(s['sub-label'], s.coc)}>By clicking submit you agree that your job(s) disregard(s) of gender, disability, ethnic and agree to our&nbsp;<Link to="/">Terms</Link>.
+            <p className={c(s['sub-label'], s.coc)}>By clicking submit you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<Link to="/">Terms</Link>.
             </p>
           </div>
         </div>
