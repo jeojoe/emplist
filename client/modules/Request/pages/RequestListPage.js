@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
 import DetailsEditor from '../components/DetailsEditor';
+import callApi from '../../../util/apiCaller';
 import c from 'classnames';
 import s from './RequestListPage.css';
 
@@ -27,6 +28,8 @@ class RequestListPage extends Component {
       company_name: '',
       logo_image_file: null,
       logo_preview_url: null,
+      country: 'Thailand',
+      city: 'Bangkok',
       remote_check: false,
       email: '',
       password: '',
@@ -70,7 +73,7 @@ class RequestListPage extends Component {
     const { submitting } = this.state;
     if (!submitting) {
       this.setState({ submitting: true });
-      const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note } = this.state;
+      const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city } = this.state;
       const details = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
       if (!title || !tags) {
@@ -110,6 +113,24 @@ class RequestListPage extends Component {
         alert('Please specify your password or password confirmation.');
         return;
       }
+
+      const yes = confirm('Do you want to submit the request?');
+      if (!yes) {
+        this.setState({ submitting: false });
+        return;
+      }
+      callApi('/requests', 'post', {
+        list_request: {
+          title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: 'http://www.underconsideration.com/brandnew/archives/google_2015_logo_detail.png', remote_check, email, password, password_confirm, additional_note, details, country, city,
+        },
+      }).then((res, err) => {
+        this.setState({ submitting: false });
+        if (err) {
+          alert(`Something went wrong! : ${err}`);
+          return;
+        }
+        this.props.router.push(`/request/done/${res.list_request_id}`);
+      });
     }
   }
 
@@ -205,7 +226,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.row}>
             <label className={s.label}>Salary Range</label>
-            <p className={s['sub-label']}>optional, but preferred for competitiveness.</p>
+            <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
             <div>
               <input
                 type="number" min={0} max={99} placeholder="min"
@@ -228,7 +249,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.rowFull}>
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>e.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
+            <p className={s['sub-label']}>E.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
             <DetailsEditor
               editorState={editorState}
               onEditorStateChange={this.onEditorStateChange}
@@ -239,7 +260,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.rowFull}>
             <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>e.g. send resume to email, go to company’s jobs site or Workable link.</p>
+            <p className={s['sub-label']}>E.g. send resume to email, go to company’s jobs site or Workable link.</p>
             <textarea
               value={how_to_apply}
               onChange={(e) => this.setState({ how_to_apply: e.target.value })}
@@ -302,7 +323,7 @@ class RequestListPage extends Component {
           */}
           <div className={c(s.row, s.emailRow)}>
             <label className={s.label}>Email<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>in case we need to contact you.</p>
+            <p className={s['sub-label']}>In case we need to contact you.</p>
             <input
               className="u-full-width" type="email"
               value={email}
@@ -349,4 +370,4 @@ class RequestListPage extends Component {
   }
 }
 
-export default RequestListPage;
+export default withRouter(RequestListPage);

@@ -5,21 +5,11 @@ import Lists from '../models/Lists';
 import sanitizeHtml from 'sanitize-html';
 
 /**
- * Get all posts
+ * Get all posts (pagination)
  * @param req
  * @param res
  * @returns void
  */
-export function getAllLists(req, res) {
-  Lists.find().sort('-created_at').exec((err, lists) => {
-    if (err) {
-      res.status(500).send(err);
-      return;
-    }
-    res.json({ lists });
-  });
-}
-
 export function getLists(req, res) {
   const startIndex = parseInt(req.query.startIndex, 10);
   const num = parseInt(req.query.num, 10);
