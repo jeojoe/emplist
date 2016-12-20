@@ -38,8 +38,12 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
+        test: /raw\.css$/,
         exclude: /node_modules/,
+        loaders: ['style-loader', 'css-loader'],
+      }, {
+        test: /\.css$/,
+        exclude: [/node_modules/, /raw\.css$/],
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?localIdentName=[hash:base64]&modules&importLoaders=1!postcss-loader'),
       }, {
         test: /\.css$/,
