@@ -200,8 +200,9 @@ svg:not(:root) {
  * Address margin not present in IE 8/9 and Safari.
  */
 
+/* CHANGES */
 figure {
-  margin: 1em 40px;
+  margin: 1em 0;
 }
 
 /**
@@ -732,10 +733,11 @@ label > :global(.label-body) {
 
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* CHANGES */
 ul {
-  list-style: circle inside; }
+  list-style: circle; }
 ol {
-  list-style: decimal inside; }
+  list-style: decimal; }
 ol, ul {
   padding-left: 0;
   margin-top: 0; }
@@ -793,7 +795,6 @@ fieldset {
 pre,
 blockquote,
 dl,
-figure,
 table,
 p,
 ul,
