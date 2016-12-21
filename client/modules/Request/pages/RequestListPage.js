@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import AWS from 'aws-sdk';
+import md5 from 'md5-js';
+
 import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
 import DetailsEditor from '../components/DetailsEditor';
 import callApi from '../../../util/apiCaller';
 import c from 'classnames';
 import s from './RequestListPage.css';
+import aws_config from '../../../../aws_config.json';
 
 class RequestListPage extends Component {
   constructor(props) {
@@ -38,6 +42,8 @@ class RequestListPage extends Component {
       submitting: false,
       error: true,
     };
+    this.uploadCompanyLogo = this.uploadCompanyLogo.bind(this);
+    this.submitRequest = this.submitRequest.bind(this);
   }
 
   onEditorStateChange = (editorState) => {
@@ -62,76 +68,115 @@ class RequestListPage extends Component {
         logo_preview_url: reader.result,
       });
     };
+
+    console.log(`logo change ${file.type}`);
     reader.readAsDataURL(file);
   }
 
-  setTagsState = tags => {
+  setTagsState(tags) {
     this.setState({ tags });
   }
 
-  submitRequest = () => {
+  uploadCompanyLogo(callback) {
+    const logo_file = this.state.logo_image_file;
+    if (!logo_file) { return; }
+
+    // * CHANGE THIS ON PRODUCTION
+    // E.g., Read from JSON is the least recommended approach here:
+    // http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html
+    AWS.config.update(aws_config);
+
+    const s3 = new AWS.S3();
+    const bucket = 'testemplist';
+    const file = logo_file;
+
+    const params = {
+      'Bucket': bucket,
+      'Key': `logos/lg_${md5(new Date())}`,
+      'Body': file,
+      'ACL': 'public-read',
+      'ContentType': file.type,
+    };
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.log(`Error: ${error}`);
+      } else {
+        callback(data);
+      }
+    });
+  }
+
+  submitRequest() {
     const { submitting } = this.state;
-    if (!submitting) {
-      this.setState({ submitting: true });
-      const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city } = this.state;
+    if (submitting) { return; }
+    this.setState({ submitting: true });
+
+    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city } = this.state;
       const details = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-      if (!title || !tags) {
-        this.setState({ submitting: false });
-        alert('Please check Title or Skills field again.');
-        return;
-      } else if (exp_condition === 'between' && (!exp_between_min || !exp_between_max)) {
-        this.setState({ submitting: false });
-        alert('Please check Experience field again (errors on "Between" condition).');
-        return;
-      } else if (exp_condition === 'more_than' && (!exp_between_min || !exp_between_max)) {
-        this.setState({ submitting: false });
-        alert('Please check Experience field again (errors on "More than" condition).');
-        return;
-      } else if (!editorState.getCurrentContent().hasText()) {
-        this.setState({ submitting: false });
-        alert('Please fill some details.');
-        return;
-      } else if (!how_to_apply) {
-        this.setState({ submitting: false });
-        alert('Please specify how to apply.');
-        return;
-      } else if (!company_name) {
-        this.setState({ submitting: false });
-        alert('Please specify your company\'s name.');
-        return;
-      } else if (!logo_preview_url || !logo_image_file) {
-        this.setState({ submitting: false });
-        alert('Please reinsert your company\'s logo.');
-        return;
-      } else if (!email) {
-        this.setState({ submitting: false });
-        alert('Please specify your email.');
-        return;
-      } else if (!password || !password_confirm) {
-        this.setState({ submitting: false });
-        alert('Please specify your password or password confirmation.');
-        return;
-      }
+    if (!title || !tags) {
+      this.setState({ submitting: false });
+      alert('Please check Title or Skills field again.');
+      return;
+    } else if (exp_condition === 'between' && (!exp_between_min || !exp_between_max)) {
+      this.setState({ submitting: false });
+      alert('Please check Experience field again (errors on "Between" condition).');
+      return;
+    } else if (exp_condition === 'more_than' && (!exp_between_min || !exp_between_max)) {
+      this.setState({ submitting: false });
+      alert('Please check Experience field again (errors on "More than" condition).');
+      return;
+    } else if (!editorState.getCurrentContent().hasText()) {
+      this.setState({ submitting: false });
+      alert('Please fill some details.');
+      return;
+    } else if (!how_to_apply) {
+      this.setState({ submitting: false });
+      alert('Please specify how to apply.');
+      return;
+    } else if (!company_name) {
+      this.setState({ submitting: false });
+      alert('Please specify your company\'s name.');
+      return;
+    } else if (!logo_preview_url || !logo_image_file) {
+      this.setState({ submitting: false });
+      alert('Please reinsert your company\'s logo.');
+      return;
+    } else if (!email) {
+      this.setState({ submitting: false });
+      alert('Please specify your email.');
+      return;
+    } else if (!password || !password_confirm) {
+      this.setState({ submitting: false });
+      alert('Please specify your password or password confirmation.');
+      return;
+    }
 
-      const yes = confirm('Do you want to submit the request?');
-      if (!yes) {
-        this.setState({ submitting: false });
-        return;
-      }
+    // all passes, upload logo
+    const yes = confirm('Do you want to submit the request?');
+    if (!yes) {
+      this.setState({ submitting: false });
+      return;
+    }
+
+    const dis = this;
+    this.uploadCompanyLogo((data) => {
+      const image_url = data.Location;
+      console.log(`company logo is at ${image_url}`);
+
       callApi('/requests', 'post', {
         list_request: {
-          title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: 'http://www.underconsideration.com/brandnew/archives/google_2015_logo_detail.png', remote_check, email, password, password_confirm, additional_note, details, country, city,
+          title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, email, password, password_confirm, additional_note, details, country, city,
         },
       }).then((res, err) => {
-        this.setState({ submitting: false });
+        dis.setState({ submitting: false });
         if (err) {
           alert(`Something went wrong! : ${err}`);
           return;
         }
-        this.props.router.push(`/request/done/${res.list_request_id}`);
+        dis.props.router.push(`/request/done/${res.list_request_id}`);
       });
-    }
+    });
   }
 
   render() {
