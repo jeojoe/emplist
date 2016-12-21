@@ -6,7 +6,6 @@ import ListItem from '../components/ListItem';
 import _ from 'lodash';
 
 import s from './ListFeedsPage.css';
-import sFeed from '../components/ListFeedsWrapper.css';
 
 import callApi from '../../../util/apiCaller';
 import cn from 'classnames';

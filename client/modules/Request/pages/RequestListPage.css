@@ -5,7 +5,7 @@
 
 .row {
   max-width: 850px;
-  margin: 0 0 6px;
+  margin: 0 0 10px;
   &.emailRow {
     max-width: 300px;
   }

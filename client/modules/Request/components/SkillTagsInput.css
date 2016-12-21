@@ -4,6 +4,11 @@
 
 :global(.ReactTags__tagInputField) {
   width: 130px;
+  margin: 0;
+}
+
+:global(.ReactTags__tags) {
+  padding-bottom: 15px;
 }
 
 .skill {

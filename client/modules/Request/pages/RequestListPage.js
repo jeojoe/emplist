@@ -42,8 +42,6 @@ class RequestListPage extends Component {
       submitting: false,
       error: true,
     };
-    this.uploadCompanyLogo = this.uploadCompanyLogo.bind(this);
-    this.submitRequest = this.submitRequest.bind(this);
   }
 
   onEditorStateChange = (editorState) => {
@@ -73,11 +71,11 @@ class RequestListPage extends Component {
     reader.readAsDataURL(file);
   }
 
-  setTagsState(tags) {
+  setTagsState = (tags) => {
     this.setState({ tags });
   }
 
-  uploadCompanyLogo(callback) {
+  uploadCompanyLogo = (callback) => {
     const logo_file = this.state.logo_image_file;
     if (!logo_file) { return; }
 
@@ -106,7 +104,7 @@ class RequestListPage extends Component {
     });
   }
 
-  submitRequest() {
+  submitRequest = () => {
     const { submitting } = this.state;
     if (submitting) { return; }
     this.setState({ submitting: true });
