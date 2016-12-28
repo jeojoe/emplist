@@ -47,8 +47,23 @@ class DoneRequestListPage extends Component {
 
   render() {
     const { fetching, is_error, company_name, requesting, done } = this.state;
-    if (fetching) return <div>Completing process</div>;
-    if (is_error) return <div>Have a problem !</div>;
+    
+    if (fetching) {
+      return (
+        <div className="container">
+          <p>Completing request..</p>
+        </div>
+      );
+    }
+
+    if (is_error) {
+      return (
+        <div className="container">
+          <p>Oops we have a problem ! please send you company name to <a>hi.emplist@gmail.com</a> so that we can figure it out !</p>
+        </div>
+      );
+    }
+
     return (
       <div className="container">
         <p>
@@ -62,7 +77,7 @@ class DoneRequestListPage extends Component {
           onClick={this.sendPromoteRequest}
         >
           {requesting && 'Sending request..'}
-          {!requesting && !done && `${company_name}'d like to request promote listing`}
+          {!requesting && !done && `${company_name} requests promote listing`}
           {!requesting && done && 'You have requested, Thank you !'}
         </button>
       </div>
