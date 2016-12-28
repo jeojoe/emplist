@@ -11,8 +11,10 @@ const listSchema = new Schema({
   company_location: {
     country: { type: String, required: true },
     city: { type: String, required: true },
+    detail: { type: String, required: true },
   },
   password: { type: String, required: true },
+  is_temp_password: { type: Boolean, default: false, },
   allow_remote: { type: Boolean, default: false, required: true },
   skills: { type: [String], default: [] },
   title: { type: String, required: true },

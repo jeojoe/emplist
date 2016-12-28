@@ -22,9 +22,9 @@ import Companies from '../models/Companies';
  * @returns void
  */
 export function insertListRequest(req, res) {
-  const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, email, password, additional_note, details, country, city } = req.body.list_request;
+  const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, email, password, additional_note, details, country, city, location_detail } = req.body.list_request;
 
-  if (!title || !tags || !company_name || !country || !city || !email || !password) {
+  if (!title || !tags || !company_name || !country || !city || !location_detail || !email || !password) {
     res.status(403).end();
   }
 
@@ -32,7 +32,7 @@ export function insertListRequest(req, res) {
   const newCompany = new Companies({
     company_image, company_name,
     company_email: email,
-    company_location: { country, city },
+    company_location: { country, city, detail: location_detail },
     allow_remote: remote_check,
     password,
   });
@@ -62,7 +62,7 @@ export function insertListRequest(req, res) {
       const newListRequest = new ListRequests({
         company_id, company_image, company_name,
         company_email: email,
-        company_location: { country, city },
+        company_location: { country, city, detail: location_detail },
         password,
         allow_remote: remote_check,
         skills,

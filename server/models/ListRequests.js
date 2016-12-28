@@ -14,6 +14,7 @@ const requestSchema = new Schema({
   company_location: {
     country: { type: String, required: true },
     city: { type: String, required: true },
+    detail: { type: String, required: true },
   },
   password: { type: String, required: true },
   allow_remote: { type: Boolean, default: false, required: true },
