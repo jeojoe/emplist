@@ -36,6 +36,7 @@ import { fetchComponentData } from './util/fetchData';
 
 import listsRoutes from './routes/Lists.routes';
 import listRequestsRoutes from './routes/ListRequests.routes';
+import UsersRoutes from './routes/Users.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -63,6 +64,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/api', listsRoutes);
 app.use('/api', listRequestsRoutes);
+app.use('/api', UsersRoutes);
 
 /* SSR Begins here */
 
