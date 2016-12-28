@@ -22,13 +22,9 @@ class DetailsEditor extends Component {
   }
 
   handleScroll = () => {
-    const { isBarFix } = this.state;
-
-    const windowTop = window.scrollY;
     const editor = document.getElementsByClassName(s.editor)[0];
     const editorTop = editor.getBoundingClientRect().top;
     const editorHeight = editor.offsetHeight;
-    console.log(windowTop, editorTop, editorHeight);
     if (editorTop <= 0 && -editorTop <= editorHeight) {
       this.setState({ isBarFix: true });
     } else {
