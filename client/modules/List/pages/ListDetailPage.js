@@ -56,6 +56,7 @@ class ListDetailPage extends Component {
     );
 
     const Location = `${company_location.city}, ${company_location.city}`;
+    const Salary = `${salary.min} - ${salary.max} B`;
 
     return (
       <div>
@@ -71,9 +72,11 @@ class ListDetailPage extends Component {
         </div>
 
         <div>
-          <p>
-            Sklls: {Tags}
-          </p>
+          <p>Sklls: {Tags}</p>
+        </div>
+
+        <div>
+          <p>Salary: {Salary}</p>
         </div>
 
         <div>
