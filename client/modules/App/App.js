@@ -20,10 +20,10 @@ export class App extends Component {
   render() {
     return (
       <div>
-        {this.state.isMounted &&
+        {/* this.state.isMounted &&
           !window.devToolsExtension &&
           process.env.NODE_ENV === 'development' &&
-          <DevTools />}
+          <DevTools /> */}
         <div>
           {/* titleTemplate="%s - Blog App" */}
           <Helmet
