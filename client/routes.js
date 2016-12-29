@@ -34,6 +34,14 @@ export default (
       }}
     />
     <Route
+      path="/list/:id"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/List/pages/ListDetailPage').default);
+        });
+      }}
+    />
+    <Route
       path="/request"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {

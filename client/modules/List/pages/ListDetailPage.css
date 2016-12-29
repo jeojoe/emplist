@@ -1,0 +1,16 @@
+.image-wrapper {
+  width: 80px;
+  height: 49px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+.image {
+  width: 49px;
+}
+
+.container {
+	margin-top: 40px;
+	margin-left: 20px;
+}

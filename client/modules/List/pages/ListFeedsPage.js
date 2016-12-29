@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import HeaderDescription from '../components/HeaderDescription';
 import ListFeedsWrapper from '../components/ListFeedsWrapper';
-import ListItem from '../components/ListItem';
 import _ from 'lodash';
 
 import s from './ListFeedsPage.css';
@@ -52,8 +51,6 @@ class ListFeedsPage extends Component {
     if (this.state.fetching || this.state.numLastFetch === 0) {
       return;
     }
-
-    console.log(`fetch start ${startIndex}`);
 
     this.setState({
       fetching: true,
