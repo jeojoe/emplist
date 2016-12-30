@@ -13,6 +13,7 @@ class ListDetailPage extends Component {
     super(props);
     this.state = {
       list: null,
+      err: null,
     };
   }
 
@@ -20,19 +21,19 @@ class ListDetailPage extends Component {
     const id = this.props.params.id;
     callApi(`/list/${id}`, 'get').then((res, err) => {
       if (err) {
-        console.log('Get detail error: ', err);
+        this.setState({ err });
       } else {
-        console.log('Get list success: ', JSON.stringify(res));
         const list = res.list;
         if (list) {
           this.setState({ list });
+        } else {
+          this.setState({ err: 'List not found.' });
         }
       }
     });
   }
 
   renderList(list) {
-    console.log(`render list please ${JSON.stringify(list, null, 2)}`);
     const {
       company_image,
       company_name,
@@ -92,11 +93,10 @@ class ListDetailPage extends Component {
   }
 
   render() {
-    const list = this.state.list;
-
+    const { list, err } = this.state;
     return (
       <div className="container">
-        {list ? this.renderList(list) : <p>Loading...</p>}
+        {list ? this.renderList(list) : <p>{err || 'Loading...'}</p>}
       </div>
     );
   }
