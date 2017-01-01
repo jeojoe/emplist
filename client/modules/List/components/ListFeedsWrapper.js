@@ -2,11 +2,12 @@ import React, { PropTypes } from 'react';
 import ListItem from './ListItem';
 import s from './ListFeedsWrapper.css';
 
-const ListFeedsWrapper = (props) => (
+const ListFeedsWrapper = ({ lists, admin }) => (
   <div className={s['feeds-wrapper']}>
+    <p>Yoo</p>
     {
-      props.lists.map(list => (
-        <ListItem list={list} key={list._id} />
+      lists.map(list => (
+        <ListItem list={list} key={list._id} admin={admin} />
       ))
     }
   </div>
@@ -14,6 +15,7 @@ const ListFeedsWrapper = (props) => (
 
 ListFeedsWrapper.propTypes = {
   lists: PropTypes.array.isRequired,
+  admin: PropTypes.boolean,
 };
 
 export default ListFeedsWrapper;

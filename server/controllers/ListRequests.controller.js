@@ -25,6 +25,29 @@ export function getAllListRequests(req, res) {
 }
 
 /**
+ * Get list request
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function getListRequest(req, res) {
+  const { list_request_id } = req.params;
+  ListRequests.findOne(
+    { _id: list_request_id },
+    (err, list_request) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json({
+          ok: true,
+          msg: 'Done!',
+          data: list_request,
+        });
+      }
+    });
+}
+
+/**
  * Insert list request
  * @param req
  * @param res

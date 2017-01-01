@@ -19,18 +19,34 @@ class ListDetailPage extends Component {
 
   componentDidMount() {
     const id = this.props.params.id;
-    callApi(`/list/${id}`, 'get').then((res, err) => {
-      if (err) {
-        this.setState({ err });
-      } else {
-        const list = res.list;
-        if (list) {
-          this.setState({ list });
+    const { pathname } = this.props.location;
+    if (pathname.indexOf('/admin/request/') < 0) {
+      callApi(`/list/${id}`, 'get').then((res, err) => {
+        if (err) {
+          this.setState({ err });
         } else {
-          this.setState({ err: 'List not found.' });
+          const list = res.list;
+          if (list) {
+            this.setState({ list });
+          } else {
+            this.setState({ err: 'List not found.' });
+          }
         }
-      }
-    });
+      });
+    } else {
+      callApi(`/requests/${id}`, 'get').then((res, err) => {
+        if (err) {
+          this.setState({ err });
+        } else {
+          const list = res.data;
+          if (list) {
+            this.setState({ list });
+          } else {
+            this.setState({ err: 'List not found.' });
+          }
+        }
+      });
+    }
   }
 
   renderList(list) {

@@ -5,6 +5,9 @@ const router = new Router();
 // Get all list requests
 router.route('/requests').get(ListRequestsController.getAllListRequests);
 
+// Get one List request
+router.route('/requests/:list_request_id').get(ListRequestsController.getListRequest);
+
 // Check if request exists
 router.route('/requests/check/:list_request_id').get(ListRequestsController.checkListRequest);
 

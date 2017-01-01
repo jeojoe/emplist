@@ -33,7 +33,7 @@ class AdminHome extends Component {
       <div className="container">
         <AdminListFilter changeFilter={this.changeFilter} filter={filter} />
         {fetching ? 'Fetching' :
-          <ListFeedsWrapper lists={lists} />
+          <ListFeedsWrapper lists={lists} admin />
         }
       </div>
     );
