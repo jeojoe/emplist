@@ -1,5 +1,7 @@
 import ListRequests from '../models/ListRequests';
+import Lists from '../models/Lists';
 import Companies from '../models/Companies';
+import { tempPassword } from '../../secret_config.json';
 
 /**
  * Get list request
@@ -144,6 +146,41 @@ export function checkListRequest(req, res) {
       }
     }
   );
+}
+
+/**
+ * Check list request
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function approveListRequest(req, res) {
+  const { list_request_id } = req.params;
+  const { password } = req.body;
+  console.log(password, tempPassword);
+  if (password !== tempPassword) {
+    res.json({
+      ok: false,
+      msg: 'whoa calm down mann. can\'t we be cool?',
+    });
+  } else {
+    ListRequests.findOne(
+      { _id: list_request_id },
+      (err, list_request) => {
+        if (err) {
+          res.status(404).send(err);
+        }
+        if (!list_request) {
+          res.json({
+            ok: false,
+            msg: 'Not found',
+          });
+        } else {
+          console.log(list_request);
+        }
+      }
+    );
+  }
 }
 
 /**

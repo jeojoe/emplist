@@ -11,7 +11,7 @@ import DetailsEditor from '../components/DetailsEditor';
 import callApi from '../../../util/apiCaller';
 import c from 'classnames';
 import s from './RequestListPage.css';
-import aws_config from '../../../../aws_config.json';
+import aws_config from '../../../../secret_config.json';
 
 class RequestListPage extends Component {
   constructor(props) {

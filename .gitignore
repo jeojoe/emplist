@@ -9,3 +9,4 @@ dist
 coverage/
 .nyc_output/
 aws_config.json
+secret_config.json
