@@ -116,7 +116,9 @@ class ListDetailPage extends Component {
     const isAdmin = pathname.indexOf('/admin/request/') >= 0;
     return (
       <div className="container">
-        {isAdmin && <AdminHeader list={list} />}
+        {list && isAdmin ?
+          <AdminHeader list={list} list_id={list.list_id} /> : ''
+        }
         {list ? this.renderList(list) : <p>{err || 'Loading...'}</p>}
       </div>
     );
