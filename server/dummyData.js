@@ -9,6 +9,7 @@ function insertDummyData() {
     company_location: {
       country: 'Thailand',
       city: 'Bangkok',
+      detail: 'Just walk down the sukhumvit street then jump 10 times.',
     },
     password: '123456',
     allow_remote: true,
@@ -32,6 +33,7 @@ function insertDummyData() {
     company_location: {
       country: 'Thailand',
       city: 'Bangkok',
+      detail: 'On the beach. just look at the horizon you will find us lol.',
     },
     password: '123456',
     allow_remote: false,
@@ -54,6 +56,7 @@ function insertDummyData() {
     company_location: {
       country: 'Thailand',
       city: 'Bangkok',
+      detail: 'BTS onnuch, underground, behind you !!',
     },
     password: '123456',
     allow_remote: false,
@@ -94,7 +97,7 @@ function insertDummyData() {
 export default function () {
   Lists.count().exec((err, count) => {
     // 23 is the correct dummy data
-    if (count === 23) {
+    if (count >= 23) {
       console.log('Dummy data: OK.');
       return;
     }
