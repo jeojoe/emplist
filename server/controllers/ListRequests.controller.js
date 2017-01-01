@@ -10,7 +10,7 @@ import { tempPassword } from '../../secret_config.json';
  * @returns void
  */
 export function getAllListRequests(req, res) {
-  ListRequests.find({})
+  ListRequests.find({ is_approved: false })
     .sort('-created_at')
     .select('_id company_name title salary exp skills allow_remote company_image ')
     .exec((err, requests) => {
@@ -103,7 +103,8 @@ export function insertListRequest(req, res) {
         title,
         exp: { condition: exp_condition, min, max, has_intern: intern_check },
         salary: {
-          min: salary_min, max: salary_max,
+          min: salary_min || 0,
+          max: salary_max || 9999999,
         },
         details,
         how_to_apply,
@@ -157,7 +158,6 @@ export function checkListRequest(req, res) {
 export function approveListRequest(req, res) {
   const { list_request_id } = req.params;
   const { password } = req.body;
-  console.log(password, tempPassword);
   if (password !== tempPassword) {
     res.json({
       ok: false,
@@ -176,7 +176,36 @@ export function approveListRequest(req, res) {
             msg: 'Not found',
           });
         } else {
-          console.log(list_request);
+          // Annoying js delete bug made me do this..
+          const {
+            company_id, company_image, company_email, company_name, company_location, password: listPassword, allow_remote, skills, title, exp, salary, details, how_to_apply,
+          } = list_request;
+          const saveList = new Lists({
+            company_id, company_image, company_email, company_name, company_location, password: listPassword, allow_remote, skills, title, exp, salary, details, how_to_apply,
+          });
+          saveList.save((err1, saved) => {
+            if (err1) {
+              res.status(500).send({
+                ok: false,
+                msg: err1,
+              });
+            } else {
+              res.json({
+                ok: true,
+                msg: 'Done approve request !',
+                data: { list_id: saved._id },
+              });
+              ListRequests.update(
+                { _id: list_request_id },
+                {
+                  $set: {
+                    is_approved: false,
+                    list_id: saved._id,
+                  },
+                }
+              );
+            }
+          });
         }
       }
     );
