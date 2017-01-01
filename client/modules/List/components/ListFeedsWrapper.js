@@ -4,7 +4,6 @@ import s from './ListFeedsWrapper.css';
 
 const ListFeedsWrapper = ({ lists, admin }) => (
   <div className={s['feeds-wrapper']}>
-    <p>Yoo</p>
     {
       lists.map(list => (
         <ListItem list={list} key={list._id} admin={admin} />
