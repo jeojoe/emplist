@@ -11,6 +11,9 @@ router.route('/requests/:list_request_id').get(ListRequestsController.getListReq
 // Check if request exists
 router.route('/requests/check/:list_request_id').get(ListRequestsController.checkListRequest);
 
+// Check if request exists
+router.route('/requests/approve/:list_request_id').put(ListRequestsController.approveListRequest);
+
 // Post Request
 router.route('/requests').post(ListRequestsController.insertListRequest);
 

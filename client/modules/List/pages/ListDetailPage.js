@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
 import callApi from '../../../util/apiCaller';
 
+import AdminHeader from '../components/AdminHeader';
 import s from './ListDetailPage.css';
 import sTag from '../../Request/components/SkillTagsInput.css';
 
@@ -110,8 +111,12 @@ class ListDetailPage extends Component {
 
   render() {
     const { list, err } = this.state;
+    const { location: { pathname } } = this.props;
+
+    const isAdmin = pathname.indexOf('/admin/request/') >= 0;
     return (
       <div className="container">
+        {isAdmin && <AdminHeader list={list} />}
         {list ? this.renderList(list) : <p>{err || 'Loading...'}</p>}
       </div>
     );
