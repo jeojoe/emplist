@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 // Import Components
 import Helmet from 'react-helmet';
-import DevTools from './components/DevTools';
+// import DevTools from './components/DevTools';
 import Navbar from './components/Navbar';
 // Import Style
 // Import Actions

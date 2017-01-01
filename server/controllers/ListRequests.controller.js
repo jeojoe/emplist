@@ -7,13 +7,22 @@ import Companies from '../models/Companies';
  * @param res
  * @returns void
  */
-// export function getListRequest(req, res) {
-//   const { list_request_id } = req.params;
-//   ListRequests.findOne(
-//     { _id: list_request_id },
-//     ''
-//   );
-// }
+export function getAllListRequests(req, res) {
+  ListRequests.find({})
+    .sort('-created_at')
+    .select('_id company_name title salary exp skills allow_remote company_image ')
+    .exec((err, requests) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json({
+          ok: true,
+          msg: 'done',
+          requests,
+        });
+      }
+    });
+}
 
 /**
  * Insert list request

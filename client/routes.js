@@ -19,6 +19,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/List/pages/ListFeedsPage');
   require('./modules/Request/pages/RequestListPage');
   require('./modules/Request/pages/DoneRequestListPage');
+  require('./modules/Admin/pages/AdminLogin');
+  require('./modules/Admin/pages/AdminHome');
   require('./modules/App/pages/Page404');
 }
 
@@ -46,6 +48,22 @@ export default (
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Request/pages/DoneRequestListPage').default);
+        });
+      }}
+    />
+    <Route
+      path="/admin"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Admin/pages/AdminLogin').default);
+        });
+      }}
+    />
+    <Route
+      path="/admin/home"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Admin/pages/AdminHome').default);
         });
       }}
     />
