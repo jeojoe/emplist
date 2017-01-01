@@ -95,6 +95,10 @@ class ListDetailPage extends Component {
 
         <div>
           <p>Salary: {Salary}</p>
+          {/*
+            FOR AUNNNNN
+            if company didn't insert salary detail i made default min, max salary to 0 and 9999999 respectively (for analytic purpose). So if you need to check whether company has specified salary or not you need to check max salary is equal to 9999999 or not.
+          */}
         </div>
 
         <div>
