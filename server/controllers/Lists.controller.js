@@ -3,6 +3,7 @@ import Lists from '../models/Lists';
 // import cuid from 'cuid';
 // import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
+import mongoose from 'mongoose';
 
 /**
  * Get all posts (pagination)
@@ -33,33 +34,17 @@ export function getLists(req, res) {
     });
 }
 
-/**
- * Save a post
- * @param req
- * @param res
- * @returns void
- */
-export function insertList(req, res) {
-  if (!req.body.list.company_name || !req.body.list.title || !req.body.list.details) {
-    res.status(403).end();
-  }
-
-  const newList = new Lists(req.body.post);
-
-  // Let's sanitize inputs
-  newList.title = sanitizeHtml(newList.title);
-  newList.company_name = sanitizeHtml(newList.company_name);
-  newList.details = sanitizeHtml(newList.details);
-
-  // newList.slug = slug(newList.title.toLowerCase(), { lowercase: true });
-  // newList.cuid = cuid();
-
-  newList.save((err, saved) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ list: saved });
-  });
+export function getListDetail(req, res) {
+  const list_id = req.params.id;
+  Lists
+    .findOne({ _id: list_id })
+    .exec((err, list) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.json({ list });
+    });
 }
 
 /**
@@ -67,7 +52,7 @@ export function insertList(req, res) {
  * @param req
  * @param res
  * @returns void
- */
+*/
 // export function getPost(req, res) {
 //   Lists.findOne({ _id: req.params.listId }).exec((err, list) => {
 //     if (err) {

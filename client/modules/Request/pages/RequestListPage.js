@@ -152,7 +152,7 @@ class RequestListPage extends Component {
       this.setState({ submitting: false });
       alert('Please check Experience field again (errors on "Between" condition).');
       return;
-    } else if (exp_condition === 'more_than' && (!exp_between_min || !exp_between_max)) {
+    } else if (exp_condition === 'more_than' && (!exp_more_than)) {
       this.setState({ submitting: false });
       alert('Please check Experience field again (errors on "More than" condition).');
       return;
@@ -188,7 +188,7 @@ class RequestListPage extends Component {
       this.setState({ submitting: false });
       return;
     }
-  
+
     const dis = this;
     this.uploadCompanyLogo((data) => {
       const image_url = data.Location;

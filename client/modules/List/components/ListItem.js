@@ -6,12 +6,12 @@ import moment from 'moment';
 const List = ({ list: { _id, title, company_image, company_name, company_location, allow_remote, exp, salary, created_at, skills } }) => (
   <div className={s.item}>
     <div className={s['image-wrapper']}>
-      <Link to={`/list/${_id}`} className={s.link}>
+      <Link to={`/list/${_id}`} params={{ id: _id }} className={s.link}>
         <img src={company_image} alt={`${company_name}'s logo`} className={s.image} />
       </Link>
     </div>
     <div className={s['text-wrapper']}>
-      <Link to={`/list/${_id}`} className={s.link}>
+      <Link to={`/list/${_id}`} params={{ _id }} className={s.link}>
         {title}
       </Link>
       <div>

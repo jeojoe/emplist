@@ -13,8 +13,8 @@ const listSchema = new Schema({
     city: { type: String, required: true },
     detail: { type: String, required: true },
   },
-  password: { type: String, required: true },
-  is_temp_password: { type: Boolean, default: false, },
+  password: { type: String, required: true, select: false },
+  is_temp_password: { type: Boolean, default: false, select: false },
   allow_remote: { type: Boolean, default: false, required: true },
   skills: { type: [String], default: [] },
   title: { type: String, required: true },
@@ -36,4 +36,7 @@ const listSchema = new Schema({
   how_to_apply: { type: String, required: true },
 });
 
+// select: false -> exclude those fields on using find().
+// If you really want to include it (e.g. to compare password and return user), read below:
+// http://www.curtismlarson.com/blog/2016/05/11/mongoose-mongodb-exclude-select-fields/
 export default mongoose.model('Lists', listSchema);

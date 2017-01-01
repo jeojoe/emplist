@@ -52,8 +52,6 @@ class ListFeedsPage extends Component {
       return;
     }
 
-    console.log(`fetch start ${startIndex}`);
-
     this.setState({
       fetching: true,
       feedBottomDescription: 'Oh you need more, wait...',
