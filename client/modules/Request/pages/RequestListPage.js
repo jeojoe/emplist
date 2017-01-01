@@ -304,14 +304,14 @@ class RequestListPage extends Component {
             <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
             <div>
               <input
-                type="number" min={0} max={99} placeholder="min"
+                type="number" min={0} max={9999999} placeholder="min"
                 className={c(s['salary-input'], s.fix)}
                 value={salary_min}
                 onChange={(e) => this.setState({ salary_min: e.target.value })}
               />
               -
               <input
-                type="number" min={0} max={99} placeholder="max"
+                type="number" min={0} max={9999999} placeholder="max"
                 className={s['salary-input']}
                 value={salary_max}
                 onChange={(e) => this.setState({ salary_max: e.target.value })}

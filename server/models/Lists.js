@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const listSchema = new Schema({
+  is_temp_password: { type: Boolean, default: false, select: false },
   created_at: { type: Date, default: Date.now, required: true },
   updated_at: { type: Date, default: Date.now, required: true },
   company_id: { type: String, default: '' },
@@ -14,7 +15,6 @@ const listSchema = new Schema({
     detail: { type: String, required: true },
   },
   password: { type: String, required: true, select: false },
-  is_temp_password: { type: Boolean, default: false, select: false },
   allow_remote: { type: Boolean, default: false, required: true },
   skills: { type: [String], default: [] },
   title: { type: String, required: true },

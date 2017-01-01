@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const requestSchema = new Schema({
+  is_approved: { type: Boolean, default: false },
+  list_id: { type: String, default: '' },
   additional_note: { type: String },
   request_promote: { type: Boolean, default: false },
   created_at: { type: Date, default: Date.now },
