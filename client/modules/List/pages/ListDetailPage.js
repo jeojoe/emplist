@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { WithContext as ReactTags } from 'react-tag-input';
 import callApi from '../../../util/apiCaller';
 
@@ -21,7 +22,8 @@ class ListDetailPage extends Component {
   componentDidMount() {
     const id = this.props.params.id;
     const { pathname } = this.props.location;
-    if (pathname.indexOf('/admin/request/') < 0) {
+    const isAdmin = pathname.indexOf('/admin/request/') >= 0;
+    if (!isAdmin) {
       callApi(`/list/${id}`, 'get').then((res, err) => {
         if (err) {
           this.setState({ err });
@@ -115,15 +117,23 @@ class ListDetailPage extends Component {
 
   render() {
     const { list, err } = this.state;
-    const { location: { pathname } } = this.props;
+    if (!list) {
+      return (
+        <div className="container">
+          <p>{err || 'Loading...'}</p>
+        </div>
+      );
+    }
 
+    const { location: { pathname } } = this.props;
     const isAdmin = pathname.indexOf('/admin/request/') >= 0;
     return (
       <div className="container">
-        {list && isAdmin ?
-          <AdminHeader list={list} list_id={list.list_id} /> : ''
+        {isAdmin ?
+          <AdminHeader list={list} list_id={list._id} /> : ''
         }
-        {list ? this.renderList(list) : <p>{err || 'Loading...'}</p>}
+        {this.renderList(list)}
+        <Link to={`/list/${list._id}/edit`}>Edit</Link>
       </div>
     );
   }

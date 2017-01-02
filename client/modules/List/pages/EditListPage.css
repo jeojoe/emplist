@@ -1,0 +1,113 @@
+.exp-dropdown {
+  min-width: 140px;
+  margin-right: 20px;
+}
+
+.row {
+  max-width: 850px;
+  margin: 0 0 10px;
+  &.emailRow {
+    max-width: 300px;
+  }
+}
+
+.rowFull {
+  margin: 0 0 10px;
+}
+
+.label {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  letter-spacing: 0.1px;
+}
+
+.sub-label {
+  margin: -10px 0 6px;
+  font-size: 11px;
+  color: #999;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.num-input {
+  margin: 0 10px;
+  width: 70px;
+}
+
+.salary-input {
+  margin: 0 10px 10px;
+  width: 120px;
+  &.fix {
+    margin-left: 0;
+  }
+}
+
+.how-to-apply {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.country {
+  display: inline-block;
+  vertical-align: top;
+  width: 100px;
+}
+
+.city {
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  p {
+    margin: 0
+  }
+  .sub-label {
+    margin-bottom: 15px;
+  }
+}
+
+.submitButton {
+  margin-bottom: 20px;
+}
+
+.coc {
+  margin-bottom: 70px;
+}
+
+.logoImageInput {
+  width: 215px;
+  vertical-align: middle;
+}
+
+.logoPreview {
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+  margin-bottom: 14px;
+}
+
+.logoPreviewBlank {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #ddd;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 36px;
+  margin-bottom: 14px;
+  color: #999;
+  cursor: default;
+}
+
+.inputAlert {
+  border-color: red !important;
+}
+
+.requiredSign {
+  color: red;
+}
