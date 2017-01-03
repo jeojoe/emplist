@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import draftToHtml from 'draftjs-to-html';
-import { WithContext as ReactTags } from 'react-tag-input';
 import callApi from '../../../util/apiCaller';
 
 import AdminHeader from '../components/AdminHeader';
 import s from './ListDetailPage.css';
-import sTag from '../../Request/components/SkillTagsInput.css';
+import sSkill from '../components/ListItem.css';
 
 // import HeaderText from '../components/HeaderText';
 
@@ -64,20 +63,10 @@ class ListDetailPage extends Component {
       how_to_apply,
     } = list;
 
-    const Tags = (
-      <ReactTags
-        tags={skills.map((text, id) => {
-          return { id, text };
-        })}
-        readOnly={true}
-        classNames={{
-          tag: sTag.skill,
-        }}
-      />
-    );
+    const Tags = skills.map((skill, i) => <span className={sSkill.skill} key={i}>{skill}</span>);
 
     const Location = `${company_location.city}, ${company_location.city}`;
-    const Salary = `${salary.min} - ${salary.max} B`;
+    const Salary = salary.max === 9999999 ? 'Unspecified.' : `${salary.min} - ${salary.max} B`;
 
     return (
       <div>

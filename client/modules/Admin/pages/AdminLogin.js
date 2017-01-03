@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import callApi from '../../../util/apiCaller';
+import { setToken } from '../authToken.js';
 
 class AdminLogin extends Component {
   constructor(props) {
@@ -21,6 +22,14 @@ class AdminLogin extends Component {
         alert(res.msg);
         return;
       }
+      if (!res.token) {
+        alert('Oops, there is no token.');
+        return;
+      }
+
+      // set token for client
+      setToken(res.token);
+
       this.props.router.push('/admin/home');
     });
   }
