@@ -11,8 +11,11 @@ router.route('/requests/:list_request_id').get(ListRequestsController.getListReq
 // Check if request exists
 router.route('/requests/check/:list_request_id').get(ListRequestsController.checkListRequest);
 
-// Check if request exists
-router.route('/requests/approve/:list_request_id').put(ListRequestsController.approveListRequest);
+// Approve new List request
+router.route('/requests/approve/new/:list_request_id').put(ListRequestsController.approveNewListRequest);
+
+// Approve edit List request
+router.route('/requests/approve/edit/:list_request_id').put(ListRequestsController.approveEditListRequest);
 
 // Post Request
 router.route('/requests').post(ListRequestsController.insertListRequest);
