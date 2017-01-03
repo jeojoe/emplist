@@ -19,7 +19,7 @@ export function login(req, res) {
 
         // auth token
         const token = jwt.sign({ username }, config.jwtSecret, {
-          expiresIn: (24 * 60 * 60), // 24 hours
+          expiresIn: (1 * 60 * 60), // 1 hour
         });
         res.json({
           ok: true,

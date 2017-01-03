@@ -29,6 +29,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import Helmet from 'react-helmet';
+import cookie from 'react-cookie';
 
 // Import required modules
 import routes from '../client/routes';
@@ -120,6 +121,11 @@ const renderError = err => {
 
 // Server Side Rendering based on routes matched by React-router.
 app.use((req, res, next) => {
+
+  // ***Isomorphic cookie for admin-auth
+  // https://github.com/thereactivestack/react-cookie
+  cookie.setRawCookie(req.headers.cookie);
+
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
     if (err) {
       return res.status(500).end(renderError(err));

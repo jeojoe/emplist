@@ -1,10 +1,10 @@
+import cookie from 'react-cookie';
+
+// Use cookies to store JWT token
 export function getToken() {
-  // No localStorage, probably on server-side
-  if (typeof localStorage === 'undefined') { return null; }
-  return localStorage.token;
+  return cookie.load('token');
 }
 
 export function setToken(token) {
-  if (typeof localStorage === 'undefined') { return; }
-  localStorage.token = token;
+  cookie.save('token', token);
 }
