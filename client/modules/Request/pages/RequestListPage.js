@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
 import { EditorState, convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
 import AWS from 'aws-sdk';
 import cuid from 'cuid';
 
@@ -142,7 +141,7 @@ class RequestListPage extends Component {
 
     this.setState({ submitting: true });
     const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city, location_detail } = this.state;
-    const details = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    const details = convertToRaw(editorState.getCurrentContent());
 
     if (!title || !tags) {
       this.setState({ submitting: false });

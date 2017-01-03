@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
-import { EditorState, convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import { EditorState, convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 import AWS from 'aws-sdk';
 import cuid from 'cuid';
 
@@ -31,6 +30,7 @@ class EditListPage extends Component {
       editorState: EditorState.createEmpty(),
       how_to_apply: '',
       company_name: '',
+      company_id: '',
       logo_image_file: null,
       logo_preview_url: null,
       logo_resized_url: null,
@@ -50,11 +50,21 @@ class EditListPage extends Component {
       if (err) {
         alert(err);
       } else {
-        const { title, company_name, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image } = res.list;
+        console.log(res.list);
+        const { title, company_name, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = res.list;
+        const tags = skills.map((skill, i) => {
+          return { id: i + 1, text: skill };
+        });
 
+        const contentState = convertFromRaw(details);
+        // console.log(contentBlocks);
+        // const contentState = ContentState.createFromBlockArray(contentBlocks);
+        // console.log(contentState);
+        const editorState = EditorState.createWithContent(contentState);
+        console.log(editorState);
         this.setState({
           fetching: false,
-          title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, exp_condition: exp.condition, exp_between_min: exp.min, exp_between_max: exp.max, exp_more_than: exp.min, intern_check: exp.has_intern, tags: skills, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image,
+          title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, editorState, exp_condition: exp.condition, exp_between_min: exp.min, exp_between_max: exp.max, exp_more_than: exp.min, intern_check: exp.has_intern, tags, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image, company_id,
         });
       }
     });
@@ -92,9 +102,12 @@ class EditListPage extends Component {
   }
 
   uploadCompanyLogo = (callback) => {
-    const { logo_image_file, company_name } = this.state;
+    const { logo_image_file, company_name, logo_preview_url } = this.state;
 
-    if (!logo_image_file) { return; }
+    if (!logo_image_file) {
+      callback({ Location: logo_preview_url });
+      return;
+    }
 
     // Resize image
     const mainCanvas = document.createElement('canvas');
@@ -149,14 +162,14 @@ class EditListPage extends Component {
     });
   }
 
-  submitRequest = () => {
+  submitEdited = () => {
     // Resize image
     const { submitting } = this.state;
     if (submitting) return;
 
     this.setState({ submitting: true });
-    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city, location_detail } = this.state;
-    const details = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, company_id } = this.state;
+    const details = convertToRaw(editorState.getCurrentContent());
 
     if (!title || !tags) {
       this.setState({ submitting: false });
@@ -186,31 +199,24 @@ class EditListPage extends Component {
       this.setState({ submitting: false });
       alert('Please reinsert your company\'s logo.');
       return;
-    } else if (!email) {
-      this.setState({ submitting: false });
-      alert('Please specify your email.');
-      return;
-    } else if (!password || !password_confirm) {
-      this.setState({ submitting: false });
-      alert('Please specify your password or password confirmation.');
-      return;
     }
 
     // all passes, upload logo
-    const yes = confirm('Do you want to submit the request?');
+    const yes = confirm('Do you want to submit ?');
     if (!yes) {
       this.setState({ submitting: false });
       return;
     }
 
+    const { id } = this.props.params;
     const dis = this;
     this.uploadCompanyLogo((data) => {
       const image_url = data.Location;
       console.log(`company logo is at ${image_url}`);
 
-      callApi('/requests', 'post', {
-        list_request: {
-          title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, email, password, password_confirm, additional_note, details, country, city, location_detail,
+      callApi(`/lists/${id}`, 'put', {
+        list: {
+          id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, company_id,
         },
       }).then((res, err) => {
         dis.setState({ submitting: false });
@@ -218,7 +224,7 @@ class EditListPage extends Component {
           alert(`Something went wrong! : ${err}`);
           return;
         }
-        dis.props.router.push(`/request/done/${res.list_request_id}`);
+        dis.props.router.push(`/list/${id}`);
       });
     });
   }
@@ -236,7 +242,6 @@ class EditListPage extends Component {
 
     return (
       <div className="container">
-        <HeaderText />
         <div className={s.wrapper}>
           {/*
             Title
@@ -439,9 +444,9 @@ class EditListPage extends Component {
           <div>
             <button
               className={c('button-primary', s.submitButton)}
-              onClick={this.submitRequest}
+              onClick={this.submitEdited}
             >
-              {submitting ? 'Submitting..' : 'Submit list request'}
+              {submitting ? 'Submitting..' : 'Submit edited list'}
             </button>
             <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT LIST REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<Link to="/">Terms</Link>.
             </p>

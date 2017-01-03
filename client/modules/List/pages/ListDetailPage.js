@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import draftToHtml from 'draftjs-to-html';
 import { WithContext as ReactTags } from 'react-tag-input';
 import callApi from '../../../util/apiCaller';
 
@@ -104,7 +105,7 @@ class ListDetailPage extends Component {
         </div>
 
         <div>
-          <p>{details}</p>
+          <p>{draftToHtml(details)}</p>
         </div>
 
         <div>
