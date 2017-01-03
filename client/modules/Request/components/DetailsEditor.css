@@ -23,6 +23,21 @@
     position: fixed;
     z-index: 99;
   }
+  @media (min-width: 400px) {
+    &.fixed {
+      padding-left: 2.5%;
+    }
+  }
+  @media (min-width: 550px) {
+    &.fixed {
+      padding-left: 10%;
+    }
+  }
+  @media (min-width: 750px) {
+    &.fixed {
+      padding-left: 20%;
+    }
+  }
 }
 
 .wrapper {

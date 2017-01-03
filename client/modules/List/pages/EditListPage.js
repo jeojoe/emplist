@@ -50,18 +50,14 @@ class EditListPage extends Component {
       if (err) {
         alert(err);
       } else {
-        console.log(res.list);
         const { title, company_name, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = res.list;
         const tags = skills.map((skill, i) => {
           return { id: i + 1, text: skill };
         });
 
         const contentState = convertFromRaw(details);
-        // console.log(contentBlocks);
-        // const contentState = ContentState.createFromBlockArray(contentBlocks);
-        // console.log(contentState);
         const editorState = EditorState.createWithContent(contentState);
-        console.log(editorState);
+
         this.setState({
           fetching: false,
           title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, editorState, exp_condition: exp.condition, exp_between_min: exp.min, exp_between_max: exp.max, exp_more_than: exp.min, intern_check: exp.has_intern, tags, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image, company_id,
@@ -446,7 +442,7 @@ class EditListPage extends Component {
               className={c('button-primary', s.submitButton)}
               onClick={this.submitEdited}
             >
-              {submitting ? 'Submitting..' : 'Submit edited list'}
+              {submitting ? 'Submitting..' : 'Submit edit request'}
             </button>
             <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT LIST REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<Link to="/">Terms</Link>.
             </p>
