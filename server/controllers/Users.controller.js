@@ -1,4 +1,6 @@
 import Users from '../models/Users';
+import jwt from 'jsonwebtoken';
+import config from '../../secret_config.json';
 
 export function login(req, res) {
   const { username, password } = req.body;
@@ -14,9 +16,15 @@ export function login(req, res) {
           msg: 'what? calm down mannn.',
         });
       } else {
+
+        // auth token
+        const token = jwt.sign({ username }, config.jwtSecret, {
+          expiresIn: (24 * 60 * 60), // 24 hours
+        });
         res.json({
           ok: true,
           msg: 'logged in yo',
+          token,
         });
       }
     });

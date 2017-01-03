@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './modules/App/App';
+import { getToken } from './modules/Admin/authToken';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -24,6 +25,13 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Admin/pages/AdminLogin');
   require('./modules/Admin/pages/AdminHome');
   require('./modules/App/pages/Page404');
+}
+
+function requireAuth(nextState, replaceState) {
+  const token = getToken();
+  if (!token) {
+    replaceState({ nextPathname: nextState.location.pathname }, '/');
+  }
 }
 
 // react-router setup with code-splitting
@@ -84,6 +92,7 @@ export default (
           cb(null, require('./modules/Admin/pages/AdminHome').default);
         });
       }}
+      onEnter={requireAuth}
     />
     <Route
       path="/admin/request/:id"
@@ -92,6 +101,7 @@ export default (
           cb(null, require('./modules/List/pages/ListDetailPage').default);
         });
       }}
+      onEnter={requireAuth}
     />
     <Route
       path="*"

@@ -63,8 +63,13 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 app.use('/api', listsRoutes);
-app.use('/api', listRequestsRoutes);
 app.use('/api', UsersRoutes);
+
+// *We use middleware for auth in 'listRequestsRoutes' router, after this line,
+// all APIs are validated for a token.
+// The order of middleware(router.use(...)) is important*.
+app.use('/api', listRequestsRoutes);
+
 
 /* SSR Begins here */
 

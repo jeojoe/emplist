@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AdminListFilter from '../components/AdminListFilter';
 import ListFeedsWrapper from '../../List/components/ListFeedsWrapper';
 import callApi from '../../../util/apiCaller';
+import { getToken } from '../authToken';
 
 class AdminHome extends Component {
   constructor(props) {
@@ -16,9 +17,13 @@ class AdminHome extends Component {
   // changeFilter = (filter) => {
   //   this.setState({ filter });
   // }
-
-  componentWillMount() {
-    callApi('/requests').then((res, err) => {
+  componentDidMount() {
+    const token = getToken();
+    if (!token) {
+      alert('No token.');
+      return;
+    }
+    callApi('/requests', 'get', { token }).then((res, err) => {
       if (err) {
         alert(err);
         return;
