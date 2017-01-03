@@ -95,20 +95,27 @@ function insertDummyData() {
 }
 
 export default function () {
-  Lists.count().exec((err, count) => {
-    // 23 is the correct dummy data
-    if (count >= 23) {
-      console.log('Dummy data: OK.');
-      return;
-    }
-
-    console.log('Dummy data: NOT OK, remove and reinsert all...');
-
-    // not 23? re-dump
-    // remove all data first
-    Lists.remove({}).then(() => {
-      console.log('  --> removed all lists');
-      insertDummyData();
-    });
+  // Remove List that doesn't connect with its company
+  console.log('  --> always removed all lists until Aunnnn change dummy data to use creating list api for connection with its company in Companies collection.');
+  Lists.remove({ company_id: '' }).then(() => {
+    console.log('  ===');
+    console.log('  --> removed.');
   });
+  // Lists.count().exec((err, count) => {
+  //   // 23 is the correct dummy data
+  //   if (count >= 23) {
+  //     console.log('Dummy data: OK.');
+  //     return;
+  //   }
+
+  //   console.log('Dummy data: NOT OK, remove and reinsert all...');
+
+  //   // not 23? re-dump
+  //   // remove all data first
+  //   Lists.remove({}).then(() => {
+  //     console.log('  --> removed all lists');
+  //     insertDummyData();
+  //   });
+  // });
+
 }

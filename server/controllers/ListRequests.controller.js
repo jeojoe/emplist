@@ -214,9 +214,6 @@ export function approveListRequest(req, res) {
 
 /**
  * Request promote
- * @param req
- * @param res
- * @returns void
  */
 export function requestPromote(req, res) {
   const { list_request_id } = req.params;

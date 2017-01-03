@@ -5,7 +5,7 @@ class AdminHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list_id_state: null,
+      list_id_after_approve: null,
       password: '',
     };
   }
@@ -13,28 +13,37 @@ class AdminHeader extends Component {
   approve = () => {
     const { list } = this.props;
     const { password } = this.state;
-    callApi(`/requests/approve/${list._id}`, 'put', { password })
+    callApi(`/requests/approve/new/${list._id}`, 'put', { password })
     .then((res, err) => {
       console.log(res, err);
       if (err) {
         alert(err.msg);
       } else {
-        this.setState({ list_id: res.data.list_id });
+        this.setState({ list_id_after_approve: res.data.list_id });
       }
     });
   }
 
   render() {
-    const { list_id } = this.props;
+    const { list_id_already_approve } = this.props;
+    const { list_id_after_approve } = this.state;
     return (
       <div>
-        {!list_id && !this.state.list_id &&
-          <div>
-            <input type="password" onChange={(e) => this.setState({ password: e.target.value })} />
-            <button className="button-primary" onClick={this.approve}>Approve</button>
-          </div>
+        {// Show approve button if not approved
+          !list_id_already_approve && !list_id_after_approve &&
+            <div>
+              <input
+                type="password"
+                onChange={(e) => this.setState({ password: e.target.value })}
+                placeholder="You shall not pass !!!"
+              />
+              <button className="button-primary" onClick={this.approve}>Approve</button>
+            </div>
         }
-        <p>List id is {list_id || this.state.list_id}</p>
+        {// Show list id if approved
+          (list_id_already_approve || list_id_after_approve) &&
+            <p>List id is {list_id_already_approve || list_id_after_approve}</p>
+        }
       </div>
     );
   }

@@ -130,10 +130,10 @@ class ListDetailPage extends Component {
     return (
       <div className="container">
         {isAdmin ?
-          <AdminHeader list={list} list_id={list._id} /> : ''
+          <AdminHeader list={list} list_id_already_approve={list.list_id} /> : ''
         }
         {this.renderList(list)}
-        <Link to={`/list/${list._id}/edit`}>Edit</Link>
+        {!isAdmin && <Link to={`/list/${list._id}/edit`}>Edit</Link>}
       </div>
     );
   }
