@@ -3,9 +3,11 @@ import { Link } from 'react-router';
 import draftToHtml from 'draftjs-to-html';
 import callApi from '../../../util/apiCaller';
 
-import AdminHeader from '../components/AdminHeader';
+import AdminHeader from '../../Admin/components/AdminHeader';
 import s from './ListDetailPage.css';
 import sSkill from '../components/ListItem.css';
+
+import { getToken } from '../../Admin/authToken';
 
 // import HeaderText from '../components/HeaderText';
 
@@ -37,7 +39,12 @@ class ListDetailPage extends Component {
         }
       });
     } else {
-      callApi(`/requests/${id}`, 'get').then((res, err) => {
+      const token = getToken();
+      if (!token) {
+        alert('No token.');
+        return;
+      }
+      callApi(`/requests/${id}?token=${token}`, 'get').then((res, err) => {
         if (err) {
           this.setState({ err });
         } else {

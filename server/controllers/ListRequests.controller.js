@@ -73,10 +73,8 @@ export function insertListRequest(req, res) {
     let company_id = '';
     newCompany.save((err1, saved1) => {
       if (err1) {
-        console.log('err1');
         res.status(500).send(err1);
       } else {
-        console.log('pass err1');
         company_id = saved1._id;
 
         let min = 0;
@@ -115,10 +113,8 @@ export function insertListRequest(req, res) {
 
         newListRequest.save((err2, saved2) => {
           if (err2) {
-            console.log(err2);
             res.status(500).send(err2);
           } else {
-            console.log('pass err2');
             res.json({ list_request_id: saved2._id });
           }
         });

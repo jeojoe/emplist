@@ -22,7 +22,59 @@ function insertDummyData() {
     exp_between_max: 4,
     salary_min: 50000,
     salary_max: 130000,
-    details: 'iCONEXT (อ่านว่า ไอ-โค-เน็กซ์) เป็นซอฟแวร์เฮ้าส์ลูกครึ่งไทยญี่ปุ่น ให้บริการพัฒนาและดูแลซอฟแวร์แก่องค์กรสัญชาติญี่ปุ่น ในกลุ่มอุตสาหกรรมการผลิตรถยนต์และการเงิน เราได้รับความเชื่อมั่นอย่างต่อเนื่องจากบริษัทชั้นนำของญี่ปุ่นหลายแห่งให้ดูแล งานทางด้านพัฒนาซอฟต์แวร์ให้ เรากำลังมองหาเพื่อนร่วมงานที่มีเวลาใช้คอมพิวเตอร์วันละ 8 ชั่วโมง เชี่ยวชาญทางด้านพัฒนา ซอฟแวร์ยิ่งหน้าตาดี นั่นแหละใช่เลย',
+    details: {
+      blocks: [
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: 'w',
+          key: '4u0d1',
+        },
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: '',
+          key: 'c0sj1',
+        },
+        {
+          entityRanges: [
+            {
+              key: 0,
+              length: 1,
+              offset: 0,
+            },
+          ],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'atomic',
+          text: ' ',
+          key: 'r7qc',
+        },
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: '',
+          key: 'c9e2e',
+        },
+      ],
+      entityMap: {
+        0: {
+          data: {
+            width: '100%',
+            height: 'auto',
+            src: 'http://d3vi0b2svic5aq.cloudfront.net/wp_content/uploads/2016/04/08081807/header.jpg',
+          },
+          mutability: 'MUTABLE',
+          type: 'IMAGE',
+        },
+      },
+    },
     how_to_apply: 'อีเมล์มาที่ recruitment@iconext.co.th บอกเราว่า คุณอยากร่วมงานกับเรา',
   };
 
@@ -40,7 +92,59 @@ function insertDummyData() {
     exp_condition: 'no',
     salary_min: 35000,
     salary_max: 130000,
-    details: 'iCONEXT (อ่านว่า ไอ-โค-เน็กซ์) เป็นซอฟแวร์เฮ้าส์ลูกครึ่งไทยญี่ปุ่น ให้บริการพัฒนาและดูแลซอฟแวร์แก่องค์กรสัญชาติญี่ปุ่น ในกลุ่มอุตสาหกรรมการผลิตรถยนต์และการเงิน เราได้รับความเชื่อมั่นอย่างต่อเนื่องจากบริษัทชั้นนำของญี่ปุ่นหลายแห่งให้ดูแล งานทางด้านพัฒนาซอฟต์แวร์ให้ เรากำลังมองหาเพื่อนร่วมงานที่มีเวลาใช้คอมพิวเตอร์วันละ 8 ชั่วโมง เชี่ยวชาญทางด้านพัฒนา ซอฟแวร์ยิ่งหน้าตาดี นั่นแหละใช่เลย',
+    details: {
+      blocks: [
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: 'w',
+          key: '4u0d1',
+        },
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: '',
+          key: 'c0sj1',
+        },
+        {
+          entityRanges: [
+            {
+              key: 0,
+              length: 1,
+              offset: 0,
+            },
+          ],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'atomic',
+          text: ' ',
+          key: 'r7qc',
+        },
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: '',
+          key: 'c9e2e',
+        },
+      ],
+      entityMap: {
+        0: {
+          data: {
+            width: '100%',
+            height: 'auto',
+            src: 'http://d3vi0b2svic5aq.cloudfront.net/wp_content/uploads/2016/04/08081807/header.jpg',
+          },
+          mutability: 'MUTABLE',
+          type: 'IMAGE',
+        },
+      },
+    },
     how_to_apply: 'อีเมล์มาที่ recruitment@iconext.co.th บอกเราว่า คุณอยากร่วมงานกับเรา',
   };
 
@@ -59,7 +163,59 @@ function insertDummyData() {
     intern_check: true,
     salary_min: 25000,
     salary_max: 80000,
-    details: 'iCONEXT (อ่านว่า ไอ-โค-เน็กซ์) เป็นซอฟแวร์เฮ้าส์ลูกครึ่งไทยญี่ปุ่น ให้บริการพัฒนาและดูแลซอฟแวร์แก่องค์กรสัญชาติญี่ปุ่น ในกลุ่มอุตสาหกรรมการผลิตรถยนต์และการเงิน เราได้รับความเชื่อมั่นอย่างต่อเนื่องจากบริษัทชั้นนำของญี่ปุ่นหลายแห่งให้ดูแล งานทางด้านพัฒนาซอฟต์แวร์ให้ เรากำลังมองหาเพื่อนร่วมงานที่มีเวลาใช้คอมพิวเตอร์วันละ 8 ชั่วโมง เชี่ยวชาญทางด้านพัฒนา ซอฟแวร์ยิ่งหน้าตาดี นั่นแหละใช่เลย',
+    details: {
+      blocks: [
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: 'w',
+          key: '4u0d1',
+        },
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: '',
+          key: 'c0sj1',
+        },
+        {
+          entityRanges: [
+            {
+              key: 0,
+              length: 1,
+              offset: 0,
+            },
+          ],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'atomic',
+          text: ' ',
+          key: 'r7qc',
+        },
+        {
+          entityRanges: [],
+          inlineStyleRanges: [],
+          depth: 0,
+          type: 'unstyled',
+          text: '',
+          key: 'c9e2e',
+        },
+      ],
+      entityMap: {
+        0: {
+          data: {
+            width: '100%',
+            height: 'auto',
+            src: 'http://d3vi0b2svic5aq.cloudfront.net/wp_content/uploads/2016/04/08081807/header.jpg',
+          },
+          mutability: 'MUTABLE',
+          type: 'IMAGE',
+        },
+      },
+    },
     how_to_apply: 'อีเมล์มาที่ recruitment@iconext.co.th บอกเราว่า คุณอยากร่วมงานกับเรา',
   };
 
