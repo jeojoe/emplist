@@ -22,7 +22,6 @@ router.use((req, res, next) => {
           ok: false,
           msg: err,
         });
-        throw err;
       } else {
         req.decoded = decoded;
         next();
