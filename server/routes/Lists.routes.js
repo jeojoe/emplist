@@ -10,6 +10,6 @@ router.route('/lists').get(ListsController.getLists);
 router.route('/list/:id').get(ListsController.getListDetail);
 
 // Update list (makes new List request)
-router.route('/lists/:id').post(ListsController.sendEditRequest);
+router.route('/lists/:id').post(ListsController.sendEditListRequest);
 
 export default router;
