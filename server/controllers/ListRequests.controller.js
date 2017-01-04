@@ -201,7 +201,7 @@ export function approveNewListRequest(req, res) {
                 { _id: list_request_id },
                 {
                   $set: {
-                    is_approved: false,
+                    is_approved: true,
                     list_id: saved._id,
                   },
                 }
@@ -218,6 +218,8 @@ export function approveNewListRequest(req, res) {
  * Approve editing List request
  */
 export function approveEditListRequest(req, res) {
+  // get list request
+  // update companies
   const { list_request_id } = req.params;
   const { password } = req.body;
   if (password !== tempPassword) {
@@ -238,36 +240,66 @@ export function approveEditListRequest(req, res) {
             msg: 'Not found',
           });
         } else {
-          // Annoying js delete bug made me do this..
-          const {
-            company_id, company_image, company_email, company_name, company_location, password: listPassword, allow_remote, skills, title, exp, salary, details, how_to_apply,
-          } = list_request;
-          const saveList = new Lists({
-            company_id, company_image, company_email, company_name, company_location, password: listPassword, allow_remote, skills, title, exp, salary, details, how_to_apply,
-          });
-          saveList.save((err1, saved) => {
-            if (err1) {
-              res.status(500).send({
-                ok: false,
-                msg: err1,
-              });
-            } else {
-              res.json({
-                ok: true,
-                msg: 'Done approve request !',
-                data: { list_id: saved._id },
-              });
-              ListRequests.update(
-                { _id: list_request_id },
-                {
-                  $set: {
-                    is_approved: false,
-                    list_id: saved._id,
+          const { id, company_name, title, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = list_request;
+
+          Companies.update(
+            { _id: company_id },
+            {
+              $set: {
+                company_image, company_name,
+                allow_remote,
+                'company_location.country': company_location.country,
+                'company_location.city': company_location.city,
+                'company_location.detail': company_location.detail,
+                updated_at: Date.now,
+              },
+            },
+            (err1) => {
+              if (err1) res.status(500).send(err1);
+              else {
+                Lists.update(
+                  { _id: id },
+                  {
+                    $set: {
+                      company_name, title, details, how_to_apply,
+                      'salary.min': salary.min,
+                      'salary.max': salary.max,
+                      'exp.condition': exp.condition,
+                      'exp.has_intern': exp.has_intern,
+                      'exp.min': exp.min,
+                      'exp.max': exp.max,
+                      skills,
+                      allow_remote: exp.allow_remote,
+                      company_image,
+                      'company_location.country': company_location.country,
+                      'company_location.city': company_location.city,
+                      'company_location.detail': company_location.detail,
+                      updated_at: Date.now,
+                    },
                   },
-                }
-              );
+                  (err2) => {
+                    if (err2) res.status(500).end(err2);
+                    else {
+                      res.json({
+                        ok: true,
+                        msg: 'Done approve request !',
+                        data: { list_id: id },
+                      });
+                      ListRequests.update(
+                        { _id: list_request_id },
+                        {
+                          $set: {
+                            is_approved: true,
+                            list_id: id,
+                          },
+                        }
+                      );
+                    }
+                  }
+                );
+              }
             }
-          });
+          );
         }
       }
     );
