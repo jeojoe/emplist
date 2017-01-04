@@ -81,6 +81,32 @@ function insertDummyData() {
 
   Promise.all(pendingRequests).then(() => {
     console.log('All requests are sent.');
+    callApi('/users/login', 'post', { username: 'dogofwisdom', password: 'Patakapa3738'}).then((res, err) => {
+      if (err) {
+        console.log('Dummy admin login error', err);
+      } else {
+        const token = res.token;
+        ListRequests.count().exec((err2, count) => {
+          if (err2) {
+            console.log('Count error', err2);
+            return;
+          }
+          const randoms = _.range(10).map(() => Math.floor(Math.random() * count));
+          const randomListRequests = randoms.map(rand => ListRequests.findOne().skip(rand));
+          Promise.all(randomListRequests).then((res) => {
+            const uniqRes = _.uniqBy(res, '_id');
+            console.log(`Will randomly approve ${uniqRes.length} list requests...`);
+            const allPendingApprovals = uniqRes.map(obj => {
+              return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: 'emplistadmin', token });
+            });
+            Promise.all(allPendingApprovals).then((res) => {
+              console.log(`result = ${JSON.stringify(res[0])}`);
+              console.log('Did randomly approve 10 list requests.');
+            });
+          });
+        });
+      }
+    });
   });
 
 
@@ -101,10 +127,10 @@ export default function () {
   //   console.log('  --> removed.');
   // });
   ListRequests.count().exec((err, count) => {
-    if (count >= 23) {
-      console.log('Dummy data: OK.');
-      return;
-    }
+    // if (count >= 23) {
+    //   console.log('Dummy data: OK.');
+    //   return;
+    // }
 
     // remove all requests & Company and reinsert with API
     Promise.all([ListRequests.remove({}), Companies.remove({}), Lists.remove({})]).then(() => {
