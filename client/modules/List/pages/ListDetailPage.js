@@ -101,7 +101,7 @@ class ListDetailPage extends Component {
         </div>
 
         <div>
-          <p>{draftToHtml(details)}</p>
+          <div dangerouslySetInnerHTML={{ __html: draftToHtml(details) }} />
         </div>
 
         <div>
