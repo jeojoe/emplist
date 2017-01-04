@@ -23,7 +23,7 @@ class AdminHome extends Component {
       alert('No token.');
       return;
     }
-    callApi('/requests', 'get', { token }).then((res, err) => {
+    callApi(`/requests?token=${token}`, 'get').then((res, err) => {
       if (err) {
         alert(err);
         return;

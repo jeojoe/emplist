@@ -4,8 +4,15 @@ import config from '../../secret_config.json';
 import * as ListRequestsController from '../controllers/ListRequests.controller';
 const router = new Router();
 
+
+// Post Request
+router.route('/requests').post(ListRequestsController.insertListRequest);
+
+// Make promote request
+router.route('/requests/promote/:list_request_id').get(ListRequestsController.requestPromote);
+
 // Authenticated-API Middleware
-// All these APIs expect to receive 'token' either from body or query, which is retrieved upon admin's login.
+// All APIs below this line are expected to receive 'token' either from body or query, which is retrieved upon admin's login.
 router.use((req, res, next) => {
   const token = req.body.token || req.query.token;
   if (token) {
@@ -43,11 +50,5 @@ router.route('/requests/approve/new/:list_request_id').put(ListRequestsControlle
 
 // Approve edit List request
 router.route('/requests/approve/edit/:list_request_id').put(ListRequestsController.approveEditListRequest);
-
-// Post Request
-router.route('/requests').post(ListRequestsController.insertListRequest);
-
-// Make promote request
-router.route('/requests/promote/:list_request_id').get(ListRequestsController.requestPromote);
 
 export default router;
