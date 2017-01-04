@@ -99,7 +99,6 @@ class EditListPage extends Component {
 
   uploadCompanyLogo = (callback) => {
     const { logo_image_file, company_name, logo_preview_url } = this.state;
-
     if (!logo_image_file) {
       callback({ Location: logo_preview_url });
       return;
@@ -190,10 +189,6 @@ class EditListPage extends Component {
     } else if (!company_name || !location_detail) {
       this.setState({ submitting: false });
       alert('Please specify your company\'s name or location detail.');
-      return;
-    } else if (!logo_preview_url || !logo_image_file) {
-      this.setState({ submitting: false });
-      alert('Please reinsert your company\'s logo.');
       return;
     }
 

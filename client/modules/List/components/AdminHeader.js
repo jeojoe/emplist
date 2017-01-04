@@ -13,24 +13,38 @@ class AdminHeader extends Component {
   approve = () => {
     const { list } = this.props;
     const { password } = this.state;
-    callApi(`/requests/approve/new/${list._id}`, 'put', { password })
-    .then((res, err) => {
-      console.log(res, err);
-      if (err) {
-        alert(err.msg);
-      } else {
-        this.setState({ list_id_after_approve: res.data.list_id });
-      }
-    });
+    if (list.request_type === 'new') {
+      callApi(`/requests/approve/new/${list._id}`, 'put', { password })
+      .then((res, err) => {
+        if (err) {
+          alert(err.msg);
+        } else {
+          this.setState({ list_id_after_approve: res.data.list_id });
+          alert('Done yo !');
+        }
+      });
+    } else if (list.request_type === 'edit') {
+      callApi(`/requests/approve/edit/${list._id}`, 'put', { password })
+      .then((res, err) => {
+        if (err) {
+          alert(err.msg);
+        } else {
+          this.setState({ list_id_after_approve: res.data.list_id });
+          alert('Done yo !');
+        }
+      });
+    } else {
+      alert('Error : unknown request type !!');
+    }
   }
 
   render() {
-    const { list_id_already_approve } = this.props;
+    const { list } = this.props;
     const { list_id_after_approve } = this.state;
     return (
       <div>
         {// Show approve button if not approved
-          !list_id_already_approve && !list_id_after_approve &&
+          !list.is_approved && !list_id_after_approve &&
             <div>
               <input
                 type="password"
@@ -41,8 +55,8 @@ class AdminHeader extends Component {
             </div>
         }
         {// Show list id if approved
-          (list_id_already_approve || list_id_after_approve) &&
-            <p>List id is {list_id_already_approve || list_id_after_approve}</p>
+          (list.is_approved || list_id_after_approve) &&
+            <p>List id is {list.list_id || list_id_after_approve}</p>
         }
       </div>
     );
