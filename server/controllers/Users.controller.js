@@ -8,7 +8,9 @@ export function login(req, res) {
     res.status(403).end();
   } else {
     Users.findOne({ username }, (err, user) => {
-      if (err) res.status(500).send(err);
+      if (err) res.status(500).send({
+        msg: err,
+      });
 
       if (!user || password !== user.password) {
         res.json({

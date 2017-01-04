@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import s from './ListItem.css';
 import moment from 'moment';
 
-const List = ({ list: { _id, title, company_image, company_name, company_location, allow_remote, exp, salary, created_at, skills }, admin }) => (
+const List = ({ list: { _id, title, company_image, company_name, company_location, allow_remote, exp, salary, created_at, skills, request_type }, admin }) => (
   <div className={s.item}>
     <div className={s['image-wrapper']}>
       <Link to={admin ? `/admin/request/${_id}` : `/list/${_id}`} params={{ id: _id }} className={s.link}>
@@ -52,6 +52,9 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
         {skills.map((skill, i) =>
           <span className={s.skill} key={i}>{skill}</span>)}
       </div>
+      {admin &&
+        <div>{request_type}</div>
+      }
     </div>
   </div>
 );
