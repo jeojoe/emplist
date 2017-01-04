@@ -256,7 +256,6 @@ function insertDummyData() {
               return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: 'emplistadmin', token });
             });
             Promise.all(allPendingApprovals).then((res) => {
-              console.log(`result = ${JSON.stringify(res[0])}`);
               console.log('Did randomly approve 10 list requests.');
             });
           });
