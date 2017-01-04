@@ -52,9 +52,6 @@ mongoose.connect(serverConfig.mongoURL,
       console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
       throw error;
     }
-
-    // feed some dummy data in DB.
-    dummyData();
   }
 );
 
@@ -169,6 +166,8 @@ app.use((req, res, next) => {
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {
+    // feed some dummy data in DB.
+    dummyData();
     console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
   }
 });
