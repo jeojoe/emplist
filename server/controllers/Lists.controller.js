@@ -1,4 +1,5 @@
 import Lists from '../models/Lists';
+import ListRequests from '../models/ListRequests';
 import Companies from '../models/Companies';
 // import Companies from '../models/Companies';
 // import cuid from 'cuid';
@@ -124,73 +125,51 @@ export function updateList(req, res) {
 /**
  * Edit one list (pagination)
  */
-export function updateeeList(req, res) {
-  const { id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, details, country, city, location_detail, company_id } = req.body.list;
+export function sendEditListRequest(req, res) {
+  const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, additional_note, details, country, city, location_detail } = req.body.list_request;
 
   if (!title || !tags || !company_name || !country || !city || !location_detail) {
     res.status(403).end();
-  }
-
-  Companies.update(
-    { _id: company_id },
-    {
-      $set: {
-        company_image, company_name,
-        allow_remote: remote_check,
-        'company_location.country': country,
-        'company_location.city': city,
-        'company_location.detail': location_detail,
-        updated_at: Date.now,
-      },
-    },
-    (err) => {
-      if (err) res.status(500).send(err);
-      else {
-        let min = 0;
-        let max = 0;
-        if (exp_condition === 'between') {
-          min = exp_between_min;
-          max = exp_between_max;
-        } else if (exp_condition === 'more_than') {
-          min = exp_more_than;
-          max = 99;
-        } else {
-          min = 0;
-          max = 99;
-        }
-
-        const skills = tags.map((skill) => skill.text);
-        Lists.update(
-          { _id: id },
-          {
-            $set: {
-              company_name, title, details, how_to_apply,
-              'salary.min': salary_min || 0,
-              'salary.max': salary_max || 9999999,
-              'exp.condition': exp_condition,
-              'exp.has_intern': intern_check,
-              'exp.min': min,
-              'exp.max': max,
-              skills,
-              allow_remote: remote_check,
-              company_image,
-              'company_location.country': country,
-              'company_location.city': city,
-              'company_location.detail': location_detail,
-              updated_at: Date.now,
-            },
-          },
-          (err1) => {
-            if (err1) res.status(500).end(err);
-            else {
-              res.json({
-                ok: true,
-                msg: 'Done editing !',
-              });
-            }
-          }
-        );
-      }
+  } else {
+    let min = 0;
+    let max = 0;
+    if (exp_condition === 'between') {
+      min = exp_between_min;
+      max = exp_between_max;
+    } else if (exp_condition === 'more_than') {
+      min = exp_more_than;
+      max = 99;
+    } else {
+      min = 0;
+      max = 99;
     }
-  );
+
+    const skills = tags.map((skill) => skill.text);
+
+    const newListRequest = new ListRequests({
+      list_id: _id,
+      request_type: 'edit',
+      company_image, company_name,
+      company_location: { country, city, detail: location_detail },
+      allow_remote: remote_check,
+      skills,
+      title,
+      exp: { condition: exp_condition, min, max, has_intern: intern_check },
+      salary: {
+        min: salary_min || 0,
+        max: salary_max || 9999999,
+      },
+      details,
+      how_to_apply,
+      additional_note,
+    });
+
+    newListRequest.save((err, saved) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json({ list_request_id: saved._id });
+      }
+    });
+  }
 }

@@ -164,7 +164,7 @@ class EditListPage extends Component {
     if (submitting) return;
 
     this.setState({ submitting: true });
-    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, company_id } = this.state;
+    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, additional_note, company_id } = this.state;
     const details = convertToRaw(editorState.getCurrentContent());
 
     if (!title || !tags) {
@@ -210,9 +210,9 @@ class EditListPage extends Component {
       const image_url = data.Location;
       console.log(`company logo is at ${image_url}`);
 
-      callApi(`/lists/${id}`, 'put', {
-        list: {
-          id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, company_id,
+      callApi(`/lists/${id}`, 'post', {
+        list_request: {
+          id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, additional_note, company_id,
         },
       }).then((res, err) => {
         dis.setState({ submitting: false });
