@@ -3,6 +3,7 @@ import callApi from '../client/util/apiCaller';
 import ListRequests from './models/ListRequests';
 import Lists from './models/Lists';
 import Companies from './models/Companies';
+import { tempPassword } from '../secret_config.json';
 import Promise from 'bluebird';
 
 function insertDummyData() {
@@ -237,7 +238,7 @@ function insertDummyData() {
 
   Promise.all(pendingRequests).then(() => {
     console.log('All requests are sent.');
-    callApi('/users/login', 'post', { username: 'dogofwisdom', password: 'Patakapa3738'}).then((res, err) => {
+    callApi('/users/login', 'post', { username: 'dogofwisdom', password: tempPassword }).then((res, err) => {
       if (err) {
         console.log('Dummy admin login error', err);
       } else {
@@ -253,7 +254,7 @@ function insertDummyData() {
             const uniqRes = _.uniqBy(res, '_id');
             console.log(`Will randomly approve ${uniqRes.length} list requests...`);
             const allPendingApprovals = uniqRes.map(obj => {
-              return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: 'emplistadmin', token });
+              return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: tempPassword, token });
             });
             Promise.all(allPendingApprovals).then((res) => {
               console.log('Did randomly approve 10 list requests.');
