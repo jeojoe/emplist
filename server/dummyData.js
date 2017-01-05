@@ -3,6 +3,7 @@ import callApi from '../client/util/apiCaller';
 import ListRequests from './models/ListRequests';
 import Lists from './models/Lists';
 import Companies from './models/Companies';
+import { tempPassword } from '../secret_config.json';
 import Promise from 'bluebird';
 import secretConfig from '../secret_config.json';
 
