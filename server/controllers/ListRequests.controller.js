@@ -2,6 +2,14 @@ import ListRequests from '../models/ListRequests';
 import Lists from '../models/Lists';
 import Companies from '../models/Companies';
 import { tempPassword } from '../../secret_config.json';
+import bcrypt from 'bcrypt';
+
+
+function bcryptPassword(password) {
+  return bcrypt.genSalt(10).then((result) => {
+    return bcrypt.hash(password, result, null);
+  });
+}
 
 /**
  * Get list request
@@ -61,64 +69,64 @@ export function insertListRequest(req, res) {
   if (!title || !tags || !company_name || !country || !city || !location_detail || !email || !password) {
     res.status(403).end();
   } else {
-    // Save company profile
-    const newCompany = new Companies({
-      company_image, company_name,
-      company_email: email,
-      company_location: { country, city, detail: location_detail },
-      allow_remote: remote_check,
-      password,
-    });
+    // Hash password
+    let HashedPassword = '';
 
-    let company_id = '';
-    newCompany.save((err1, saved1) => {
-      if (err1) {
-        res.status(500).send(err1);
+    bcryptPassword(password)
+    .then(hashedPassword => {
+      // Store for the next promise
+      HashedPassword = hashedPassword;
+      // 1. Insert company
+      return new Companies({
+        company_image, company_name,
+        company_email: email,
+        company_location: { country, city, detail: location_detail },
+        allow_remote: remote_check,
+        password: hashedPassword,
+      }).save();
+    })
+    .then((company) => {
+      const company_id = company._id;
+      let min = 0;
+      let max = 0;
+      if (exp_condition === 'between') {
+        min = exp_between_min;
+        max = exp_between_max;
+      } else if (exp_condition === 'more_than') {
+        min = exp_more_than;
+        max = 99;
       } else {
-        company_id = saved1._id;
-
-        let min = 0;
-        let max = 0;
-        if (exp_condition === 'between') {
-          min = exp_between_min;
-          max = exp_between_max;
-        } else if (exp_condition === 'more_than') {
-          min = exp_more_than;
-          max = 99;
-        } else {
-          min = 0;
-          max = 99;
-        }
-
-        const skills = tags.map((skill) => skill.text);
-
-        const newListRequest = new ListRequests({
-          request_type: 'new',
-          company_id, company_image, company_name,
-          company_email: email,
-          company_location: { country, city, detail: location_detail },
-          password,
-          allow_remote: remote_check,
-          skills,
-          title,
-          exp: { condition: exp_condition, min, max, has_intern: intern_check },
-          salary: {
-            min: salary_min || 0,
-            max: salary_max || 9999999,
-          },
-          details,
-          how_to_apply,
-          additional_note,
-        });
-
-        newListRequest.save((err2, saved2) => {
-          if (err2) {
-            res.status(500).send(err2);
-          } else {
-            res.json({ list_request_id: saved2._id });
-          }
-        });
+        min = 0;
+        max = 99;
       }
+      const skills = tags.map((tag) => tag.text);
+      // 2. Insert List Request
+      return new ListRequests({
+        request_type: 'new',
+        company_id, company_image, company_name,
+        company_email: email,
+        company_location: { country, city, detail: location_detail },
+        password: HashedPassword,
+        allow_remote: remote_check,
+        skills,
+        title,
+        exp: { condition: exp_condition, min, max, has_intern: intern_check },
+        salary: {
+          min: salary_min || 0,
+          max: salary_max || 9999999,
+        },
+        details,
+        how_to_apply,
+        additional_note,
+      }).save();
+    })
+    .then((list_request) => {
+      // 3.1 Success
+      res.json({ list_request_id: list_request._id });
+    })
+    .catch(err => {
+      // 3.2 Error
+      res.status(500).send(err);
     });
   }
 }

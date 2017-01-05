@@ -8,9 +8,11 @@ export function login(req, res) {
     res.status(403).end();
   } else {
     Users.findOne({ username }, (err, user) => {
-      if (err) res.status(500).send({
-        msg: err,
-      });
+      if (err) {
+        res.status(500).send({
+          msg: err,
+        });
+      }
 
       if (!user || password !== user.password) {
         res.json({
@@ -18,7 +20,6 @@ export function login(req, res) {
           msg: 'what? calm down mannn.',
         });
       } else {
-
         // auth token
         const token = jwt.sign({ username }, config.jwtSecret, {
           expiresIn: (1 * 60 * 60), // 1 hour

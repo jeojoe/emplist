@@ -4,6 +4,7 @@ import ListRequests from './models/ListRequests';
 import Lists from './models/Lists';
 import Companies from './models/Companies';
 import Promise from 'bluebird';
+import secretConfig from '../secret_config.json';
 
 function insertDummyData() {
   const req1 = {
@@ -235,13 +236,20 @@ function insertDummyData() {
     return callApi('/requests', 'post', { list_request: data });
   });
 
-  Promise.all(pendingRequests).then(() => {
-    console.log('All requests are sent.');
-    callApi('/users/login', 'post', { username: 'dogofwisdom', password: 'Patakapa3738'}).then((res, err) => {
+  // Send dummy list requests
+  Promise
+  .all(pendingRequests)
+  .then(reqs => {
+    console.log('All requests are sent: total = ', reqs.length);
+
+    // Login first so we have token to approve listRequests
+    callApi('/users/login', 'post', { username: secretConfig.admin, password: secretConfig.tempPassword }).then((res, err) => {
       if (err) {
         console.log('Dummy admin login error', err);
       } else {
         const token = res.token;
+
+        // Count total listRequests
         ListRequests.count().exec((err2, count) => {
           if (err2) {
             console.log('Count error', err2);
@@ -249,19 +257,28 @@ function insertDummyData() {
           }
           const randoms = _.range(10).map(() => Math.floor(Math.random() * count));
           const randomListRequests = randoms.map(rand => ListRequests.findOne().skip(rand));
-          Promise.all(randomListRequests).then((res) => {
-            const uniqRes = _.uniqBy(res, '_id');
+
+          // Randomly approve listRequests
+          Promise.all(randomListRequests)
+          .then(resRandom => {
+            const uniqRes = _.uniqBy(resRandom, '_id');
             console.log(`Will randomly approve ${uniqRes.length} list requests...`);
             const allPendingApprovals = uniqRes.map(obj => {
-              return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: 'emplistadmin', token });
+              return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: secretConfig.tempPassword, token });
             });
-            Promise.all(allPendingApprovals).then((res) => {
-              console.log('Did randomly approve 10 list requests.');
-            });
+            return Promise.all(allPendingApprovals);
+          })
+          .then(resApproval => {
+            console.log(`Did randomly approve ${resApproval.length} list requests.`);
+          })
+          .catch(errApproval => {
+            console.log('Error while randomly approve: ', errApproval);
           });
         });
       }
     });
+  }).catch(err => {
+    console.log('Error while sending dummy requests', err);
   });
 
 
