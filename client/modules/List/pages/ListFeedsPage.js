@@ -48,7 +48,7 @@ class ListFeedsPage extends Component {
   }
 
   fetchLists(startIndex, num_to_fetch) {
-    if (this.state.fetching || this.state.numLastFetch === 0) {
+    if (this.state.fetching || this.state.numLastFetch === 0 || (this.state.numLastFetch !== -1 && this.state.numLastFetch < NUM_ITEMS_PER_FETCH)) {
       return;
     }
 
@@ -64,16 +64,15 @@ class ListFeedsPage extends Component {
       }
       const previousLists = this.state.lists;
       const previousLength = previousLists.length;
-
+      console.log(`length ${res.lists.length} ${NUM_ITEMS_PER_FETCH}`);
       this.setState({
         lists: previousLists.concat(res.lists),
         lastIndex: previousLength + res.lists.length - 1,
         numLastFetch: res.lists.length,
 
         // No more jobs when:
-        // - fetched data length = 0
         // - fetched data length < NUM_ITEMS_PER_FETCH (e.g. no more to fetch after first time.)
-        feedBottomDescription: (res.lists.length === 0 || res.lists.length < NUM_ITEMS_PER_FETCH) ? `No more dude. We have ${previousLists.length || res.lists.length} jobs.` : this.state.feedBottomDescription,
+        feedBottomDescription: (res.lists.length < NUM_ITEMS_PER_FETCH) ? `No more dude. We have ${previousLists.length + res.lists.length} jobs.` : this.state.feedBottomDescription,
       });
     });
     setTimeout(() => this.setState({ fetching: false }), 1000);

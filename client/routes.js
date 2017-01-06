@@ -27,13 +27,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/App/pages/Page404');
 }
 
-function goHomeIfAlreadyAuth(nextState, replaceState) {
-  const token = getToken();
-  if (token) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/admin/home');
-  }
-}
-
 function requireAuth(nextState, replaceState) {
   const token = getToken();
   if (!token) {
@@ -91,7 +84,6 @@ export default (
           cb(null, require('./modules/Admin/pages/AdminLogin').default);
         });
       }}
-      onEnter={goHomeIfAlreadyAuth}
     />
     <Route
       path="/admin/home"

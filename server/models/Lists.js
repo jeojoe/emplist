@@ -39,4 +39,8 @@ const listSchema = new Schema({
 // select: false -> exclude those fields on using find().
 // If you really want to include it (e.g. to compare password and return user), read below:
 // http://www.curtismlarson.com/blog/2016/05/11/mongoose-mongodb-exclude-select-fields/
+//
+// Alright, you're lazy, to force include do this:
+//
+// User.findOne({_id: userId}).select("+password")
 export default mongoose.model('Lists', listSchema);
