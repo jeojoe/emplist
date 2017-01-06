@@ -3,7 +3,6 @@ import callApi from '../client/util/apiCaller';
 import ListRequests from './models/ListRequests';
 import Lists from './models/Lists';
 import Companies from './models/Companies';
-import { tempPassword } from '../secret_config.json';
 import Promise from 'bluebird';
 import secretConfig from '../secret_config.json';
 
@@ -244,7 +243,8 @@ function insertDummyData() {
     console.log('All requests are sent: total = ', reqs.length);
 
     // Login first so we have token to approve listRequests
-    callApi('/users/login', 'post', { username: secretConfig.admin, password: secretConfig.tempPassword }).then((res, err) => {
+    callApi('/users/login', 'post', { username: secretConfig.admin, password: secretConfig.tempPassword })
+    .then((res, err) => {
       if (err) {
         console.log('Dummy admin login error', err);
       } else {
