@@ -353,7 +353,8 @@ class EditListPage extends Component {
           <div className={s.rowFull}>
             <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>E.g. send resume to email, go to company’s jobs site or Workable link.</p>
-            <textarea
+            <input
+              type="text"
               value={how_to_apply}
               onChange={(e) => this.setState({ how_to_apply: e.target.value })}
               className={s['how-to-apply']}

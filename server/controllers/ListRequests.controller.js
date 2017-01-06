@@ -1,3 +1,4 @@
+import sanitizeHtml from 'sanitize-html';
 import ListRequests from '../models/ListRequests';
 import Lists from '../models/Lists';
 import Companies from '../models/Companies';
