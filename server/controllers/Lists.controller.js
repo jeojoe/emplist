@@ -126,7 +126,7 @@ export function updateList(req, res) {
  * Edit one list (pagination)
  */
 export function sendEditListRequest(req, res) {
-  const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, additional_note, details, country, city, location_detail } = req.body.list_request;
+  const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, company_id, remote_check, additional_note, details, country, city, location_detail } = req.body.list_request;
 
   if (!title || !tags || !company_name || !country || !city || !location_detail) {
     res.status(403).end();
@@ -149,7 +149,7 @@ export function sendEditListRequest(req, res) {
     const newListRequest = new ListRequests({
       list_id: _id,
       request_type: 'edit',
-      company_image, company_name,
+      company_image, company_name, company_id,
       company_location: { country, city, detail: location_detail },
       allow_remote: remote_check,
       skills,
@@ -166,9 +166,9 @@ export function sendEditListRequest(req, res) {
 
     newListRequest.save((err, saved) => {
       if (err) {
-        res.status(500).send(err);
+        res.json({ ok: false, msg: err.message });
       } else {
-        res.json({ list_request_id: saved._id });
+        res.json({ ok: true, list_request_id: saved._id });
       }
     });
   }
