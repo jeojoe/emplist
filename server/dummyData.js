@@ -239,49 +239,50 @@ function insertDummyData() {
   // Send dummy list requests
   Promise
   .all(pendingRequests)
-  .then(reqs => {
+  .then((reqs) => {
+    // if (err) {
+    //   console.log('Error while sending dummy requests', err);
+    //   return;
+    // };
     console.log('All requests are sent: total = ', reqs.length);
 
     // Login first so we have token to approve listRequests
     callApi('/users/login', 'post', { username: secretConfig.admin, password: secretConfig.tempPassword })
-    .then((res, err) => {
-      if (err) {
-        console.log('Dummy admin login error', err);
-      } else {
-        const token = res.token;
+    .then((res) => {
+      const token = res.token;
 
-        // Count total listRequests
-        ListRequests.count().exec((err2, count) => {
-          if (err2) {
-            console.log('Count error', err2);
-            return;
-          }
-          const randoms = _.range(10).map(() => Math.floor(Math.random() * count));
-          const randomListRequests = randoms.map(rand => ListRequests.findOne().skip(rand));
+      // Count total listRequests
+      ListRequests.count().exec((err2, count) => {
+        if (err2) {
+          console.log('Count error', err2);
+          return;
+        }
+        const randoms = _.range(10).map(() => Math.floor(Math.random() * count));
+        const randomListRequests = randoms.map(rand => ListRequests.findOne().skip(rand));
 
-          // Randomly approve listRequests
-          Promise.all(randomListRequests)
-          .then(resRandom => {
-            const uniqRes = _.uniqBy(resRandom, '_id');
-            console.log(`Will randomly approve ${uniqRes.length} list requests...`);
-            const allPendingApprovals = uniqRes.map(obj => {
-              return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: secretConfig.tempPassword, token });
-            });
-            return Promise.all(allPendingApprovals);
-          })
-          .then(resApproval => {
-            console.log(`Did randomly approve ${resApproval.length} list requests.`);
-          })
-          .catch(errApproval => {
-            console.log('Error while randomly approve: ', errApproval);
+        // Randomly approve listRequests
+        Promise.all(randomListRequests)
+        .then(resRandom => {
+          const uniqRes = _.uniqBy(resRandom, '_id');
+          console.log(`Will randomly approve ${uniqRes.length} list requests...`);
+          const allPendingApprovals = uniqRes.map(obj => {
+            return callApi(`/requests/approve/new/${obj._id}`, 'put', { password: secretConfig.tempPassword, token });
           });
+          return Promise.all(allPendingApprovals);
+        })
+        .then(resApproval => {
+          console.log(`Did randomly approve ${resApproval.length} list requests.`);
+        })
+        .catch(errApproval => {
+          console.log('Error while randomly approve: ', errApproval);
         });
-      }
+      });
+    }).catch(err => {
+      console.log('Error logging in as admin', err);
     });
   }).catch(err => {
-    console.log('Error while sending dummy requests', err);
+    console.log('Error post request', err);
   });
-
 
   // Lists.insertMany(allDummy)
   //   .then(docs => {
@@ -309,6 +310,9 @@ export default function () {
     Promise.all([ListRequests.remove({}), Companies.remove({}), Lists.remove({})]).then(() => {
       console.log('All data removed, insert new one...');
       insertDummyData();
+    })
+    .catch(errFinal => {
+      console.log('Error removing all data', errFinal);
     });
   });
   // Lists.count().exec((err, count) => {

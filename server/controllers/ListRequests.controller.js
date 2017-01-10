@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 
 function bcryptPassword(password) {
   return bcrypt.genSalt(10).then((result) => {
-    return bcrypt.hash(password, result, null);
+    return bcrypt.hash(password, result);
   });
 }
 
@@ -127,6 +127,7 @@ export function insertListRequest(req, res) {
     })
     .catch(err => {
       // 3.2 Error
+      console.log(`error inserting post`,err);
       res.status(500).send(err);
     });
   }
