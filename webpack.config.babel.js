@@ -23,6 +23,14 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel?cacheDirectory',
+        query: {
+          presets: ['es2015']
+        }
+      },
+      {
         test: /raw\.css$/,
         exclude: /node_modules/,
         loader: ['style-loader', 'css-loader'],
