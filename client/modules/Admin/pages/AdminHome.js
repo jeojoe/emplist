@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import AdminListFilter from '../components/AdminListFilter';
 import ListFeedsWrapper from '../../List/components/ListFeedsWrapper';
 import callApi from '../../../util/apiCaller';
@@ -23,9 +24,11 @@ class AdminHome extends Component {
       alert('No token.');
       return;
     }
-    callApi(`/requests?token=${token}`, 'get').then((res, err) => {
-      if (err) {
-        alert(err);
+    callApi(`/requests?token=${token}`, 'get').then((res) => {
+      if (!res.ok) {
+        this.props.router.push('/admin');
+        alert(res.msg);
+        console.log(res.err);
         return;
       }
       this.setState({ fetching: false, lists: res.requests });
@@ -45,4 +48,4 @@ class AdminHome extends Component {
   }
 }
 
-export default AdminHome;
+export default withRouter(AdminHome);

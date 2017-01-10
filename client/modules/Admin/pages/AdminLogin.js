@@ -16,8 +16,7 @@ class AdminLogin extends Component {
     const { username, password } = this.state;
     callApi('/users/login', 'post', {
       username, password,
-    }).then((res, err) => {
-      if (err) return;
+    }).then((res) => {
       if (!res.ok) {
         alert(res.msg);
         return;

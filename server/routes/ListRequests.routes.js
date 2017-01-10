@@ -2,6 +2,7 @@ import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../../secret_config.json';
 import * as ListRequestsController from '../controllers/ListRequests.controller';
+
 const router = new Router();
 
 
@@ -18,9 +19,10 @@ router.use((req, res, next) => {
   if (token) {
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) {
-        res.status(500).json({
+        res.json({
           ok: false,
-          msg: err,
+          msg: `Token fuck up ${err}`,
+          err,
         });
       } else {
         req.decoded = decoded;

@@ -126,10 +126,10 @@ export function updateList(req, res) {
  * Edit one list (pagination)
  */
 export function sendEditListRequest(req, res) {
-  const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, company_id, remote_check, additional_note, details, country, city, location_detail } = req.body.list_request;
+  const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, company_id, remote_check, additional_note, details, country, city, location_detail } = req.body.list;
 
   if (!title || !tags || !company_name || !country || !city || !location_detail) {
-    res.status(403).end();
+    res.json({ ok: false, msg: 'no required fields' });
   } else {
     let min = 0;
     let max = 0;

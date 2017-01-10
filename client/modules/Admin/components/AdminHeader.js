@@ -17,9 +17,10 @@ class AdminHeader extends Component {
     const { password } = this.state;
     if (list.request_type === 'new') {
       callApi(`/requests/approve/new/${list._id}?token=${token}`, 'put', { password })
-      .then((res, err) => {
-        if (err) {
-          alert(err.msg);
+      .then((res) => {
+        if (!res.ok) {
+          alert(res.msg);
+          console.log(res.err);
         } else {
           this.setState({ list_id_after_approve: res.data.list_id });
           alert('Done yo !');
@@ -27,9 +28,10 @@ class AdminHeader extends Component {
       });
     } else if (list.request_type === 'edit') {
       callApi(`/requests/approve/edit/${list._id}?token=${token}`, 'put', { password })
-      .then((res, err) => {
-        if (err) {
-          alert(err.msg);
+      .then((res) => {
+        if (!res.ok) {
+          alert(res.msg);
+          console.log(res.err);
         } else {
           this.setState({ list_id_after_approve: res.data.list_id });
           alert('Done yo !');

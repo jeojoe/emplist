@@ -5,9 +5,9 @@ import AWS from 'aws-sdk';
 import cuid from 'cuid';
 
 import SkillTagsInput from '../../Request/components/SkillTagsInput';
-import HeaderText from '../../Request/components/HeaderText';
 import DetailsEditor from '../../Request/components/DetailsEditor';
 import callApi from '../../../util/apiCaller';
+import { getToken } from '../../Admin/authToken.js';
 import c from 'classnames';
 import s from './EditListPage.css';
 import aws_config from '../../../../secret_config.json';
@@ -206,13 +206,14 @@ class EditListPage extends Component {
       console.log(`company logo is at ${image_url}`);
 
       callApi(`/lists/${id}`, 'post', {
-        list_request: {
-          id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, additional_note, company_id,
+        list: {
+          _id: id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, additional_note, company_id,
         },
-      }).then((res, err) => {
+      }).then(res => {
         dis.setState({ submitting: false });
-        if (err) {
-          alert(`Something went wrong! : ${err}`);
+        if (!res.ok) {
+          alert(`Something went wrong!`);
+          console.log(res.msg);
           return;
         }
         dis.props.router.push(`/list/${id}`);

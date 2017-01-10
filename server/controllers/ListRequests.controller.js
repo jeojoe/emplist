@@ -176,7 +176,11 @@ export function approveNewListRequest(req, res) {
       { _id: list_request_id },
       (err, list_request) => {
         if (err) {
-          res.status(404).send(err);
+          res.json({
+            ok: false,
+            msg: 'Error : finding list request',
+            err,
+          });
         }
         if (!list_request) {
           res.json({
@@ -193,7 +197,7 @@ export function approveNewListRequest(req, res) {
           });
           saveList.save((err1, saved) => {
             if (err1) {
-              res.status(500).send({
+              res.json({
                 ok: false,
                 msg: err1,
               });
@@ -238,7 +242,11 @@ export function approveEditListRequest(req, res) {
       { _id: list_request_id },
       (err, list_request) => {
         if (err) {
-          res.status(404).send(err);
+          res.json({
+            ok: false,
+            msg: 'Internal Error',
+            err,
+          });
         }
         if (!list_request) {
           res.json({
@@ -246,10 +254,10 @@ export function approveEditListRequest(req, res) {
             msg: 'Not found',
           });
         } else {
-          const { id, company_name, title, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = list_request;
+          const { list_id, company_name, title, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = list_request;
 
           Companies.update(
-            { _id: company_id },
+            company_id,
             {
               $set: {
                 company_image, company_name,
@@ -257,14 +265,17 @@ export function approveEditListRequest(req, res) {
                 'company_location.country': company_location.country,
                 'company_location.city': company_location.city,
                 'company_location.detail': company_location.detail,
-                updated_at: Date.now,
+                updated_at: new Date(),
               },
             },
             (err1) => {
-              if (err1) res.status(500).send(err1);
-              else {
+              if (err1) {
+                res.json({
+                  ok: false, msg: err1.message, err: err1,
+                });
+              } else {
                 Lists.update(
-                  { _id: id },
+                  { _id: list_id },
                   {
                     $set: {
                       company_name, title, details, how_to_apply,
@@ -280,26 +291,29 @@ export function approveEditListRequest(req, res) {
                       'company_location.country': company_location.country,
                       'company_location.city': company_location.city,
                       'company_location.detail': company_location.detail,
-                      updated_at: Date.now,
+                      updated_at: new Date(),
                     },
                   },
                   (err2) => {
-                    if (err2) res.status(500).end(err2);
-                    else {
+                    if (err2) {
+                      res.json({
+                        ok: false, msg: err2.message, err: err2,
+                      });
+                    } else {
                       res.json({
                         ok: true,
                         msg: 'Done approve request !',
-                        data: { list_id: id },
+                        data: { list_id },
                       });
                       ListRequests.update(
                         { _id: list_request_id },
                         {
                           $set: {
                             is_approved: true,
-                            list_id: id,
+                            list_id,
                           },
                         }
-                      );
+                      ).exec();
                     }
                   }
                 );
