@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getToken } from '../authToken.js';
 import callApi from '../../../util/apiCaller';
 
 class AdminHeader extends Component {
@@ -11,10 +12,11 @@ class AdminHeader extends Component {
   }
 
   approve = () => {
+    const token = getToken();
     const { list } = this.props;
     const { password } = this.state;
     if (list.request_type === 'new') {
-      callApi(`/requests/approve/new/${list._id}`, 'put', { password })
+      callApi(`/requests/approve/new/${list._id}?token=${token}`, 'put', { password })
       .then((res, err) => {
         if (err) {
           alert(err.msg);
@@ -24,7 +26,7 @@ class AdminHeader extends Component {
         }
       });
     } else if (list.request_type === 'edit') {
-      callApi(`/requests/approve/edit/${list._id}`, 'put', { password })
+      callApi(`/requests/approve/edit/${list._id}?token=${token}`, 'put', { password })
       .then((res, err) => {
         if (err) {
           alert(err.msg);
