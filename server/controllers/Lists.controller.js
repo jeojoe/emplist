@@ -1,7 +1,6 @@
 import Lists from '../models/Lists';
 import ListRequests from '../models/ListRequests';
 import Companies from '../models/Companies';
-import jwt from 'jsonwebtoken';
 import { signToken } from '../util/jwt-helpers';
 import bcrypt from 'bcrypt';
 // import Companies from '../models/Companies';
