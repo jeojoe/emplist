@@ -102,7 +102,7 @@ class ListDetailPage extends Component {
         </div>
 
         <div>
-          <div dangerouslySetInnerHTML={{ __html: draftToHtml(details) }} />
+          <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(details)) }} />
         </div>
 
         <div>

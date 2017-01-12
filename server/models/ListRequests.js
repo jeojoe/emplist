@@ -41,7 +41,7 @@ const requestSchema = new Schema({
     min: { type: Number, default: 0 },
     max: { type: Number, default: 9999999 },
   },
-  details: { type: Object, required: true },
+  details: { type: String, required: true },
   how_to_apply: { type: String, required: true },
 });
 

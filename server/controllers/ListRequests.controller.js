@@ -101,6 +101,7 @@ export function insertListRequest(req, res) {
         max = 99;
       }
       const skills = tags.map((tag) => tag.text);
+
       // 2. Insert List Request
       return new ListRequests({
         request_type: 'new',
@@ -116,7 +117,7 @@ export function insertListRequest(req, res) {
           min: salary_min || 0,
           max: salary_max || 9999999,
         },
-        details,
+        details: JSON.stringify(details),
         how_to_apply,
         additional_note,
       }).save();
