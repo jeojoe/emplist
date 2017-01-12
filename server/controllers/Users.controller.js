@@ -3,9 +3,8 @@ import jwt from 'jsonwebtoken';
 import { signToken } from '../util/jwt-helpers';
 import config from '../../secret_config.json';
 
-export function validateToken(req, res) {
+export function validateEditingToken(req, res) {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
-  console.log(token);
   if (token) {
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) {
@@ -13,11 +12,38 @@ export function validateToken(req, res) {
           To resign token !!
         */
         res.json({ ok: false, msg: 'Failed to authenticate' });
-      } else {
-        //  Check decoded
-        if (decoded.sub !== req.params.id);
-        res.json({ ok: true });
+        return;
       }
+      if (decoded.sub !== req.params.list_id) {
+        res.json({ ok: false, msg: 'Wrong token.' });
+        return;
+      }
+      res.json({ ok: true });
+    });
+  } else {
+    res.json({
+      ok: false,
+      msg: 'No token provided (in validate token api)',
+    });
+  }
+}
+
+export function validateAdminToken(req, res) {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (token) {
+    jwt.verify(token, config.jwtSecret, (err) => {
+      if (err) {
+        /*
+          To resign token !!
+        */
+        res.json({ ok: false, msg: 'Failed to authenticate' });
+        return;
+      }
+      // if (decoded.sub !== req.params.list_id) {
+      //   res.json({ ok: false, msg: 'Wrong token.' });
+      //   return;
+      // }
+      res.json({ ok: true });
     });
   } else {
     res.json({

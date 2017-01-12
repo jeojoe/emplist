@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+import callApi from './util/apiCaller';
 import App from './modules/App/App';
 import { getToken } from './modules/Admin/authToken';
 
@@ -27,10 +28,40 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/App/pages/Page404');
 }
 
-function requireAuth(nextState, replaceState) {
+function requireAdminAuth(nextState, replaceState, cb) {
   const token = getToken();
   if (!token) {
     replaceState({ nextPathname: nextState.location.pathname }, '/');
+    cb();
+  } else {
+    callApi(`/users/permission/admin?token=${token}`)
+      .then((res) => {
+        if (!res.ok) {
+          replaceState({ nextPathname: nextState.location.pathname }, '/');
+          cb();
+        } else {
+          cb();
+        }
+      });
+  }
+}
+
+function requireEditAuth(nextState, replaceState, cb) {
+  const token = getToken();
+  if (!token) {
+    replaceState({ nextPathname: nextState.location.pathname }, '/');
+    cb();
+  } else {
+    callApi(`/users/permission/edit/${nextState.params.id}?token=${token}`)
+      .then((res) => {
+        if (!res.ok) {
+          console.log(res.msg);
+          replaceState({ nextPathname: nextState.location.pathname }, '/');
+          cb();
+        } else {
+          cb();
+        }
+      });
   }
 }
 
@@ -52,6 +83,7 @@ export default (
           cb(null, require('./modules/List/pages/EditListPage').default);
         });
       }}
+      onEnter={requireEditAuth}
     />
     <Route
       path="/list/:id"
@@ -92,7 +124,7 @@ export default (
           cb(null, require('./modules/Admin/pages/AdminHome').default);
         });
       }}
-      onEnter={requireAuth}
+      onEnter={requireAdminAuth}
     />
     <Route
       path="/admin/request/:id"
@@ -101,7 +133,7 @@ export default (
           cb(null, require('./modules/List/pages/ListDetailPage').default);
         });
       }}
-      onEnter={requireAuth}
+      onEnter={requireAdminAuth}
     />
     <Route
       path="*"

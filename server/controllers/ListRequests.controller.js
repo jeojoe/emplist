@@ -24,12 +24,12 @@ export function getAllListRequests(req, res) {
     .select('_id request_type company_name title salary exp skills allow_remote company_image ')
     .exec((err, requests) => {
       if (err) {
-        res.status(500).send(err);
+        res.json({
+          ok: false, msg: err.message, err,
+        });
       } else {
         res.json({
-          ok: true,
-          msg: 'done',
-          requests,
+          ok: true, msg: 'done', requests,
         });
       }
     });

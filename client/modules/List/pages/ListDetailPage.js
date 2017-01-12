@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { withRouter } from 'react-router';
 import draftToHtml from 'draftjs-to-html';
 import callApi from '../../../util/apiCaller';
 
 import AdminHeader from '../../Admin/components/AdminHeader';
+import PasswordBeforeEdit from '../components/PasswordBeforeEdit';
 import s from './ListDetailPage.css';
 import sSkill from '../components/ListItem.css';
 
@@ -122,7 +123,7 @@ class ListDetailPage extends Component {
       );
     }
 
-    const { location: { pathname } } = this.props;
+    const { location: { pathname }, params: { id } } = this.props;
     const isAdmin = pathname.indexOf('/admin/request/') >= 0;
     return (
       <div className="container">
@@ -130,7 +131,9 @@ class ListDetailPage extends Component {
           <AdminHeader list={list} /> : ''
         }
         {this.renderList(list)}
-        {!isAdmin && <Link to={`/list/${list._id}/edit`}>Edit</Link>}
+        {!isAdmin &&
+          <PasswordBeforeEdit list_id={id} />
+        }
       </div>
     );
   }
@@ -140,4 +143,4 @@ ListDetailPage.propTypes = {
   params: React.PropTypes.object.isRequired,
 };
 
-export default ListDetailPage;
+export default withRouter(ListDetailPage);
