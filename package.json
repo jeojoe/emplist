@@ -1,7 +1,7 @@
 {
   "name": "emplist",
   "version": "0.1.0",
-  "description": "Boilerplate project for building Isomorphic apps using React and Redux",
+  "description": "Why they want to work with you?",
   "scripts": {
     "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/mern-test node_modules/.bin/nyc node --harmony-proxies node_modules/.bin/ava",
     "watch:test": "npm run test -- --watch",
