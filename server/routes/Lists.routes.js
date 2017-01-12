@@ -12,4 +12,7 @@ router.route('/list/:id').get(ListsController.getListDetail);
 // Update list (makes new List request)
 router.route('/lists/:id').post(ListsController.sendEditListRequest);
 
+// Check if user has permission on the List
+router.route('/lists/:id/permission').post(ListsController.checkPermission);
+
 export default router;

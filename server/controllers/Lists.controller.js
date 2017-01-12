@@ -1,6 +1,9 @@
 import Lists from '../models/Lists';
 import ListRequests from '../models/ListRequests';
 import Companies from '../models/Companies';
+import jwt from 'jsonwebtoken';
+import { signToken } from '../util/jwt-helpers';
+import bcrypt from 'bcrypt';
 // import Companies from '../models/Companies';
 // import cuid from 'cuid';
 // import slug from 'limax';
@@ -172,4 +175,47 @@ export function sendEditListRequest(req, res) {
       }
     });
   }
+}
+
+/*
+  Check if user has permission on the List
+*/
+export function checkPermission(req, res) {
+  const { password } = req.body;
+  const list_id = req.params.id;
+
+  if (!list_id) {
+    res.json({ ok: false, msg: 'No list id' });
+    return;
+  }
+
+  Lists.findOne({ _id: list_id }).select('password').exec((err, list) => {
+    if (err) {
+      res.json({ ok: false, msg: 'Error finding list' });
+      return;
+    }
+    if (!list) {
+      res.json({ ok: false, msg: 'Can\'t find list' });
+      return;
+    }
+    bcrypt.compare(password, list.password, (err2, valid) => {
+      if (err2) {
+        // Internal error)
+        res.json({
+          ok: false, msg: 'Comparing hash failed.', err: err2,
+        });
+      } else if (!valid) {
+        // Fail
+        res.json({
+          ok: false, msg: 'Authentication failed. Wrong password.',
+        });
+      } else {
+        // Success -> create jwt then send it to client
+        const token = signToken(list_id);
+        res.json({
+          ok: true, msg: 'logged in yo', token,
+        });
+      }
+    });
+  });
 }
