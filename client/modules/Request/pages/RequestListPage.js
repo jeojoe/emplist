@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router';
-import { EditorState, convertToRaw } from 'draft-js';
-import AWS from 'aws-sdk';
-import cuid from 'cuid';
+import { Link } from 'react-router';
+import { EditorState } from 'draft-js';
 
 import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
 import DetailsEditor from '../components/DetailsEditor';
-import callApi from '../../../util/apiCaller';
+import RequestListButton from '../components/RequestListButton';
 import c from 'classnames';
 import s from './RequestListPage.css';
-import aws_config from '../../../../secret_config.json';
+
 
 class RequestListPage extends Component {
   constructor(props) {
@@ -76,140 +74,12 @@ class RequestListPage extends Component {
     this.setState({ tags });
   }
 
-  uploadCompanyLogo = (callback) => {
-    const { logo_image_file, company_name } = this.state;
-
-    if (!logo_image_file) { return; }
-
-    // Resize image
-    const mainCanvas = document.createElement('canvas');
-    const img = document.getElementById('logo-preview');
-    mainCanvas.width = 100;
-    mainCanvas.height = 100;
-    const ctx = mainCanvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, mainCanvas.width, mainCanvas.height);
-
-    // * CHANGE THIS ON PRODUCTION
-    // E.g., Read from JSON is the least recommended approach here:
-    // http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html
-    AWS.config.update(aws_config);
-
-    function dataURItoBlob(dataURI) {
-      // convert base64/URLEncoded data component to raw binary data held in a string
-      let byteString;
-      if (dataURI.split(',')[0].indexOf('base64') >= 0) {
-        byteString = atob(dataURI.split(',')[1]);
-      } else {
-        byteString = unescape(dataURI.split(',')[1]);
-      }
-      // separate out the mime component
-      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      // write the bytes of the string to a typed array
-      const ia = new Uint8Array(byteString.length);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      return new Blob([ia], { type: mimeString });
-    }
-
-    const s3 = new AWS.S3();
-    const bucket = 'testemplist';
-    const blob = dataURItoBlob(mainCanvas.toDataURL(logo_image_file.type));
-
-    console.log(`logos/lg_${company_name}_${cuid.slug()}`);
-    const params = {
-      Bucket: bucket,
-      Key: `logos/lg_${company_name}_${cuid.slug()}`,
-      Body: blob,
-      ACL: 'public-read',
-      ContentType: logo_image_file.type,
-    };
-
-    s3.upload(params, (err, data) => {
-      if (err) {
-        console.log(`Error: ${err}`);
-      } else {
-        callback(data);
-      }
-    });
-  }
-
-  submitRequest = () => {
-    // Resize image
-    const { submitting } = this.state;
-    if (submitting) return;
-
-    this.setState({ submitting: true });
-    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city, location_detail } = this.state;
-    const details = convertToRaw(editorState.getCurrentContent());
-
-    if (!title || !tags) {
-      this.setState({ submitting: false });
-      alert('Please check Title or Skills field again.');
-      return;
-    } else if (exp_condition === 'between' && (!exp_between_min || !exp_between_max)) {
-      this.setState({ submitting: false });
-      alert('Please check Experience field again (errors on "Between" condition).');
-      return;
-    } else if (exp_condition === 'more_than' && (!exp_more_than)) {
-      this.setState({ submitting: false });
-      alert('Please check Experience field again (errors on "More than" condition).');
-      return;
-    } else if (!editorState.getCurrentContent().hasText()) {
-      this.setState({ submitting: false });
-      alert('Please fill some details.');
-      return;
-    } else if (!how_to_apply) {
-      this.setState({ submitting: false });
-      alert('Please specify how to apply.');
-      return;
-    } else if (!company_name || !location_detail) {
-      this.setState({ submitting: false });
-      alert('Please specify your company\'s name or location detail.');
-      return;
-    } else if (!logo_preview_url || !logo_image_file) {
-      this.setState({ submitting: false });
-      alert('Please reinsert your company\'s logo.');
-      return;
-    } else if (!email) {
-      this.setState({ submitting: false });
-      alert('Please specify your email.');
-      return;
-    } else if (!password || !password_confirm) {
-      this.setState({ submitting: false });
-      alert('Please specify your password or password confirmation.');
-      return;
-    }
-
-    // all passes, upload logo
-    const yes = confirm('Do you want to submit the request?');
-    if (!yes) {
-      this.setState({ submitting: false });
-      return;
-    }
-
-    const dis = this;
-    this.uploadCompanyLogo((data) => {
-      const image_url = data.Location;
-      console.log(`company logo is at ${image_url}`);
-
-      callApi('/requests', 'post', {
-        list_request: {
-          title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, email, password, password_confirm, additional_note, details, country, city, location_detail,
-        },
-      }).then((res, err) => {
-        dis.setState({ submitting: false });
-        if (err) {
-          alert(`Something went wrong! : ${err}`);
-          return;
-        }
-        dis.props.router.push(`/request/done/${res.list_request_id}`);
-      });
-    });
+  setSubmitState = (submitting) => {
+    this.setState({ submitting });
   }
 
   render() {
-    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, email, password, password_confirm, additional_note, submitting } = this.state;
+    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, email, password, password_confirm, additional_note } = this.state;
 
     const notSamePassword = password !== password_confirm;
     return (
@@ -440,12 +310,11 @@ class RequestListPage extends Component {
             />
           </div>
           <div>
-            <button
-              className={c('button-primary', s.submitButton)}
-              onClick={this.submitRequest}
-            >
-              {submitting ? 'Submitting..' : 'Submit list request'}
-            </button>
+            <RequestListButton
+              {...this.state}
+              buttonStyle={s.submitButton}
+              setSubmitState={this.setSubmitState}
+            />
             <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT LIST REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<Link to="/">Terms</Link>.
             </p>
           </div>
@@ -455,4 +324,4 @@ class RequestListPage extends Component {
   }
 }
 
-export default withRouter(RequestListPage);
+export default RequestListPage;

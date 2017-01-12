@@ -12,6 +12,9 @@ router.route('/requests').post(ListRequestsController.insertListRequest);
 // Make promote request
 router.route('/requests/promote/:list_request_id').get(ListRequestsController.requestPromote);
 
+// Check if request exists
+router.route('/requests/check/:list_request_id').get(ListRequestsController.checkListRequest);
+
 // Authenticated-API Middleware
 // All APIs below this line are expected to receive 'token' either from body or query, which is retrieved upon admin's login.
 router.use((req, res, next) => {
@@ -42,9 +45,6 @@ router.route('/requests').get(ListRequestsController.getAllListRequests);
 
 // Get one List request
 router.route('/requests/:list_request_id').get(ListRequestsController.getListRequest);
-
-// Check if request exists
-router.route('/requests/check/:list_request_id').get(ListRequestsController.checkListRequest);
 
 // Approve new List request
 router.route('/requests/approve/new/:list_request_id').put(ListRequestsController.approveNewListRequest);
