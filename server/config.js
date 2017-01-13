@@ -3,6 +3,7 @@ const config = {
   port: process.env.PORT || 8000,
   autoIndex: process.env.NODE_ENV !== 'production',
   tokenExpires: '1h',
+  saltRound: 10,
 };
 
 export default config;
