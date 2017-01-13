@@ -43,7 +43,7 @@ class PasswordBeforeEdit extends Component {
         {isShow &&
           <div>
             <input
-              type="text" placeholder="insert password"
+              type="password" placeholder="insert password"
               value={password}
               onChange={(e) => this.setState({ password: e.target.value })}
             />
