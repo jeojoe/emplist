@@ -20,9 +20,10 @@ if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
   require('./modules/List/pages/ListFeedsPage');
   require('./modules/List/pages/ListDetailPage');
-  require('./modules/List/pages/EditListPage');
+  require('./modules/Request/pages/EditListPage');
   require('./modules/Request/pages/RequestListPage');
   require('./modules/Request/pages/DoneRequestListPage');
+  require('./modules/Request/pages/DoneEditListPage');
   require('./modules/Admin/pages/AdminLogin');
   require('./modules/Admin/pages/AdminHome');
   require('./modules/App/pages/Page404');
@@ -80,10 +81,18 @@ export default (
       path="/list/:id/edit"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/List/pages/EditListPage').default);
+          cb(null, require('./modules/Request/pages/EditListPage').default);
         });
       }}
       onEnter={requireEditAuth}
+    />
+    <Route
+      path="/list/:id/edit/done"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Request/pages/DoneEditListPage').default);
+        });
+      }}
     />
     <Route
       path="/list/:id"

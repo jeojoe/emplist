@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
 import { EditorState, convertFromRaw } from 'draft-js';
 
-import SkillTagsInput from '../../Request/components/SkillTagsInput';
-import DetailsEditor from '../../Request/components/DetailsEditor';
+import SkillTagsInput from '../components/SkillTagsInput';
+import DetailsEditor from '../components/DetailsEditor';
 import ChangePasswordSection from '../components/ChangePasswordSection';
-import SubmitEditButton from '../components/SubmitEditButton';
+import EditListButton from '../components/EditListButton';
 import callApi from '../../../util/apiCaller';
 import c from 'classnames';
 import s from './EditListPage.css';
@@ -314,7 +314,7 @@ class EditListPage extends Component {
             />
           </div>
           <div>
-            <SubmitEditButton
+            <EditListButton
               buttonStyle={s.submitButton}
               {...this.state}
               setSubmitState={this.setSubmitState}

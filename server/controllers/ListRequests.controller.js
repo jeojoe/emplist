@@ -146,13 +146,15 @@ export function checkListRequest(req, res) {
     { _id: list_request_id },
     (err, result) => {
       if (err) {
-        res.status(404).send(err);
+        res.status(404).send({
+          ok: false, msg: 'Something went wrong.', err,
+        });
       }
       if (!result) {
-        res.json({ exist: false });
+        res.json({ ok: false, msg: 'Not found' });
       } else {
         res.json({
-          exist: true,
+          ok: true,
           company_name: result.company_name,
           title: result.title,
         });

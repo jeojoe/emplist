@@ -48,7 +48,7 @@ class RequestListButton extends Component {
     const bucket = 'testemplist';
     const blob = dataURItoBlob(mainCanvas.toDataURL(logo_image_file.type));
 
-    console.log(`logos/lg_${company_name}_${cuid.slug()}`);
+    // console.log(`logos/lg_${company_name}_${cuid.slug()}`);
     const params = {
       Bucket: bucket,
       Key: `logos/lg_${company_name}_${cuid.slug()}`,
@@ -59,7 +59,7 @@ class RequestListButton extends Component {
 
     s3.upload(params, (err, data) => {
       if (err) {
-        console.log(`Error: ${err}`);
+        callback(data, err);
       } else {
         callback(data);
       }
@@ -121,18 +121,22 @@ class RequestListButton extends Component {
     }
 
     const dis = this;
-    this.uploadCompanyLogo((data) => {
+    this.uploadCompanyLogo((data, err) => {
+      if (err) {
+        alert('Something went wrong! (err code: 1), please contact hi.emplist@gmail.com');
+        return;
+      }
       const image_url = data.Location;
-      console.log(`company logo is at ${image_url}`);
+      // console.log(`company logo is at ${image_url}`);
 
       callApi('/requests', 'post', {
         list_request: {
           title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, email, password, password_confirm, additional_note, details, country, city, location_detail,
         },
-      }).then((res, err) => {
+      }).then((res) => {
         setSubmitState(false);
-        if (err) {
-          alert(`Something went wrong! : ${err}`);
+        if (!res.ok) {
+          alert('Something went wrong! (err code: 2), please contact hi.emplist@gmail.com');
           return;
         }
         dis.props.router.push(`/request/done/${res.list_request_id}`);

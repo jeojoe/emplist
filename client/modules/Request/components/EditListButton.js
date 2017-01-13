@@ -7,7 +7,7 @@ import c from 'classnames';
 import callApi from '../../../util/apiCaller';
 import aws_config from '../../../../secret_config.json';
 
-class SubmitEditButton extends Component {
+class EditListButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +57,7 @@ class SubmitEditButton extends Component {
     const bucket = 'testemplist';
     const blob = dataURItoBlob(mainCanvas.toDataURL(logo_image_file.type));
 
-    console.log(`logos/lg_${company_name}_${cuid.slug()}`);
+    // console.log(`logos/lg_${company_name}_${cuid.slug()}`);
     const params = {
       Bucket: bucket,
       Key: `logos/lg_${company_name}_${cuid.slug()}`,
@@ -68,7 +68,7 @@ class SubmitEditButton extends Component {
 
     s3.upload(params, (err, data) => {
       if (err) {
-        console.log(`Error: ${err}`);
+        callback(data, err);
       } else {
         callback(data);
       }
@@ -125,9 +125,13 @@ class SubmitEditButton extends Component {
       }
 
       const dis = this;
-      this.uploadCompanyLogo((data) => {
+      this.uploadCompanyLogo((data, err) => {
+        if (err) {
+          alert('Something went wrong! (err code: 1), please contact hi.emplist@gmail.com');
+          return;
+        }
         const image_url = data.Location;
-        console.log(`company logo is at ${image_url}`);
+        // console.log(`company logo is at ${image_url}`);
 
         callApi(`/lists/${list_id}`, 'post', {
           list: {
@@ -136,11 +140,10 @@ class SubmitEditButton extends Component {
         }).then(res1 => {
           setSubmitState(false);
           if (!res1.ok) {
-            alert('Something went wrong!');
-            console.log(res.msg);
+            alert('Something went wrong! (err code: 2), please contact hi.emplist@gmail.com');
             return;
           }
-          dis.props.router.push(`/list/${list_id}`);
+          dis.props.router.push(`/list/${res1.list_request_id}/edit/done`);
         });
       });
     });
@@ -167,11 +170,11 @@ class SubmitEditButton extends Component {
   }
 }
 
-SubmitEditButton.propTypes = {
+EditListButton.propTypes = {
   buttonStyle: React.PropTypes.string,
   submitting: React.PropTypes.bool,
   setSubmitState: React.PropTypes.func,
   list_id: React.PropTypes.string,
 };
 
-export default withRouter(SubmitEditButton);
+export default withRouter(EditListButton);
