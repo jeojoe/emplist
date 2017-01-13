@@ -1,7 +1,13 @@
 import Lists from '../models/Lists';
 import ListRequests from '../models/ListRequests';
+import Companies from '../models/Companies';
 import { signToken } from '../util/jwt-helpers';
+import jwt from 'jsonwebtoken';
+import config from '../config.js';
+import secret_config from '../../secret_config.json';
 import bcrypt from 'bcrypt';
+import Promise from 'bluebird';
+
 // import Companies from '../models/Companies';
 // import cuid from 'cuid';
 // import slug from 'limax';
@@ -140,6 +146,95 @@ export function checkPermission(req, res) {
           ok: true, msg: 'Authentication\'s success', token,
         });
       }
+    });
+  });
+}
+
+/*
+  Change password (require token)
+  /lists/:id/password
+*/
+export function changePassword(req, res) {
+  const { oldPassword, newPassword, list_id } = req.body;
+  const { token } = req.query;
+
+  if (!oldPassword || !newPassword) {
+    res.status(403).send({
+      ok: false, msg: 'Something is not right about password !',
+    });
+    return;
+  }
+
+  if (!token) {
+    res.status(403).send({
+      ok: false, msg: 'Token is not provided',
+    });
+    return;
+  }
+
+  jwt.verify(token, secret_config.jwtSecret, (err, decoded) => {
+    if (err) {
+      res.status(403).send({
+        ok: false, msg: 'Token is invalid.',
+      });
+      return;
+    }
+    if (list_id !== decoded.sub) {
+      res.status(403).send({
+        ok: false, msg: 'Wrong token.',
+      });
+      return;
+    }
+    Lists.findOne({ _id: list_id }).select('password company_id')
+    .exec((err2, list) => {
+      if (err2) {
+        res.status(403).send({
+          ok: false, msg: 'Error finding list.', err: err2,
+        });
+      }
+      if (!list) {
+        res.status(403).send({
+          ok: false, msg: 'List not found',
+        });
+      }
+
+      bcrypt.compare(oldPassword, list.password, (err3, valid) => {
+        if (err3) {
+          // Internal error)
+          res.status(403).send({
+            ok: false, msg: 'Comparing hash failed.', err: err3,
+          });
+        } else if (!valid) {
+          // Fail
+          res.status(403).send({
+            ok: false, msg: 'Authentication failed. Wrong password.',
+          });
+        } else {
+          // Success -> create jwt then send it to client
+          bcrypt.genSalt(config.saltRound).then(result => {
+            bcrypt.hash(newPassword, result).then(hashedPassword => {
+              Promise.all(
+                [
+                  Lists.update(
+                    { _id: list_id },
+                    { $set: { password: hashedPassword } },
+                  ),
+                  Companies.update(
+                    list.company_id, // Mongo ObjectID
+                    { $set: { password: hashedPassword } },
+                  ),
+                ]
+              )
+              .then(() =>
+                res.json({ ok: true })
+              )
+              .catch((err4) =>
+                res.status(403).send({ ok: false, msg: 'Error updating password !', err: err4 })
+              );
+            });
+          });
+        }
+      });
     });
   });
 }

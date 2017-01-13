@@ -15,4 +15,7 @@ router.route('/lists/:id').post(ListsController.sendEditListRequest);
 // Check if user has permission on the List
 router.route('/lists/:id/permission').post(ListsController.checkPermission);
 
+// Change password : token
+router.route('/lists/:id/password').post(ListsController.changePassword);
+
 export default router;

@@ -112,7 +112,6 @@ class EditListPage extends Component {
     return (
       <div className="container">
         <ChangePasswordSection list_id={this.props.params.id} />
-        <hr />
         <div className={s.wrapper}>
           {/*
             Title
