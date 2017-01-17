@@ -25,8 +25,8 @@ class EditListButton extends Component {
     // Resize image
     const mainCanvas = document.createElement('canvas');
     const img = document.getElementById('logo-preview');
-    mainCanvas.width = 100;
-    mainCanvas.height = 100;
+    mainCanvas.width = 200;
+    mainCanvas.height = 200;
     const ctx = mainCanvas.getContext('2d');
     ctx.drawImage(img, 0, 0, mainCanvas.width, mainCanvas.height);
 
@@ -139,6 +139,7 @@ class EditListButton extends Component {
           },
         }).then(res1 => {
           setSubmitState(false);
+          console.log(res1);
           if (!res1.ok) {
             alert('Something went wrong! (err code: 2), please contact hi.emplist@gmail.com');
             return;
