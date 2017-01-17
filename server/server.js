@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 
 /* SSR Import begins here */
 // React And Redux Setup
-// import IntlWrapper from '../client/modules/intl/IntlWrapper';
+import IntlWrapper from '../client/modules/intl/IntlWrapper';
 import { configureStore } from '../client/modules/store';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -140,18 +140,18 @@ app.use((req, res, next) => {
 
     return fetchComponentData(store, renderProps.components, renderProps.params)
       .then(() => {
-        // const initialView = renderToString(
-        //   <Provider store={store}>
-        //     <IntlWrapper>
-        //       <RouterContext {...renderProps} />
-        //     </IntlWrapper>
-        //   </Provider>
-        // );
         const initialView = renderToString(
           <Provider store={store}>
-            <RouterContext {...renderProps} />
+            <IntlWrapper>
+              <RouterContext {...renderProps} />
+            </IntlWrapper>
           </Provider>
         );
+        // const initialView = renderToString(
+        //   <Provider store={store}>
+        //     <RouterContext {...renderProps} />
+        //   </Provider>
+        // );
         const finalState = store.getState();
 
         res

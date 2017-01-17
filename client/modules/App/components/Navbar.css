@@ -12,3 +12,24 @@
     font-size: 18px;
   }
 }
+
+.langButton {
+  display: inline-block;
+  float: right;
+  vertical-align: top;
+  padding-top: 5px;
+}
+
+.langButton button {
+  margin: 0;
+  padding: 0 10px; 
+}
+
+.langButton button:hover {
+  color: #1EAEDB; 
+}
+
+.active {
+  text-decoration: underline;
+  color: #1EAEDB;
+}

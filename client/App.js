@@ -4,7 +4,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
-// import IntlWrapper from './modules/intl/IntlWrapper';
+import IntlWrapper from './modules/intl/IntlWrapper';
 
 // Import Routes
 import routes from './routes';
@@ -16,11 +16,11 @@ import './draft.raw.css';
 export default function App(props) {
   return (
     <Provider store={props.store}>
-      {/* <IntlWrapper> */}
-      <Router history={browserHistory}>
-        {routes}
-      </Router>
-      {/* </IntlWrapper> */}
+      <IntlWrapper>
+        <Router history={browserHistory}>
+          {routes}
+        </Router>
+      </IntlWrapper>
     </Provider>
   );
 }

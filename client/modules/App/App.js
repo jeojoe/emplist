@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-// import { connect } from 'react-redux';
 // Import Components
 import Helmet from 'react-helmet';
-// import DevTools from './components/DevTools';
+import DevTools from './components/DevTools';
 import Navbar from './components/Navbar';
 // Import Style
 // Import Actions
@@ -20,10 +19,10 @@ export class App extends Component {
   render() {
     return (
       <div>
-        {/* this.state.isMounted &&
+        {this.state.isMounted &&
           !window.devToolsExtension &&
           process.env.NODE_ENV === 'development' &&
-          <DevTools /> */}
+          <DevTools />}
         <div>
           {/* titleTemplate="%s - Blog App" */}
           <Helmet
@@ -52,15 +51,6 @@ export class App extends Component {
 
 App.propTypes = {
   children: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
-// Retrieve data from store as props
-// function mapStateToProps(store) {
-//   return {
-//     intl: store.intl,
-//   };
-// }
-
-// export default connect(mapStateToProps)(App);
 export default App;
