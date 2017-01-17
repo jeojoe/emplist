@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import s from './ListItem.css';
-import moment from 'moment';
+// import moment from 'moment';
 
 const List = ({ list: { _id, title, company_image, company_name, company_location, allow_remote, exp, salary, created_at, skills, request_type }, admin }) => (
   <div className={s.item}>
@@ -43,10 +43,11 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
             {salary.min}-{salary.max} <span className={s.baht}>฿</span>
           </div>
         }
-        {/* Date */}
+        {/* Date
         <div className={s.detail}>
           {moment(created_at).fromNow()}
         </div>
+        */}
       </div>
       <div>
         {skills.map((skill, i) =>
