@@ -13,7 +13,7 @@ function bcryptPassword(password) {
 }
 
 /**
- * Get list request
+ * 1. Get list request
  * @param req
  * @param res
  * @returns void
@@ -36,7 +36,7 @@ export function getAllListRequests(req, res) {
 }
 
 /**
- * Get list request
+ * 2. Get list request
  * @param req
  * @param res
  * @returns void
@@ -59,16 +59,18 @@ export function getListRequest(req, res) {
 }
 
 /**
- * Insert list request
+ * 3. Insert list request
  * @param req
  * @param res
  * @returns void
  */
 export function insertListRequest(req, res) {
   const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, email, password, additional_note, details, country, city, location_detail } = req.body.list_request;
-
+  console.log(!title || !tags || !company_name || !country || !city || !location_detail || !email || !password);
   if (!title || !tags || !company_name || !country || !city || !location_detail || !email || !password) {
-    res.status(403).end();
+    res.status(403).send({
+      ok: false, msg: '31',
+    });
   } else {
     // Hash password
     let HashedPassword = '';
@@ -124,12 +126,14 @@ export function insertListRequest(req, res) {
     })
     .then((list_request) => {
       // 3.1 Success
-      res.json({ list_request_id: list_request._id });
+      res.json({ ok: true, list_request_id: list_request._id });
     })
     .catch(err => {
       // 3.2 Error
-      console.log(`error inserting post`,err);
-      res.status(500).send(err);
+      console.log('error inserting post', err);
+      res.status(500).send({
+        ok: false, msg: '32',
+      });
     });
   }
 }
@@ -339,8 +343,8 @@ export function requestPromote(req, res) {
     { $set: { request_promote: true },
   }, (err) => {
     if (err) {
-      res.json({ done: false, err });
+      res.json({ ok: false, msg: 'Something went wrong !', err });
     }
-    res.json({ done: true });
+    res.json({ ok: true });
   });
 }

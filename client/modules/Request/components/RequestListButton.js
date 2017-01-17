@@ -136,7 +136,7 @@ class RequestListButton extends Component {
       }).then((res) => {
         setSubmitState(false);
         if (!res.ok) {
-          alert('Something went wrong! (err code: 2), please contact hi.emplist@gmail.com');
+          alert(`Something went wrong! (err code: 2${res.msg}), please contact hi.emplist@gmail.com`);
           return;
         }
         dis.props.router.push(`/request/done/${res.list_request_id}`);

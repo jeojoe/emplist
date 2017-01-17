@@ -18,7 +18,7 @@ class DoneRequestListPage extends Component {
   componentWillMount() {
     const { id } = this.props.params;
     callApi(`/requests/check/${id}`).then((res, err) => {
-      if (err || !res.exist) {
+      if (err || !res.ok) {
         this.setState({ fetching: false, is_error: true });
       } else {
         this.setState({
@@ -34,10 +34,10 @@ class DoneRequestListPage extends Component {
     if (!this.state.done) {
       this.setState({ requesting: true });
       const { id } = this.props.params;
-      callApi(`/requests/promote/${id}`).then((res, err) => {
-        if (err) {
+      callApi(`/requests/promote/${id}`).then((res) => {
+        if (!res.err) {
           this.setState({ requesting: false });
-          alert(err);
+          alert(res.msg);
           return;
         }
         this.setState({ requesting: false, done: true });
@@ -47,7 +47,7 @@ class DoneRequestListPage extends Component {
 
   render() {
     const { fetching, is_error, company_name, requesting, done } = this.state;
-    
+
     if (fetching) {
       return (
         <div className="container">
