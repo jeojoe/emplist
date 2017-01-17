@@ -1,4 +1,4 @@
-import { localizationData } from './setup';
+import { localizationData } from '../../../Intl/setup';
 
 // Export Constants
 export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';
