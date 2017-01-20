@@ -80,7 +80,7 @@ function insertDummyData() {
   };
 
   const req2 = {
-    company_image: 'http://seas100.com/wordpress/wp-content/uploads/2015/08/17Wognai1.png',
+    company_image: 'https://www.jobtoshare.com/assets/images/company/profile/wongnai_logo.png',
     company_name: 'Wongnai',
     email: 'wongnai@gmail.com',
     country: 'Thailand',
@@ -150,7 +150,7 @@ function insertDummyData() {
   };
 
   const req3 = {
-    company_image: 'http://www.underconsideration.com/brandnew/archives/google_2015_logo_detail.png',
+    company_image: 'http://www.mr-mackey.org/uploads/5/8/9/5/58950309/8110278_orig.jpg',
     company_name: 'FireOneOne',
     email: 'fireoneone@gmail.com',
     country: 'Thailand',
