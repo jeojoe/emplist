@@ -14,7 +14,7 @@ const Navbar = ({ dispatch, intl }) => (
         <Logo />
       </Link>
       <div className={s['after-logo']}>
-        <h6>Simple finding tech jobs !</h6>
+        <h6>Employee list in one place !</h6>
       </div>
       <div className={s.langButton}>
         <button

@@ -22,14 +22,15 @@
 
 .langButton button {
   margin: 0;
-  padding: 0 10px; 
-}
-
-.langButton button:hover {
-  color: #1EAEDB; 
-}
-
-.active {
-  text-decoration: underline;
+  padding: 0 10px;
   color: #1EAEDB;
+  text-decoration: underline;
+  &:hover {
+    color: #0FA0CE;
+  }
+  &.active {
+    cursor: default;
+    color: #222;
+    text-decoration: none;
+  }
 }
