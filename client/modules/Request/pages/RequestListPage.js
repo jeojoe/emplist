@@ -43,6 +43,24 @@ class RequestListPage extends Component {
     };
   }
 
+  componentDidMount() {
+    window.onbeforeunload = (e) => {
+      e = e || window.event;
+
+      // For IE and Firefox prior to version 4
+      if (e) {
+        e.returnValue = 'Did you save your stuff?';
+      }
+
+      // For Safari
+      return 'Did you save your stuff?';
+    };
+  }
+
+  componentWillUnmount() {
+    window.onbeforeunload = () => {};
+  }
+
   onEditorStateChange = (editorState) => {
     this.setState({ editorState });
   }
@@ -129,14 +147,14 @@ class RequestListPage extends Component {
               {exp_condition === 'between' &&
                 <div className={s.inline}>
                   <input
-                    type="number" min={0} max={99} placeholder="min"
+                    type="number" min={0} max={99} placeholder="Min"
                     className={s['num-input']}
                     value={exp_between_min}
                     onChange={(e) => this.setState({ exp_between_min: e.target.value })}
                   />
                   -
                   <input
-                    type="number" min={0} max={99} placeholder="max"
+                    type="number" min={0} max={99} placeholder="Max"
                     className={s['num-input']}
                     value={exp_between_max}
                     onChange={(e) => this.setState({ exp_between_max: e.target.value })}
@@ -174,14 +192,14 @@ class RequestListPage extends Component {
               <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
               <div>
                 <input
-                  type="number" min={0} max={9999999} placeholder="min"
+                  type="number" min={0} max={9999999} placeholder="Min"
                   className={c(s['salary-input'], s.fix)}
                   value={salary_min}
                   onChange={(e) => this.setState({ salary_min: e.target.value })}
                 />
                 -
                 <input
-                  type="number" min={0} max={9999999} placeholder="max"
+                  type="number" min={0} max={9999999} placeholder="Max"
                   className={s['salary-input']}
                   value={salary_max}
                   onChange={(e) => this.setState({ salary_max: e.target.value })}
