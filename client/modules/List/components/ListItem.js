@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import s from './ListItem.css';
+import c from 'classnames';
 // import moment from 'moment';
 
 const List = ({ list: { _id, title, company_image, company_name, company_location, allow_remote, exp, salary, created_at, skills, request_type }, admin }) => (
@@ -18,7 +19,11 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
         {/* Company Name */}
         <div className={`${s.bold} ${s.detail}`}>{company_name}</div>
         {/* Company Location */}
-        {/*<div className={s.detail}>{company_location.city} {allow_remote ? '(allow remote)' : ''}</div>*/}
+        {allow_remote &&
+          <div className={c(s.detail, s.remote)}>
+            &#10004; Remote
+          </div>
+        }
         {/* Experience */}
         {exp.condition !== 'no' &&
           <div className={s.detail}>
@@ -34,7 +39,7 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
         {/* Internship */}
         {exp.has_intern &&
           <div className={`${s.detail} ${s.green}`}>
-            Internship
+            &#10004; Internship
           </div>
         }
         {/* Salary */}
@@ -49,7 +54,7 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
         </div>
         */}
       </div>
-      <div>
+      <div className={s.skillWrapper}>
         {skills.map((skill, i) =>
           <span className={s.skill} key={i}>{skill}</span>)}
       </div>
@@ -59,14 +64,5 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
     </div>
   </div>
 );
-
-// List.propTypes = {
-//   list: PropTypes.shape({
-//     company_id
-//   }),
-//   company: PropTypes.string.isRequired,
-//   title: PropTypes.string.isRequired,
-//   company: PropTypes.string.isRequired,
-// };
 
 export default List;
