@@ -113,85 +113,88 @@ class RequestListPage extends Component {
           {/*
             Experience
           */}
-          <div className={s.row}>
-            <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>Experience rage of all your company's jobs.</p>
-            <select
-              value={exp_condition}
-              onChange={(e) => this.setState({ exp_condition: e.target.value })}
-              className={s['exp-dropdown']}
-            >
-              <option value="no">No minimum</option>
-              <option value="between">Between</option>
-              <option value="more_than">More than</option>
-            </select>
-            {exp_condition === 'between' &&
-              <div className={s.inline}>
+          <div style={{ height: '150px' }}>
+            <div className="six columns">
+              <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
+              <p className={s['sub-label']}>Experience rage of all your company's jobs.</p>
+              <select
+                value={exp_condition}
+                onChange={(e) => this.setState({ exp_condition: e.target.value })}
+                className={s['exp-dropdown']}
+              >
+                <option value="no">No minimum</option>
+                <option value="between">Between</option>
+                <option value="more_than">More than</option>
+              </select>
+              {exp_condition === 'between' &&
+                <div className={s.inline}>
+                  <input
+                    type="number" min={0} max={99} placeholder="min"
+                    className={s['num-input']}
+                    value={exp_between_min}
+                    onChange={(e) => this.setState({ exp_between_min: e.target.value })}
+                  />
+                  -
+                  <input
+                    type="number" min={0} max={99} placeholder="max"
+                    className={s['num-input']}
+                    value={exp_between_max}
+                    onChange={(e) => this.setState({ exp_between_max: e.target.value })}
+                  />
+                  years
+                </div>
+              }
+              {exp_condition === 'more_than' &&
+                <div className={s.inline}>
+                  <input
+                    type="number" min={0} max={99}
+                    className={s['num-input']}
+                    value={exp_more_than}
+                    onChange={(e) => this.setState({ exp_more_than: e.target.value })}
+                  />
+                  years
+                </div>
+              }
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={intern_check}
+                    onChange={(e) => this.setState({ intern_check: e.target.checked })}
+                  />
+                  <span className="label-body">Internship opening</span>
+                </label>
+              </div>
+            </div>
+            {/*
+              Salary
+            */}
+            <div className="six columns">
+              <label className={s.label}>Salary Range</label>
+              <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
+              <div>
                 <input
-                  type="number" min={0} max={99} placeholder="min"
-                  className={s['num-input']}
-                  value={exp_between_min}
-                  onChange={(e) => this.setState({ exp_between_min: e.target.value })}
+                  type="number" min={0} max={9999999} placeholder="min"
+                  className={c(s['salary-input'], s.fix)}
+                  value={salary_min}
+                  onChange={(e) => this.setState({ salary_min: e.target.value })}
                 />
                 -
                 <input
-                  type="number" min={0} max={99} placeholder="max"
-                  className={s['num-input']}
-                  value={exp_between_max}
-                  onChange={(e) => this.setState({ exp_between_max: e.target.value })}
+                  type="number" min={0} max={9999999} placeholder="max"
+                  className={s['salary-input']}
+                  value={salary_max}
+                  onChange={(e) => this.setState({ salary_max: e.target.value })}
                 />
-                years
+                THB
               </div>
-            }
-            {exp_condition === 'more_than' &&
-              <div className={s.inline}>
-                <input
-                  type="number" min={0} max={99}
-                  className={s['num-input']}
-                  value={exp_more_than}
-                  onChange={(e) => this.setState({ exp_more_than: e.target.value })}
-                />
-                years
-              </div>
-            }
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={intern_check}
-                  onChange={(e) => this.setState({ intern_check: e.target.checked })}
-                />
-                <span className="label-body">Internship opening</span>
-              </label>
             </div>
           </div>
-          {/*
-            Salary
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Salary Range</label>
-            <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
-            <div>
-              <input
-                type="number" min={0} max={9999999} placeholder="min"
-                className={c(s['salary-input'], s.fix)}
-                value={salary_min}
-                onChange={(e) => this.setState({ salary_min: e.target.value })}
-              />
-              -
-              <input
-                type="number" min={0} max={9999999} placeholder="max"
-                className={s['salary-input']}
-                value={salary_max}
-                onChange={(e) => this.setState({ salary_max: e.target.value })}
-              />
-              THB
-            </div>
-          </div>
+          <hr />
           {/*
             Details - Draft.js
           */}
-          <div className={s.rowFull}>
+          <div>
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>E.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
             <DetailsEditor
@@ -212,35 +215,41 @@ class RequestListPage extends Component {
               className={s['how-to-apply']}
             />
           </div>
-          {/*
-            Company's name
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Company's Name<span className={s.requiredSign}>*</span></label>
-            <input
-              type="text" maxLength={120}
-              value={company_name}
-              onChange={(e) => this.setState({ company_name: e.target.value })}
-            />
-          </div>
-          {/*
-            Company's logo
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Company's Logo<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>1 : 1 regtangle</p>
-            <input
-              type="file" accept="image/*"
-              onChange={this.onLogoImageChange}
-              className={s.logoImageInput}
-            />
-            {logo_preview_url ?
-              <img src={logo_preview_url} alt="logo" className={s.logoPreview} id="logo-preview" />
-              :
-              <div className={s.logoPreviewBlank}>
-                Preview
+          <div style={{ height: '175px' }}>
+            <div className="six columns">
+              {/*
+                Company's name
+              */}
+              <div className={s.row}>
+                <label className={s.label}>Company's Name<span className={s.requiredSign}>*</span></label>
+                <input
+                  type="text" maxLength={120}
+                  value={company_name}
+                  onChange={(e) => this.setState({ company_name: e.target.value })}
+                />
               </div>
-            }
+            </div>
+            <div className="six columns">
+              {/*
+                Company's logo
+              */}
+              <div className={s.row}>
+                <label className={s.label}>Company's Logo<span className={s.requiredSign}>*</span></label>
+                <p className={s['sub-label']}>1 : 1 regtangle</p>
+                <input
+                  type="file" accept="image/*"
+                  onChange={this.onLogoImageChange}
+                  className={s.logoImageInput}
+                />
+                {logo_preview_url ?
+                  <img src={logo_preview_url} alt="logo" className={s.logoPreview} id="logo-preview" />
+                  :
+                  <div className={s.logoPreviewBlank}>
+                    Preview
+                  </div>
+                }
+              </div>
+            </div>
           </div>
           {/*
             Company's location
@@ -253,7 +262,7 @@ class RequestListPage extends Component {
             <div className={s.city}>
               <label className={s.label}>City (Province)</label>
               <p>Bangkok</p>
-              <p className={s['sub-label']}>Outside Bangkok and other country soon!</p>
+              <p className={s['sub-label']}>Outside Bangkok and other countries soon!</p>
             </div>
             <div>
               <label className={s.label}>Location Detail</label>
