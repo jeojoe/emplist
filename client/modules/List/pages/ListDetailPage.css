@@ -1,3 +1,8 @@
+.detailWrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
 .image-wrapper {
   width: 80px;
   height: 49px;

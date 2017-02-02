@@ -77,7 +77,7 @@ class ListDetailPage extends Component {
     const Salary = salary.max === 9999999 ? 'Unspecified.' : `${salary.min} - ${salary.max} B`;
 
     return (
-      <div>
+      <div className={s.detailWrapper}>
         <div className={s['image-wrapper']}>
           <img src={company_image} alt={`${company_name}'s logo`} className={s.image} />
         </div>
