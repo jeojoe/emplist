@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import callApi from '../../../util/apiCaller';
 
 class DoneRequestListPage extends Component {
@@ -17,8 +18,8 @@ class DoneRequestListPage extends Component {
 
   componentWillMount() {
     const { id } = this.props.params;
-    callApi(`/requests/check/${id}`).then((res, err) => {
-      if (err || !res.ok) {
+    callApi(`/requests/check/${id}`).then((res) => {
+      if (!res.ok) {
         this.setState({ fetching: false, is_error: true });
       } else {
         this.setState({
@@ -35,7 +36,7 @@ class DoneRequestListPage extends Component {
       this.setState({ requesting: true });
       const { id } = this.props.params;
       callApi(`/requests/promote/${id}`).then((res) => {
-        if (!res.err) {
+        if (!res.ok) {
           this.setState({ requesting: false });
           alert(res.msg);
           return;
@@ -67,13 +68,13 @@ class DoneRequestListPage extends Component {
     return (
       <div className="container">
         <p>
-          Sending request done ! we will let you know via your email if your list passes checking.
+          <FormattedMessage id="doneRequestDesc1" />
         </p>
         <p>
-          Posting list is complete free. but it has a problem of ถูกดันลงไป. So we'd like to know the needs of this feature. If you'd like to have this feature on your list please click the button below..
+          <FormattedMessage id="doneRequestDesc2" />
         </p>
         <button
-          className={done ? 'button' : 'button-primary'}
+          className={done || requesting ? 'button' : 'button-primary'}
           onClick={this.sendPromoteRequest}
         >
           {requesting && 'Sending request..'}
