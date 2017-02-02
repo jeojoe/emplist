@@ -1,5 +1,8 @@
 #navbar {
   margin: 50px 0 10px;
+  @media (max-width: 400px) {
+    margin-top: 30px;
+  }
 }
 
 .after-logo {
@@ -7,6 +10,9 @@
   vertical-align: top;
   margin-left: 40px;
   padding-top: 10px;
+  @media (max-width: 400px) {
+    margin-left: 0;
+  }
   h6 {
     margin: 0;
     font-size: 18px;
