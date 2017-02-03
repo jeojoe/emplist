@@ -208,7 +208,6 @@ class RequestListPage extends Component {
               </div>
             </div>
           </div>
-          <hr />
           {/*
             Details - Draft.js
           */}
@@ -221,7 +220,7 @@ class RequestListPage extends Component {
             />
           </div>
           {/*
-            Details - Draft.js
+            How to apply - Draft.js
           */}
           <div className={s.rowFull}>
             <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
@@ -233,6 +232,7 @@ class RequestListPage extends Component {
               className={s['how-to-apply']}
             />
           </div>
+          <hr />
           <div style={{ height: '175px' }}>
             <div className="six columns">
               {/*
@@ -300,6 +300,7 @@ class RequestListPage extends Component {
               <span className="label-body">Remote working allowed</span>
             </label>
           </div>
+          <hr />
           {/*
             Email & Password
           */}
@@ -325,7 +326,6 @@ class RequestListPage extends Component {
               className={c({ [`${s.inputAlert}`]: notSamePassword })}
             />
           </div>
-          <hr />
           {/*
             Submit Button
           */}
