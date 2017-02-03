@@ -26,7 +26,7 @@ export class App extends Component {
         <div>
           {/* titleTemplate="%s - Blog App" */}
           <Helmet
-            title="emplist : simple finding jobs"
+            title="Emplist | Easiest way finding the right company !"
             meta={[
               { charset: 'utf-8' },
               {
