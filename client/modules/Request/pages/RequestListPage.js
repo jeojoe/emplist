@@ -108,7 +108,7 @@ class RequestListPage extends Component {
             Title
           */}
           <div className={s.row}>
-            <label className={s.label} htmlFor="exampleEmailInput">List title<span className={s.requiredSign}>*</span></label>
+            <label className={s.label} htmlFor="exampleEmailInput">Title<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>Use your creativity freely to create company’s emplist title ! (up to 120 chars.)</p>
             <input
               className="u-full-width" type="text" maxLength={120}
