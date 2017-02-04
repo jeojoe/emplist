@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { EditorState } from 'draft-js';
+import { FormattedMessage } from 'react-intl';
 
 import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
@@ -109,7 +110,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.row}>
             <label className={s.label} htmlFor="exampleEmailInput">Title<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>Use your creativity freely to create company’s emplist title ! (up to 120 chars.)</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_titleDesc" /></p>
             <input
               className="u-full-width" type="text" maxLength={120}
               value={title}
@@ -121,7 +122,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.row}>
             <label className={s.label}>Skills<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>All skills required. e.g. Javascript, PHP (at least 1, up to 6 skills)</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_skillsDesc" /></p>
             <SkillTagsInput
               tags={tags}
               suggestions={suggestions}
@@ -134,7 +135,7 @@ class RequestListPage extends Component {
           <div style={{ height: '150px' }}>
             <div className="six columns">
               <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
-              <p className={s['sub-label']}>Experience rage of all your company's jobs.</p>
+              <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
               <select
                 value={exp_condition}
                 onChange={(e) => this.setState({ exp_condition: e.target.value })}
@@ -189,7 +190,7 @@ class RequestListPage extends Component {
             */}
             <div className="six columns">
               <label className={s.label}>Salary Range</label>
-              <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
+              <p className={s['sub-label']}><FormattedMessage id="rlp_salaryDesc" /></p>
               <div>
                 <input
                   type="number" min={0} max={9999999} placeholder="Min"
@@ -213,7 +214,7 @@ class RequestListPage extends Component {
           */}
           <div>
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>E.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_detailsDesc" /></p>
             <DetailsEditor
               editorState={editorState}
               onEditorStateChange={this.onEditorStateChange}
@@ -224,7 +225,7 @@ class RequestListPage extends Component {
           */}
           <div className={s.rowFull}>
             <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>E.g. send resume to email, go to company’s jobs site or Workable link.</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_howToApplyDesc" /></p>
             <input
               type="text"
               value={how_to_apply}
@@ -284,7 +285,7 @@ class RequestListPage extends Component {
             </div>
             <div>
               <label className={s.label}>Location Detail</label>
-              <p className={s['sub-label']}>E.g. near BTS Foo, in Bar Building.</p>
+              <p className={s['sub-label']}><FormattedMessage id="rlp_locationDetailDesc" /></p>
               <input
                 type="text"
                 value={location_detail}
@@ -306,14 +307,14 @@ class RequestListPage extends Component {
           */}
           <div className={c(s.row, s.emailRow)}>
             <label className={s.label}>Email<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>In case we need to contact you.</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_emailDesc" /></p>
             <input
               className="u-full-width" type="email"
               value={email}
               onChange={(e) => this.setState({ email: e.target.value })}
             />
             <label className={s.label}>Password<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>For editing list in the next 30 days displaying period.</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_passwordDesc" /></p>
             <input
               className="u-full-width" type="password"
               value={password}
