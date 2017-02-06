@@ -42,7 +42,7 @@ class SkillTagsInput extends Component {
         classNames={{
           tag: s.skill,
           remove: s.remove,
-          tagInput: tags.length >= 6 ? s['hide-input'] : 'ReactTags__tagInput',
+          tagInput: tags.length >= 7 ? s['hide-input'] : 'ReactTags__tagInput',
         }}
       />
     );
