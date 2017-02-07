@@ -52,7 +52,7 @@ class DoneRequestListPage extends Component {
     if (fetching) {
       return (
         <div className="container">
-          <p>Completing request..</p>
+          <p><FormattedMessage id="drlp_completing" /></p>
         </div>
       );
     }
@@ -60,7 +60,7 @@ class DoneRequestListPage extends Component {
     if (is_error) {
       return (
         <div className="container">
-          <p>Oops we have a problem ! please send you company name to <a>hi.emplist@gmail.com</a> so that we can figure it out !</p>
+          <p><FormattedMessage id="drlp_err" /></p>
         </div>
       );
     }
@@ -73,14 +73,14 @@ class DoneRequestListPage extends Component {
         <p>
           <FormattedMessage id="doneRequestDesc2" />
         </p>
-        <button
+        {/*<button
           className={done || requesting ? 'button' : 'button-primary'}
           onClick={this.sendPromoteRequest}
         >
           {requesting && 'Sending request..'}
           {!requesting && !done && `${company_name} requests promote listing`}
           {!requesting && done && 'You have requested, Thank you !'}
-        </button>
+        </button>*/}
       </div>
     );
   }
