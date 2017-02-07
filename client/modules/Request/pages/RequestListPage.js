@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { EditorState } from 'draft-js';
 import { FormattedMessage } from 'react-intl';
 
 import SkillTagsInput from '../components/SkillTagsInput';
@@ -25,7 +24,7 @@ class RequestListPage extends Component {
       intern_check: false,
       salary_min: null,
       salary_max: null,
-      editorState: EditorState.createEmpty(),
+      // editorState: EditorState.createEmpty(),
       how_to_apply: '',
       company_name: '',
       logo_image_file: null,

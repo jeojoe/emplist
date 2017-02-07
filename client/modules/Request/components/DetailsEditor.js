@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Editor } from 'react-draft-wysiwyg';
+// import { Editor } from 'react-draft-wysiwyg';
 import c from 'classnames';
 import s from './DetailsEditor.css';
 import _ from 'lodash';
@@ -13,12 +13,21 @@ class DetailsEditor extends Component {
     this.handleScroll = _.throttle(this.handleScroll, 100);
   }
 
+  componentWillMount() {
+    console.log('what');
+  }
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    // window.addEventListener('scroll', this.handleScroll);
+    console.log('hey');
+    console.log(window.$);
+    console.log(window.jQuery);
+    setTimeout(() => {
+      $('#react-trumbowyg').trumbowyg();
+    }, 1000);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    // window.removeEventListener('scroll', this.handleScroll);
   }
 
   handleScroll = () => {
@@ -33,7 +42,7 @@ class DetailsEditor extends Component {
   }
 
   render() {
-    const { editorState, onEditorStateChange } = this.props;
+    // const { editorState, onEditorStateChange } = this.props;
     const { isBarFix } = this.state;
     const toolbar = {
       options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'history'],
@@ -44,7 +53,7 @@ class DetailsEditor extends Component {
 
     return (
       <div>
-        <Editor
+        {/*<Editor
           editorState={editorState}
           onEditorStateChange={onEditorStateChange}
           toolbar={toolbar}
@@ -52,7 +61,8 @@ class DetailsEditor extends Component {
           toolbarClassName={c(s.toolbar, {[`${s.fixed}`]: isBarFix})}
           wrapperClassName={s.wrapper}
           editorClassName={s.editor}
-        />
+        />*/}
+        <div id='react-trumbowyg' />
       </div>
     );
   }
