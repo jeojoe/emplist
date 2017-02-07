@@ -64,6 +64,10 @@ module.exports = {
   },
 
   plugins: [
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery',
+    //   jQuery: 'jquery',
+    // }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -74,7 +78,7 @@ module.exports = {
       'process.env': {
         CLIENT: JSON.stringify(true),
         'NODE_ENV': JSON.stringify('development'),
-      }
+      },
     }),
   ],
 
