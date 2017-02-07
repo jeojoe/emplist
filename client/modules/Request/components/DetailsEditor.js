@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 // import { Editor } from 'react-draft-wysiwyg';
 import scriptLoader from 'react-async-script-loader';
 import c from 'classnames';
-import s from './DetailsEditor.css';
+// import s from './DetailsEditor.css';
 import _ from 'lodash';
+
 
 class DetailsEditor extends Component {
   constructor(props) {
@@ -11,24 +12,13 @@ class DetailsEditor extends Component {
     this.state = {
       isBarFix: false,
     };
-    this.handleScroll = _.throttle(this.handleScroll, 100);
+    // this.handleScroll = _.throttle(this.handleScroll, 100);
   }
 
   componentDidMount() {
     const { isScriptLoaded, isScriptLoadSucceed } = this.props;
     if (isScriptLoaded && isScriptLoadSucceed) {
-      tinymce.init({
-        selector: '#mytextarea',
-        theme: 'modern',
-        menubar: false,
-        plugins: [
-          'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-          'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-          'save table contextmenu directionality emoticons template paste textcolor',
-        ],
-        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
-        plugin_preview_width: 900,
-      });
+      this.initEditor();
     }
     // window.addEventListener('scroll', this.handleScroll);
   }
@@ -36,18 +26,7 @@ class DetailsEditor extends Component {
   componentWillReceiveProps({ isScriptLoaded, isScriptLoadSucceed }) {
     if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
       if (isScriptLoadSucceed) {
-        tinymce.init({
-          selector: '#mytextarea',
-          theme: 'modern',
-          menubar: false,
-          plugins: [
-            'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-            'save table contextmenu directionality emoticons template paste textcolor',
-          ],
-          toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
-          plugin_preview_width: 900,
-        });
+        this.initEditor();
       }
     }
   }
@@ -56,16 +35,32 @@ class DetailsEditor extends Component {
     tinymce.remove('#mytextarea');
   }
 
-  handleScroll = () => {
-    const editor = document.getElementsByClassName(s.editor)[0];
-    const editorTop = editor.getBoundingClientRect().top;
-    const editorHeight = editor.offsetHeight;
-    if (editorTop <= 0 && -editorTop <= editorHeight) {
-      this.setState({ isBarFix: true });
-    } else {
-      this.setState({ isBarFix: false });
-    }
+  initEditor = () => {
+    tinymce.init({
+      selector: '#mytextarea',
+      theme: 'modern',
+      max_width: 900,
+      min_height: 500,
+      menubar: false,
+      plugins: [
+        'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+        'searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'save table contextmenu directionality emoticons template paste textcolor',
+      ],
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+      plugin_preview_width: 900,
+    });
   }
+  // handleScroll = () => {
+  //   const editor = document.getElementsByClassName(s.editor)[0];
+  //   const editorTop = editor.getBoundingClientRect().top;
+  //   const editorHeight = editor.offsetHeight;
+  //   if (editorTop <= 0 && -editorTop <= editorHeight) {
+  //     this.setState({ isBarFix: true });
+  //   } else {
+  //     this.setState({ isBarFix: false });
+  //   }
+  // }
 
   render() {
     const { isScriptLoaded, isScriptLoadedSucceed } = this.props;
