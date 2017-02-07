@@ -38,6 +38,9 @@
   &:hover {
     text-decoration: underline;
   }
+  @media (max-width: 400px) {
+    font-size: 14px;
+  }
 }
 
 .detail {
@@ -47,6 +50,11 @@
   display: inline-block;
   white-space: nowrap;
   letter-spacing: 0.03rem;
+  @media (max-width: 400px) {
+    font-size: 11px;
+    margin: 5px 10px 2px 0;
+    line-height: 0.1;
+  }
 }
 
 .remote {
@@ -58,6 +66,9 @@
   font-weight: 700;
   color: #222;
   font-size: 14px;
+  @media (max-width: 400px) {
+    font-size: 12px;
+  }
 }
 
 .green {
@@ -84,5 +95,8 @@
   margin-right: 10px;
   cursor: default;
   letter-spacing: 0.03rem;
+  @media (max-width: 400px) {
+    padding: 1px 4px;
+  }
 }
 

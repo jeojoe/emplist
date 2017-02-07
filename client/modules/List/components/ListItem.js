@@ -48,15 +48,15 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
             {salary.min}-{salary.max} <span className={s.baht}>฿</span>
           </div>
         }
-        {/* Date
+        
         <div className={s.detail}>
-          {moment(created_at).fromNow()}
+          {skills.map((skill, i) =>
+          <span className={s.skill} key={i}>{skill}</span>)}
         </div>
-        */}
+        
       </div>
       <div className={s.skillWrapper}>
-        {skills.map((skill, i) =>
-          <span className={s.skill} key={i}>{skill}</span>)}
+        
       </div>
       {admin &&
         <div>{request_type}</div>
