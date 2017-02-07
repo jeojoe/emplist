@@ -41,13 +41,13 @@ class DetailsEditor extends Component {
       theme: 'modern',
       max_width: 900,
       min_height: 500,
-      menubar: false,
       plugins: [
-        'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-        'searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-        'save table contextmenu directionality emoticons template paste textcolor',
+        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+        'insertdatetime media nonbreaking save table contextmenu directionality',
+        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc',
       ],
-      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+      toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | codesample | forecolor backcolor emoticons | print fullscreen ',
       plugin_preview_width: 900,
     });
   }
