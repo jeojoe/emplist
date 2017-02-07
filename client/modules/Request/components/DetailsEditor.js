@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import { Editor } from 'react-draft-wysiwyg';
+import scriptLoader from 'react-async-script-loader';
 import c from 'classnames';
 import s from './DetailsEditor.css';
 import _ from 'lodash';
@@ -13,21 +14,46 @@ class DetailsEditor extends Component {
     this.handleScroll = _.throttle(this.handleScroll, 100);
   }
 
-  componentWillMount() {
-    console.log('what');
-  }
   componentDidMount() {
+    const { isScriptLoaded, isScriptLoadSucceed } = this.props;
+    if (isScriptLoaded && isScriptLoadSucceed) {
+      tinymce.init({
+        selector: '#mytextarea',
+        theme: 'modern',
+        menubar: false,
+        plugins: [
+          'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+          'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+          'save table contextmenu directionality emoticons template paste textcolor',
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+        plugin_preview_width: 900,
+      });
+    }
     // window.addEventListener('scroll', this.handleScroll);
-    console.log('hey');
-    console.log(window.$);
-    console.log(window.jQuery);
-    setTimeout(() => {
-      $('#react-trumbowyg').trumbowyg();
-    }, 1000);
+  }
+
+  componentWillReceiveProps({ isScriptLoaded, isScriptLoadSucceed }) {
+    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      if (isScriptLoadSucceed) {
+        tinymce.init({
+          selector: '#mytextarea',
+          theme: 'modern',
+          menubar: false,
+          plugins: [
+            'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            'save table contextmenu directionality emoticons template paste textcolor',
+          ],
+          toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+          plugin_preview_width: 900,
+        });
+      }
+    }
   }
 
   componentWillUnmount() {
-    // window.removeEventListener('scroll', this.handleScroll);
+    tinymce.remove('#mytextarea');
   }
 
   handleScroll = () => {
@@ -42,30 +68,17 @@ class DetailsEditor extends Component {
   }
 
   render() {
-    // const { editorState, onEditorStateChange } = this.props;
+    const { isScriptLoaded, isScriptLoadedSucceed } = this.props;
     const { isBarFix } = this.state;
-    const toolbar = {
-      options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'history'],
-      inline: {
-        options: ['bold', 'italic', 'underline', 'strikethrough'],
-      },
-    };
 
     return (
       <div>
-        {/*<Editor
-          editorState={editorState}
-          onEditorStateChange={onEditorStateChange}
-          toolbar={toolbar}
-          placeholder="Enter text..."
-          toolbarClassName={c(s.toolbar, {[`${s.fixed}`]: isBarFix})}
-          wrapperClassName={s.wrapper}
-          editorClassName={s.editor}
-        />*/}
-        <div id='react-trumbowyg' />
+        <textarea id="mytextarea">Hello, World!</textarea>
       </div>
     );
   }
 }
 
-export default DetailsEditor;
+export default scriptLoader(
+  'https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=icv599u9scktjksi0db6oh4n3obkh0ryupfevrw06ps5q9vj'
+)(DetailsEditor);
