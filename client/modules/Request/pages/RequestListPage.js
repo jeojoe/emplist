@@ -60,10 +60,6 @@ class RequestListPage extends Component {
     window.onbeforeunload = () => {};
   }
 
-  onEditorStateChange = (editorState) => {
-    this.setState({ editorState });
-  }
-
   onLogoImageChange = (e) => {
     e.preventDefault();
     const reader = new FileReader();

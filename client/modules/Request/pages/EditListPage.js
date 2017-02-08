@@ -24,7 +24,6 @@ class EditListPage extends Component {
       intern_check: false,
       salary_min: null,
       salary_max: null,
-      editorState: EditorState.createEmpty(),
       how_to_apply: '',
       company_name: '',
       company_id: '',
@@ -51,19 +50,13 @@ class EditListPage extends Component {
         const tags = skills.map((skill, i) => {
           return { id: i + 1, text: skill };
         });
-        const contentState = convertFromRaw(JSON.parse(details));
-        const editorState = EditorState.createWithContent(contentState);
 
         this.setState({
           fetching: false,
-          title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, editorState, exp_condition: exp.condition, exp_between_min: exp.min, exp_between_max: exp.max, exp_more_than: exp.min, intern_check: exp.has_intern, tags, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image, company_id,
+          title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, exp_condition: exp.condition, exp_between_min: exp.min, exp_between_max: exp.max, exp_more_than: exp.min, intern_check: exp.has_intern, tags, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image, company_id, details,
         });
       }
     });
-  }
-
-  onEditorStateChange = (editorState) => {
-    this.setState({ editorState });
   }
 
   onLogoImageChange = (e) => {
