@@ -24,7 +24,6 @@ class RequestListPage extends Component {
       intern_check: false,
       salary_min: null,
       salary_max: null,
-      // editorState: EditorState.createEmpty(),
       how_to_apply: '',
       company_name: '',
       logo_image_file: null,
@@ -211,7 +210,7 @@ class RequestListPage extends Component {
           {/*
             Details - Draft.js
           */}
-          <div>
+          <div style={{ paddingBottom: '30px' }}>
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}><FormattedMessage id="rlp_detailsDesc" /></p>
             <DetailsEditor
