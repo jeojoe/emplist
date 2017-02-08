@@ -16,23 +16,24 @@ class DetailsEditor extends Component {
   }
 
   componentDidMount() {
-    const { isScriptLoaded, isScriptLoadSucceed } = this.props;
-    if (isScriptLoaded && isScriptLoadSucceed) {
+    const { isScriptLoaded, isScriptLoadSucceed, details } = this.props;
+    if (isScriptLoaded && isScriptLoadSucceed && details) {
       this.initEditor();
     }
     // window.addEventListener('scroll', this.handleScroll);
   }
 
-  componentWillReceiveProps({ isScriptLoaded, isScriptLoadSucceed }) {
-    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
-      if (isScriptLoadSucceed) {
+  componentWillReceiveProps({ isScriptLoaded, isScriptLoadSucceed, details }) {
+    const scriptNotLoadedYet = !this.props.isScriptLoaded;
+    if (isScriptLoaded && scriptNotLoadedYet) { // load finished
+      if (isScriptLoadSucceed && details) {
         this.initEditor();
       }
     }
   }
 
   componentWillUnmount() {
-    tinymce.remove('#mytextarea');
+    tinyMCE.remove('#mytextarea');
   }
 
   initEditor = () => {
@@ -49,6 +50,11 @@ class DetailsEditor extends Component {
       ],
       toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons | link image media | codesample | print preview fullscreen ',
       plugin_preview_width: 900,
+    }).then(() => {
+      const path = this.props.pathname;
+      if (path.length - 5 === path.indexOf('/edit')) {
+        tinyMCE.get('mytextarea').setContent(this.props.details);
+      }
     });
   }
   // handleScroll = () => {

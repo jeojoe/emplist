@@ -92,7 +92,8 @@ class RequestListPage extends Component {
   }
 
   render() {
-    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, email, password, password_confirm, additional_note } = this.state;
+    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, email, password, password_confirm, additional_note } = this.state;
+    const { pathname } = this.props.location;
 
     const notSamePassword = password !== password_confirm;
     return (
@@ -210,8 +211,7 @@ class RequestListPage extends Component {
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}><FormattedMessage id="rlp_detailsDesc" /></p>
             <DetailsEditor
-              editorState={editorState}
-              onEditorStateChange={this.onEditorStateChange}
+              details pathname={pathname}
             />
           </div>
           {/*

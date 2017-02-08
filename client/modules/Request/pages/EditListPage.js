@@ -37,6 +37,7 @@ class EditListPage extends Component {
       additional_note: '',
       submitting: false,
       error: true,
+      details: '',
     };
   }
 
@@ -99,7 +100,8 @@ class EditListPage extends Component {
         </div>
       );
     }
-    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, additional_note } = this.state;
+    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, additional_note, details } = this.state;
+    const { pathname } = this.props.location;
 
     return (
       <div className="container">
@@ -214,14 +216,13 @@ class EditListPage extends Component {
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>E.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
             <DetailsEditor
-              editorState={editorState}
-              onEditorStateChange={this.onEditorStateChange}
+              details={details} pathname={pathname}
             />
           </div>
           {/*
             Details - Draft.js
           */}
-          <div className={s.rowFull}>
+          <div className={s.rowFull} style={{ paddingBottom: '30px' }}>
             <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}>E.g. send resume to email, go to company’s jobs site or Workable link.</p>
             <input
