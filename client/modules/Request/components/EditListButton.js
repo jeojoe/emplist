@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { convertToRaw } from 'draft-js';
 import { withRouter } from 'react-router';
 import AWS from 'aws-sdk';
 import cuid from 'cuid';

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
-import { EditorState, convertFromRaw } from 'draft-js';
 
 import SkillTagsInput from '../components/SkillTagsInput';
 import DetailsEditor from '../components/DetailsEditor';
