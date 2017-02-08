@@ -119,7 +119,7 @@ export function insertListRequest(req, res) {
           min: salary_min || 0,
           max: salary_max || 9999999,
         },
-        details: JSON.stringify(details),
+        details,
         how_to_apply,
         additional_note,
       }).save();

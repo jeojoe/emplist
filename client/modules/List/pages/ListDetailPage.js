@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import draftToHtml from 'draftjs-to-html';
 import callApi from '../../../util/apiCaller';
 
 import AdminHeader from '../../Admin/components/AdminHeader';
@@ -102,7 +101,7 @@ class ListDetailPage extends Component {
         </div>
 
         <div>
-          <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(details)) }} />
+          <div dangerouslySetInnerHTML={{ __html: details }} />
         </div>
 
         <div>

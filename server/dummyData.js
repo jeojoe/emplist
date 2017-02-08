@@ -23,59 +23,7 @@ function insertDummyData() {
     exp_between_max: 4,
     salary_min: 50000,
     salary_max: 130000,
-    details: {
-      blocks: [
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: 'w',
-          key: '4u0d1',
-        },
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: '',
-          key: 'c0sj1',
-        },
-        {
-          entityRanges: [
-            {
-              key: 0,
-              length: 1,
-              offset: 0,
-            },
-          ],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'atomic',
-          text: ' ',
-          key: 'r7qc',
-        },
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: '',
-          key: 'c9e2e',
-        },
-      ],
-      entityMap: {
-        0: {
-          data: {
-            width: '100%',
-            height: 'auto',
-            src: 'http://d3vi0b2svic5aq.cloudfront.net/wp_content/uploads/2016/04/08081807/header.jpg',
-          },
-          mutability: 'MUTABLE',
-          type: 'IMAGE',
-        },
-      },
-    },
+    details: '<p>Hello, World!;ldsakfsadf</p><p>lkasd</p><p>fasdfsadf</p><table><tbody><tr><td>lkjlkl;klk;</td><td>;lklkl;k</td><td>l;k;lk</td><td>;lkl;kl;k</td><td>;lkl;k;lkl;k</td></tr><tr><td>;lkl;k;lk</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p><img style="float: left;" src="https://nimbl3.com/assets/image/home-hero-1.png" alt="" width="706" height="527" /></p>',
     how_to_apply: 'อีเมล์มาที่ recruitment@iconext.co.th บอกเราว่า คุณอยากร่วมงานกับเรา',
   };
 
@@ -93,59 +41,7 @@ function insertDummyData() {
     exp_condition: 'no',
     salary_min: 35000,
     salary_max: 130000,
-    details: {
-      blocks: [
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: 'w',
-          key: '4u0d1',
-        },
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: '',
-          key: 'c0sj1',
-        },
-        {
-          entityRanges: [
-            {
-              key: 0,
-              length: 1,
-              offset: 0,
-            },
-          ],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'atomic',
-          text: ' ',
-          key: 'r7qc',
-        },
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: '',
-          key: 'c9e2e',
-        },
-      ],
-      entityMap: {
-        0: {
-          data: {
-            width: '100%',
-            height: 'auto',
-            src: 'http://d3vi0b2svic5aq.cloudfront.net/wp_content/uploads/2016/04/08081807/header.jpg',
-          },
-          mutability: 'MUTABLE',
-          type: 'IMAGE',
-        },
-      },
-    },
+    details: '<p>Hello, World!;ldsakfsadf</p><p>lkasd</p><p>fasdfsadf</p><table><tbody><tr><td>lkjlkl;klk;</td><td>;lklkl;k</td><td>l;k;lk</td><td>;lkl;kl;k</td><td>;lkl;k;lkl;k</td></tr><tr><td>;lkl;k;lk</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p><img style="float: left;" src="https://nimbl3.com/assets/image/home-hero-1.png" alt="" width="706" height="527" /></p>',
     how_to_apply: 'อีเมล์มาที่ recruitment@iconext.co.th บอกเราว่า คุณอยากร่วมงานกับเรา',
   };
 
@@ -164,59 +60,7 @@ function insertDummyData() {
     intern_check: true,
     salary_min: 25000,
     salary_max: 80000,
-    details: {
-      blocks: [
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: 'w',
-          key: '4u0d1',
-        },
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: '',
-          key: 'c0sj1',
-        },
-        {
-          entityRanges: [
-            {
-              key: 0,
-              length: 1,
-              offset: 0,
-            },
-          ],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'atomic',
-          text: ' ',
-          key: 'r7qc',
-        },
-        {
-          entityRanges: [],
-          inlineStyleRanges: [],
-          depth: 0,
-          type: 'unstyled',
-          text: '',
-          key: 'c9e2e',
-        },
-      ],
-      entityMap: {
-        0: {
-          data: {
-            width: '100%',
-            height: 'auto',
-            src: 'http://d3vi0b2svic5aq.cloudfront.net/wp_content/uploads/2016/04/08081807/header.jpg',
-          },
-          mutability: 'MUTABLE',
-          type: 'IMAGE',
-        },
-      },
-    },
+    details: '<p>Hello, World!;ldsakfsadf</p><p>lkasd</p><p>fasdfsadf</p><table><tbody><tr><td>lkjlkl;klk;</td><td>;lklkl;k</td><td>l;k;lk</td><td>;lkl;kl;k</td><td>;lkl;k;lkl;k</td></tr><tr><td>;lkl;k;lk</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p><img style="float: left;" src="https://nimbl3.com/assets/image/home-hero-1.png" alt="" width="706" height="527" /></p>',
     how_to_apply: 'อีเมล์มาที่ recruitment@iconext.co.th บอกเราว่า คุณอยากร่วมงานกับเรา',
   };
 

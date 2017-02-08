@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import AWS from 'aws-sdk';
 import cuid from 'cuid';
-import { convertToRaw } from 'draft-js';
 import c from 'classnames';
 import callApi from '../../../util/apiCaller';
 import aws_config from '../../../../secret_config.json';
@@ -73,7 +72,7 @@ class RequestListButton extends Component {
 
     setSubmitState(true);
     const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city, location_detail } = this.props; //eslint-disable-line
-    const details = convertToRaw(editorState.getCurrentContent());
+    const details = tinyMCE.get('mytextarea').getContent(); //eslint-disable-line
 
     if (!title || !tags) {
       setSubmitState(false);
