@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import { Editor } from 'react-draft-wysiwyg';
 import scriptLoader from 'react-async-script-loader';
+import isMobile from '../../../util/mobile-detect.js';
 import c from 'classnames';
 // import s from './DetailsEditor.css';
 import _ from 'lodash';
@@ -43,11 +43,11 @@ class DetailsEditor extends Component {
       min_height: 500,
       plugins: [
         'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-        'searchreplace wordcount visualblocks visualchars code fullscreen',
+        'searchreplace visualblocks visualchars code fullscreen',
         'insertdatetime media nonbreaking save table contextmenu directionality',
         'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc',
       ],
-      toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | codesample | forecolor backcolor emoticons | print fullscreen ',
+      toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons | link image media | codesample | print preview fullscreen ',
       plugin_preview_width: 900,
     });
   }
