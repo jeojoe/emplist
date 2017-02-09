@@ -13,13 +13,14 @@ function bcryptPassword(password) {
 }
 
 /**
- * 1. Get list request
+ * 1. Get all (unapproved) list requests
  * @param req
  * @param res
  * @returns void
  */
 export function getAllListRequests(req, res) {
-  ListRequests.find({ is_approved: false })
+  const { request_type } = req.query;
+  ListRequests.find({ is_approved: false, request_type })
     .sort('-created_at')
     .select('_id request_type company_name title salary exp skills allow_remote company_image ')
     .exec((err, requests) => {

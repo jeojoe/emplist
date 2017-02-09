@@ -1,48 +1,45 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import AdminListFilter from '../components/AdminListFilter';
-import ListFeedsWrapper from '../../List/components/ListFeedsWrapper';
-import callApi from '../../../util/apiCaller';
-import { getToken } from '../authToken';
+import DynamicSegmentedControl from '../components/DynamicSegmentedControl';
+import AdminApprovementPanel from '../components/AdminApprovementPanel';
 
 class AdminHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fetching: true,
-      lists: [],
-      filter: 'requests',
+      activeIndex: 0,
     };
   }
 
-  // changeFilter = (filter) => {
-  //   this.setState({ filter });
-  // }
-  componentDidMount() {
-    const token = getToken();
-    if (!token) {
-      alert('No token.');
-      return;
+  onClickForIndex = (idx) => () => {
+    this.setState({ activeIndex: idx });
+  }
+
+  activeViewForIndex(index) {
+    switch (index) {
+      case 0:
+        return <AdminApprovementPanel />;
+      case 1:
+        return <div>In progress</div>;
+      default:
+        return <div>View not found for index {index}</div>;
     }
-    callApi(`/requests?token=${token}`, 'get').then((res) => {
-      if (!res.ok) {
-        this.props.router.push('/admin');
-        alert(res.msg);
-        console.log(res.err);
-        return;
-      }
-      this.setState({ fetching: false, lists: res.requests });
-    });
   }
 
   render() {
-    const { filter, fetching, lists } = this.state;
+    const { activeIndex } = this.state;
+    const segments = [
+      { title: 'Approve', onClick: this.onClickForIndex(0) },
+      { title: 'All Companies', onClick: this.onClickForIndex(1) },
+    ];
     return (
       <div className="container">
-        <AdminListFilter changeFilter={this.changeFilter} filter={filter} />
-        {fetching ? 'Fetching' :
-          <ListFeedsWrapper lists={lists} admin />
-        }
+
+        {/* segmented control */}
+        <DynamicSegmentedControl segments={segments} />
+
+        {/* active view */}
+        {this.activeViewForIndex(activeIndex)}
       </div>
     );
   }
