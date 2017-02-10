@@ -60,6 +60,24 @@ class EditListPage extends Component {
     });
   }
 
+  componentDidMount() {
+    window.onbeforeunload = (e) => {
+      e = e || window.event;
+
+      // For IE and Firefox prior to version 4
+      if (e) {
+        e.returnValue = 'Did you save your stuff?';
+      }
+
+      // For Safari
+      return 'Did you save your stuff?';
+    };
+  }
+
+  componentWillUnmount() {
+    window.onbeforeunload = () => {};
+  }
+
   onLogoImageChange = (e) => {
     e.preventDefault();
     const reader = new FileReader();
