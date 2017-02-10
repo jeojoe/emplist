@@ -597,10 +597,11 @@ p {
 
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* #1EAEDB, #0FA0CE */
 a {
-  color: #1EAEDB; }
+  color: #1976D2; }
 a:hover {
-  color: #0FA0CE; }
+  color: #1565C0; }
 
 
 /* Buttons
@@ -646,8 +647,8 @@ input[type="button"]:focus {
 :global(input[type="reset"].button-primary),
 :global(input[type="button"].button-primary) {
   color: #FFF;
-  background-color: #33C3F0;
-  border-color: #33C3F0; }
+  background-color: #039BE5;
+  border-color: #039BE5; }
 :global(.button.button-primary:hover),
 :global(button.button-primary:hover),
 :global(input[type="submit"].button-primary:hover),
@@ -659,8 +660,8 @@ input[type="button"]:focus {
 :global(input[type="reset"].button-primary:focus),
 :global(input[type="button"].button-primary:focus) {
   color: #FFF;
-  background-color: #1EAEDB;
-  border-color: #1EAEDB; }
+  background-color: #0288D1;
+  border-color: #0288D1; }
 
 button,
 input[type="submit"],
