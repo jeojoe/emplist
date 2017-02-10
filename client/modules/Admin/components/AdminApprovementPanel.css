@@ -1,0 +1,9 @@
+.activeFilterButton {
+	color: #4DAEFF;
+	text-decoration: underline;
+}
+
+.normalFilterButton {
+	color: darkGray;
+	text-decoration: none;
+}
