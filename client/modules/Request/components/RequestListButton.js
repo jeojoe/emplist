@@ -86,7 +86,7 @@ class RequestListButton extends Component {
       setSubmitState(false);
       alert('Please check Experience field again (errors on "More than" condition).');
       return;
-    } else if (!editorState.getCurrentContent().hasText()) {
+    } else if (!details) {
       setSubmitState(false);
       alert('Please fill some details.');
       return;

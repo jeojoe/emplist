@@ -87,8 +87,8 @@ class EditListButton extends Component {
         setSubmitState(false);
         return;
       }
-      const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, additional_note, company_id } = this.props; // eslint-disable-line
-      const details = convertToRaw(editorState.getCurrentContent());
+      const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, additional_note, company_id } = this.props; // eslint-disable-line
+      const details = tinymce.get('mytextarea').getContent();
 
       if (!title || !tags) {
         setSubmitState(false);
@@ -102,7 +102,7 @@ class EditListButton extends Component {
         setSubmitState(false);
         alert('Please check Experience field again (errors on "More than" condition).');
         return;
-      } else if (!editorState.getCurrentContent().hasText()) {
+      } else if (!details) {
         setSubmitState(false);
         alert('Please fill some details.');
         return;
