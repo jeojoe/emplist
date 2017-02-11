@@ -124,10 +124,10 @@ class RequestListPage extends Component {
               setTagsState={this.setTagsState}
             />
           </div>
-          {/*
-            Experience
-          */}
           <div style={{ height: '150px' }}>
+            {/*
+              Experience
+            */}
             <div className="six columns">
               <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
               <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
