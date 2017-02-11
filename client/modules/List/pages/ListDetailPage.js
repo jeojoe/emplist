@@ -4,6 +4,8 @@ import callApi from '../../../util/apiCaller';
 
 import AdminHeader from '../../Admin/components/AdminHeader';
 import PasswordBeforeEdit from '../components/PasswordBeforeEdit';
+import Loader from '../../App/components/Loader';
+
 import s from './ListDetailPage.css';
 import sSkill from '../components/ListItem.css';
 
@@ -117,7 +119,7 @@ class ListDetailPage extends Component {
     if (!list) {
       return (
         <div className="container">
-          <p>{err || 'Loading...'}</p>
+          {err ? <div>{err}</div> : <Loader style={{ 'text-align': 'center' }} />}
         </div>
       );
     }
