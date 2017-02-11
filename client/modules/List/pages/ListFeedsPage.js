@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import RequestListButton from '../components/RequestListButton';
 import HeaderDescription from '../components/HeaderDescription';
 import ListFeedsWrapper from '../components/ListFeedsWrapper';
 import _ from 'lodash';
@@ -96,7 +96,7 @@ class ListFeedsPage extends Component {
     return (
       <div className="container">
         <HeaderDescription />
-        <Link to="/request" className="button button-primary" >Request your list</Link>
+        <RequestListButton />
         {/*
           Filter
         */}
