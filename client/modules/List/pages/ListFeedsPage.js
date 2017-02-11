@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import RequestListButton from '../components/RequestListButton';
 import HeaderDescription from '../components/HeaderDescription';
 import ListFeedsWrapper from '../components/ListFeedsWrapper';
-import _ from 'lodash';
-
-import s from './ListFeedsPage.css';
+import Loader from '../../App/components/Loader';
 
 import callApi from '../../../util/apiCaller';
-import cn from 'classnames';
 
-const NUM_ITEMS_PER_FETCH = 6;
+import _ from 'lodash';
+import c from 'classnames';
+import s from './ListFeedsPage.css';
+
+
+const NUM_ITEMS_PER_FETCH = 10;
 
 class ListFeedsPage extends Component {
 
@@ -18,8 +20,8 @@ class ListFeedsPage extends Component {
     this.state = {
       fetching: false,
       lastIndex: -1,             // keep track of last index to fetch more
-      numLastFetch: -1,          // keep tract of last fetch count, if 0 -> no more lists.
-      feedBottomDescription: '', // cool loading text
+      numLastFetch: -1,          // keep tract of last fetch count
+      isAtTheEndOfFeed: false,         // numLastFetch < NUM_ITEMS_PER_FETCH
       filter: 'bangkok',
       lists: [],
     };
@@ -29,7 +31,7 @@ class ListFeedsPage extends Component {
   }
 
   componentDidMount() {
-    this.handleScroll = _.throttle(this.handleScroll, 1000);
+    this.fetchLists = _.throttle(this.fetchLists, 1000);
     window.addEventListener('scroll', this.handleScroll);
 
     // initial fetch
@@ -42,7 +44,7 @@ class ListFeedsPage extends Component {
 
   handleScroll() {
     // if reach bottom, load more
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 40) {
+    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
       this.fetchLists(this.state.lastIndex + 1, NUM_ITEMS_PER_FETCH);
     }
   }
@@ -54,7 +56,6 @@ class ListFeedsPage extends Component {
 
     this.setState({
       fetching: true,
-      feedBottomDescription: 'Oh you need more, wait...',
     });
 
     callApi(`/lists?startIndex=${startIndex}&num=${num_to_fetch}`, 'get').then((res, err) => {
@@ -64,18 +65,14 @@ class ListFeedsPage extends Component {
       }
       const previousLists = this.state.lists;
       const previousLength = previousLists.length;
-      console.log(`length ${res.lists.length} ${NUM_ITEMS_PER_FETCH}`);
       this.setState({
+        fetching: false,
         lists: previousLists.concat(res.lists),
         lastIndex: previousLength + res.lists.length - 1,
         numLastFetch: res.lists.length,
-
-        // No more jobs when:
-        // - fetched data length < NUM_ITEMS_PER_FETCH (e.g. no more to fetch after first time.)
-        feedBottomDescription: (res.lists.length < NUM_ITEMS_PER_FETCH) ? `No more dude. We have ${previousLists.length + res.lists.length} jobs.` : this.state.feedBottomDescription,
+        isAtTheEndOfFeed: res.lists.length < NUM_ITEMS_PER_FETCH,
       });
     });
-    setTimeout(() => this.setState({ fetching: false }), 1000);
   }
 
   changeFilter(filter) {
@@ -90,8 +87,15 @@ class ListFeedsPage extends Component {
   }
 
   render() {
-    const { feedBottomDescription, lists, filter } = this.state;
+    const { isAtTheEndOfFeed, lists, filter } = this.state;
     const isBangkok = filter === 'bangkok';
+
+    const LoaderComponent = (
+      <div className={c(s['bottom-div'], s['center-wrapper'])}>
+        <Loader size="28px" borderWidth="4px" />
+        <div style={{ 'margin-left': '8px' }}> Loading your opportunities</div>
+      </div>
+    );
 
     return (
       <div className="container">
@@ -103,7 +107,7 @@ class ListFeedsPage extends Component {
         <div className={s.filter}>
           Thailand :
           <a
-            href="#" className={cn(s['filter-link'], { [`${s.active}`]: isBangkok })}
+            href="#" className={c(s['filter-link'], { [`${s.active}`]: isBangkok })}
             // onClick={() => this.changeFilter('bangkok')}
           >
             Bangkok
@@ -118,7 +122,7 @@ class ListFeedsPage extends Component {
 
         {/* main feed*/}
         <ListFeedsWrapper lists={lists} />
-        <div className={s['bottom-div']}>{feedBottomDescription}</div>
+        {!isAtTheEndOfFeed ? LoaderComponent : <div className={s['bottom-div']}>We have {lists.length} jobs.</div>}
       </div>
     );
   }
