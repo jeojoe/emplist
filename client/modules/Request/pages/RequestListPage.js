@@ -6,6 +6,7 @@ import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
 import DetailsEditor from '../components/DetailsEditor';
 import SubmitRequestButton from '../components/SubmitRequestButton';
+
 import c from 'classnames';
 import s from './RequestListPage.css';
 
@@ -278,7 +279,7 @@ class RequestListPage extends Component {
               <p className={s['sub-label']}>Outside Bangkok and other countries soon!</p>
             </div>
             <div>
-              <label className={s.label}>Location Detail</label>
+              <label className={s.label}>Location Detail<span className={s.requiredSign}>*</span></label>
               <p className={s['sub-label']}><FormattedMessage id="rlp_locationDetailDesc" /></p>
               <input
                 type="text"
