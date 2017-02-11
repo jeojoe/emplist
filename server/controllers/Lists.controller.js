@@ -55,9 +55,9 @@ export function getListDetail(req, res) {
     });
 }
 
-/**
- * Edit one list (pagination)
- */
+/*
+  Edit List
+*/
 export function sendEditListRequest(req, res) {
   const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, company_id, remote_check, additional_note, details, country, city, location_detail } = req.body.list;
 
@@ -92,7 +92,7 @@ export function sendEditListRequest(req, res) {
         min: salary_min || 0,
         max: salary_max || 9999999,
       },
-      details: JSON.stringify(details),
+      details,
       how_to_apply,
       additional_note,
     });
