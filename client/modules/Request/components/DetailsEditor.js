@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import scriptLoader from 'react-async-script-loader';
+import Loader from '../../App/components/Loader';
 import isMobile from '../../../util/mobile-detect.js';
-import c from 'classnames';
-// import s from './DetailsEditor.css';
-import _ from 'lodash';
+// import c from 'classnames';
+import s from './DetailsEditor.css';
+// import _ from 'lodash';
 
 
 class DetailsEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isBarFix: false,
+      fetching: true,
     };
     // this.handleScroll = _.throttle(this.handleScroll, 100);
   }
@@ -51,6 +52,7 @@ class DetailsEditor extends Component {
       toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons | link image media | codesample | print preview fullscreen ',
       plugin_preview_width: 900,
     }).then(() => {
+      this.setState({ fetching: false });
       const path = this.props.pathname;
       if (path.length - 5 === path.indexOf('/edit')) {
         tinyMCE.get('mytextarea').setContent(this.props.details);
@@ -70,10 +72,11 @@ class DetailsEditor extends Component {
 
   render() {
     const { isScriptLoaded, isScriptLoadedSucceed } = this.props;
-    const { isBarFix } = this.state;
+    const { fetching } = this.state;
 
     return (
       <div>
+        {fetching && <Loader black /> }
         <textarea id="mytextarea">Hello, World!</textarea>
       </div>
     );
