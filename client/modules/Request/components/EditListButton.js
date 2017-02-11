@@ -88,7 +88,7 @@ class EditListButton extends Component {
         return;
       }
       const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, additional_note, company_id } = this.props; // eslint-disable-line
-      const details = tinymce.get('mytextarea').getContent();
+      const details = tinymce.get('mytextarea').getContent(); //eslint-disable-line
 
       if (!title || !tags) {
         setSubmitState(false);

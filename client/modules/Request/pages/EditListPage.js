@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 import SkillTagsInput from '../components/SkillTagsInput';
 import DetailsEditor from '../components/DetailsEditor';
@@ -130,7 +131,7 @@ class EditListPage extends Component {
           */}
           <div className={s.row}>
             <label className={s.label} htmlFor="exampleEmailInput">List title<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>Use your creativity freely to create company’s emplist title ! (up to 120 chars.)</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_titleDesc" /></p>
             <input
               className="u-full-width" type="text" maxLength={120}
               value={title}
@@ -142,107 +143,109 @@ class EditListPage extends Component {
           */}
           <div className={s.row}>
             <label className={s.label}>Skills<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>All skills required. e.g. Javascript, PHP (at least 1, up to 6 skills)</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_skillsDesc" /></p>
             <SkillTagsInput
               tags={tags}
               suggestions={suggestions}
               setTagsState={this.setTagsState}
             />
           </div>
-          {/*
-            Experience
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>Experience rage of all your company's jobs.</p>
-            <select
-              value={exp_condition}
-              onChange={(e) => this.setState({ exp_condition: e.target.value })}
-              className={s['exp-dropdown']}
-            >
-              <option value="no">No minimum</option>
-              <option value="between">Between</option>
-              <option value="more_than">More than</option>
-            </select>
-            {exp_condition === 'between' &&
-              <div className={s.inline}>
+          <div style={{ height: '150px' }}>
+            {/*
+              Experience
+            */}
+            <div className="six columns">
+              <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
+              <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
+              <select
+                value={exp_condition}
+                onChange={(e) => this.setState({ exp_condition: e.target.value })}
+                className={s['exp-dropdown']}
+              >
+                <option value="no">No minimum</option>
+                <option value="between">Between</option>
+                <option value="more_than">More than</option>
+              </select>
+              {exp_condition === 'between' &&
+                <div className={s.inline}>
+                  <input
+                    type="number" min={0} max={99} placeholder="min"
+                    className={s['num-input']}
+                    value={exp_between_min}
+                    onChange={(e) => this.setState({ exp_between_min: e.target.value })}
+                  />
+                  -
+                  <input
+                    type="number" min={0} max={99} placeholder="max"
+                    className={s['num-input']}
+                    value={exp_between_max}
+                    onChange={(e) => this.setState({ exp_between_max: e.target.value })}
+                  />
+                  years
+                </div>
+              }
+              {exp_condition === 'more_than' &&
+                <div className={s.inline}>
+                  <input
+                    type="number" min={0} max={99}
+                    className={s['num-input']}
+                    value={exp_more_than}
+                    onChange={(e) => this.setState({ exp_more_than: e.target.value })}
+                  />
+                  years
+                </div>
+              }
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={intern_check}
+                    onChange={(e) => this.setState({ intern_check: e.target.checked })}
+                  />
+                  <span className="label-body">Internship opening</span>
+                </label>
+              </div>
+            </div>
+            {/*
+              Salary
+            */}
+            <div className="six columns">
+              <label className={s.label}>Salary Range</label>
+              <p className={s['sub-label']}><FormattedMessage id="rlp_salaryDesc" /></p>
+              <div>
                 <input
-                  type="number" min={0} max={99} placeholder="min"
-                  className={s['num-input']}
-                  value={exp_between_min}
-                  onChange={(e) => this.setState({ exp_between_min: e.target.value })}
+                  type="number" min={0} max={9999999} placeholder="min"
+                  className={c(s['salary-input'], s.fix)}
+                  value={salary_min}
+                  onChange={(e) => this.setState({ salary_min: e.target.value })}
                 />
                 -
                 <input
-                  type="number" min={0} max={99} placeholder="max"
-                  className={s['num-input']}
-                  value={exp_between_max}
-                  onChange={(e) => this.setState({ exp_between_max: e.target.value })}
+                  type="number" min={0} max={9999999} placeholder="max"
+                  className={s['salary-input']}
+                  value={salary_max}
+                  onChange={(e) => this.setState({ salary_max: e.target.value })}
                 />
-                years
+                THB
               </div>
-            }
-            {exp_condition === 'more_than' &&
-              <div className={s.inline}>
-                <input
-                  type="number" min={0} max={99}
-                  className={s['num-input']}
-                  value={exp_more_than}
-                  onChange={(e) => this.setState({ exp_more_than: e.target.value })}
-                />
-                years
-              </div>
-            }
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={intern_check}
-                  onChange={(e) => this.setState({ intern_check: e.target.checked })}
-                />
-                <span className="label-body">Internship opening</span>
-              </label>
-            </div>
-          </div>
-          {/*
-            Salary
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Salary Range</label>
-            <p className={s['sub-label']}>Optional, but preferred for competitiveness.</p>
-            <div>
-              <input
-                type="number" min={0} max={9999999} placeholder="min"
-                className={c(s['salary-input'], s.fix)}
-                value={salary_min}
-                onChange={(e) => this.setState({ salary_min: e.target.value })}
-              />
-              -
-              <input
-                type="number" min={0} max={9999999} placeholder="max"
-                className={s['salary-input']}
-                value={salary_max}
-                onChange={(e) => this.setState({ salary_max: e.target.value })}
-              />
-              THB
             </div>
           </div>
           {/*
             Details - Draft.js
           */}
-          <div className={s.rowFull}>
+          <div style={{ paddingBottom: '30px' }}>
             <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>E.g. Introduce your company and its culture. Why does it exist. All jobs available. What you will offer, etc. (feel free to add creative styles !)</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_detailsDesc" /></p>
             <DetailsEditor
               details={details} pathname={pathname}
             />
           </div>
           {/*
-            Details - Draft.js
+            How to apply - Draft.js
           */}
-          <div className={s.rowFull} style={{ paddingBottom: '30px' }}>
+          <div className={s.rowFull}>
             <label className={s.label}>How to apply<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>E.g. send resume to email, go to company’s jobs site or Workable link.</p>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_howToApplyDesc" /></p>
             <input
               type="text"
               value={how_to_apply}
@@ -250,35 +253,42 @@ class EditListPage extends Component {
               className={s['how-to-apply']}
             />
           </div>
-          {/*
-            Company's name
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Company's Name<span className={s.requiredSign}>*</span></label>
-            <input
-              type="text" maxLength={120}
-              value={company_name}
-              onChange={(e) => this.setState({ company_name: e.target.value })}
-            />
-          </div>
-          {/*
-            Company's logo
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Company's Logo<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}>1 : 1 regtangle</p>
-            <input
-              type="file" accept="image/*"
-              onChange={this.onLogoImageChange}
-              className={s.logoImageInput}
-            />
-            {logo_preview_url ?
-              <img src={logo_preview_url} alt="logo" className={s.logoPreview} id="logo-preview" />
-              :
-              <div className={s.logoPreviewBlank}>
-                Preview
+          <hr />
+          <div style={{ height: '175px' }}>
+            {/*
+              Company's name
+            */}
+            <div className="six columns">
+              <div className={s.row}>
+                <label className={s.label}>Company's Name<span className={s.requiredSign}>*</span></label>
+                <input
+                  type="text" maxLength={120}
+                  value={company_name}
+                  onChange={(e) => this.setState({ company_name: e.target.value })}
+                />
               </div>
-            }
+            </div>
+            {/*
+              Company's logo
+            */}
+            <div className="six columns">
+              <div className={s.row}>
+                <label className={s.label}>Company's Logo<span className={s.requiredSign}>*</span></label>
+                <p className={s['sub-label']}>1 : 1 regtangle</p>
+                <input
+                  type="file" accept="image/*"
+                  onChange={this.onLogoImageChange}
+                  className={s.logoImageInput}
+                />
+                {logo_preview_url ?
+                  <img src={logo_preview_url} alt="logo" className={s.logoPreview} id="logo-preview" />
+                  :
+                  <div className={s.logoPreviewBlank}>
+                    Preview
+                  </div>
+                }
+              </div>
+            </div>
           </div>
           {/*
             Company's location
