@@ -101,7 +101,7 @@ function insertDummyData() {
           console.log('Count error', err2);
           return;
         }
-        const randoms = _.range(10).map(() => Math.floor(Math.random() * count));
+        const randoms = _.range(16).map(() => Math.floor(Math.random() * count));
         const randomListRequests = randoms.map(rand => ListRequests.findOne().skip(rand));
 
         // Randomly approve listRequests
