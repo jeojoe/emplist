@@ -6,7 +6,7 @@ import c from 'classnames';
 import callApi from '../../../util/apiCaller';
 import aws_config from '../../../../secret_config.json';
 
-class EditListButton extends Component {
+class SubmitEditButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -170,11 +170,11 @@ class EditListButton extends Component {
   }
 }
 
-EditListButton.propTypes = {
+SubmitEditButton.propTypes = {
   buttonStyle: React.PropTypes.string,
   submitting: React.PropTypes.bool,
   setSubmitState: React.PropTypes.func,
   list_id: React.PropTypes.string,
 };
 
-export default withRouter(EditListButton);
+export default withRouter(SubmitEditButton);

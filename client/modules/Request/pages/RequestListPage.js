@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import SkillTagsInput from '../components/SkillTagsInput';
 import HeaderText from '../components/HeaderText';
 import DetailsEditor from '../components/DetailsEditor';
-import RequestListButton from '../components/RequestListButton';
+import SubmitRequestButton from '../components/SubmitRequestButton';
 import c from 'classnames';
 import s from './RequestListPage.css';
 
@@ -332,7 +332,7 @@ class RequestListPage extends Component {
             />
           </div>
           <div>
-            <RequestListButton
+            <SubmitRequestButton
               {...this.state}
               buttonStyle={s.submitButton}
               setSubmitState={this.setSubmitState}

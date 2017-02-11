@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import SkillTagsInput from '../components/SkillTagsInput';
 import DetailsEditor from '../components/DetailsEditor';
 import ChangePasswordSection from '../components/ChangePasswordSection';
-import EditListButton from '../components/EditListButton';
+import SubmitEditButton from '../components/SubmitEditButton';
 import callApi from '../../../util/apiCaller';
 import c from 'classnames';
 import s from './EditListPage.css';
@@ -334,7 +334,7 @@ class EditListPage extends Component {
             />
           </div>
           <div>
-            <EditListButton
+            <SubmitEditButton
               buttonStyle={s.submitButton}
               {...this.state}
               setSubmitState={this.setSubmitState}

@@ -6,7 +6,7 @@ import c from 'classnames';
 import callApi from '../../../util/apiCaller';
 import aws_config from '../../../../secret_config.json';
 
-class RequestListButton extends Component {
+class SubmitRequestButton extends Component {
   uploadCompanyLogo = (callback) => {
     const { logo_image_file, company_name } = this.props; //eslint-disable-line
 
@@ -156,10 +156,10 @@ class RequestListButton extends Component {
   }
 }
 
-RequestListButton.propTypes = {
+SubmitRequestButton.propTypes = {
   submitting: React.PropTypes.bool,
   setSubmitState: React.PropTypes.func,
   buttonStyle: React.PropTypes.string,
 };
 
-export default withRouter(RequestListButton);
+export default withRouter(SubmitRequestButton);
