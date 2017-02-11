@@ -35,9 +35,11 @@ import cookie from 'react-cookie';
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 
-import listsRoutes from './routes/Lists.routes';
-import listRequestsRoutes from './routes/ListRequests.routes';
+import ListsRoutes from './routes/Lists.routes';
+import ListRequestsRoutes from './routes/ListRequests.routes';
 import UsersRoutes from './routes/Users.routes';
+import CompaniesRoutes from './routes/Companies.routes';
+
 import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -60,13 +62,14 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
-app.use('/api', listsRoutes);
+app.use('/api', ListsRoutes);
 app.use('/api', UsersRoutes);
 
 // *We use middleware for auth in 'listRequestsRoutes' router, after this line,
 // all APIs are validated for a token.
 // The order of middleware(router.use(...)) is important*.
-app.use('/api', listRequestsRoutes);
+app.use('/api', ListRequestsRoutes);
+app.use('/api', CompaniesRoutes);
 
 
 /* SSR Begins here */
@@ -118,7 +121,6 @@ const renderError = err => {
 
 // Server Side Rendering based on routes matched by React-router.
 app.use((req, res, next) => {
-
   // ***Isomorphic cookie for admin-auth
   // https://github.com/thereactivestack/react-cookie
   cookie.setRawCookie(req.headers.cookie);

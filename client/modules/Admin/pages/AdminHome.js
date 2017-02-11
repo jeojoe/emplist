@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import DynamicSegmentedControl from '../components/DynamicSegmentedControl';
 import AdminApprovementPanel from '../components/AdminApprovementPanel';
+import CompanyList from '../components/CompanyList';
+import SimpleDataFetchedView from '../components/SimpleDataFetchedView';
+import { getToken } from '../authToken';
 
 class AdminHome extends Component {
   constructor(props) {
@@ -20,7 +23,20 @@ class AdminHome extends Component {
       case 0:
         return <AdminApprovementPanel />;
       case 1:
-        return <div>In progress</div>;
+        // simple way to show read-only data-from-api view
+        return (
+          <SimpleDataFetchedView
+            api={`/companies?token=${getToken()}`}
+            successViewBuilder={(res) => {
+              return (
+                <div>
+                  <h5>We got {res.companies.length} companies.</h5>
+                  <CompanyList companies={res.companies} />
+                </div>
+              );
+            }}
+          />
+        );
       default:
         return <div>View not found for index {index}</div>;
     }
