@@ -78,7 +78,7 @@ export default (
       }}
     />
     <Route
-      path="/list/:id/edit"
+      path="/el/:id/edit"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Request/pages/EditListPage').default);
@@ -87,7 +87,7 @@ export default (
       onEnter={requireEditAuth}
     />
     <Route
-      path="/list/:id/edit/done"
+      path="/el/:id/edit/done"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Request/pages/DoneEditListPage').default);
@@ -95,7 +95,7 @@ export default (
       }}
     />
     <Route
-      path="/list/:id"
+      path="/el/:id"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/List/pages/ListDetailPage').default);

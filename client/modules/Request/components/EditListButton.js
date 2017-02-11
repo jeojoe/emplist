@@ -143,7 +143,7 @@ class EditListButton extends Component {
             alert('Something went wrong! (err code: 2), please contact hi.emplist@gmail.com');
             return;
           }
-          dis.props.router.push(`/list/${res1.list_request_id}/edit/done`);
+          dis.props.router.push(`/el/${res1.list_request_id}/edit/done`);
         });
       });
     });

@@ -37,7 +37,7 @@ class ChangePasswordSection extends Component {
         return;
       }
       alert('Successfully changed password!');
-      this.props.router.push(`/list/${this.props.list_id}`);
+      this.props.router.push(`/el/${this.props.list_id}`);
     });
   }
 

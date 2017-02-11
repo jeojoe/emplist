@@ -23,7 +23,7 @@ class PasswordBeforeEdit extends Component {
           return;
         }
         setToken(res.token);
-        this.props.router.push(`/list/${this.props.list_id}/edit`);
+        this.props.router.push(`/el/${this.props.list_id}/edit`);
       });
   }
 
