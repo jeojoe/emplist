@@ -93,7 +93,7 @@ class ListFeedsPage extends Component {
     const LoaderComponent = (
       <div className={c(s['bottom-div'], s['center-wrapper'])}>
         <Loader size="28px" borderWidth="4px" />
-        <div style={{ 'margin-left': '8px' }}> Loading your opportunities</div>
+        <div style={{ 'marginLeft': '8px' }}> Loading your opportunities</div>
       </div>
     );
 
