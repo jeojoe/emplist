@@ -18,4 +18,17 @@ Loader.propTypes = {
   borderWidth: React.PropTypes.string,
 };
 
+const LoaderWithText = ({ text, center = false }) => (
+  <div className={s['loader-inline-wrapper']} style={{ textAlign: center ? 'center' : 'initial' }}>
+    <Loader size="28px" borderWidth="4px" />
+    <div style={{ marginLeft: '8px' }}> {text}</div>
+  </div>
+);
+
+LoaderWithText.propTypes = {
+  text: React.PropTypes.string.isRequired,
+  center: React.PropTypes.bool,
+};
+
 export default Loader;
+export { LoaderWithText };

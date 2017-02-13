@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RequestListButton from '../components/RequestListButton';
 import HeaderDescription from '../components/HeaderDescription';
 import ListFeedsWrapper from '../components/ListFeedsWrapper';
-import Loader from '../../App/components/Loader';
+import { LoaderWithText } from '../../App/components/Loader';
 
 import callApi from '../../../util/apiCaller';
 
@@ -90,12 +90,7 @@ class ListFeedsPage extends Component {
     const { isAtTheEndOfFeed, lists, filter } = this.state;
     const isBangkok = filter === 'bangkok';
 
-    const LoaderComponent = (
-      <div className={c(s['bottom-div'], s['center-wrapper'])}>
-        <Loader size="28px" borderWidth="4px" />
-        <div style={{ 'marginLeft': '8px' }}> Loading your opportunities</div>
-      </div>
-    );
+    const LoaderComponent = <LoaderWithText text="Loading your opportunities" center className={s['bottom-div']} />;
 
     return (
       <div className="container">

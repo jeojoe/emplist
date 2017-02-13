@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from '../../App/components/Loader';
+import { LoaderWithText } from '../../App/components/Loader';
 
 import { withRouter } from 'react-router';
 import AWS from 'aws-sdk';
@@ -7,7 +7,6 @@ import cuid from 'cuid';
 import c from 'classnames';
 import callApi from '../../../util/apiCaller';
 import aws_config from '../../../../secret_config.json';
-import sRequestListButton from '../../List/components/RequestListButton.css';
 
 class SubmitRequestButton extends Component {
   uploadCompanyLogo = (callback) => {
@@ -150,16 +149,15 @@ class SubmitRequestButton extends Component {
     const { submitting, buttonStyle } = this.props;
     return (
       <div>
-        <button
-          className={c('button-primary', buttonStyle)}
-          onClick={this.submitRequest}
-        >
-          Submit list request
-        </button>
-        {submitting &&
-          <div className={sRequestListButton.loaderWrapper}>
-            <Loader size="25px" />
-          </div>
+        {!submitting ?
+          <button
+            className={c('button-primary', buttonStyle)}
+            onClick={this.submitRequest}
+          >
+            Submit list request
+          </button>
+          :
+          <LoaderWithText text="Submitting" style={{ height: '40px' }} />
         }
       </div>
     );
