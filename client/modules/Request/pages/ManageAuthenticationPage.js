@@ -3,20 +3,30 @@ import { withRouter } from 'react-router';
 import callApi from '../../../util/apiCaller';
 import { setToken } from '../../Admin/authToken';
 import sListDetailPage from '../../List/pages/ListDetailPage.css';
+import { LoaderWithText } from '../../App/components/Loader';
 
 class ManageAuthenticationPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       password: '',
+      checking: false,
     };
   }
 
   checkPassword = () => {
-    const { password } = this.state;
+    const { password, checking } = this.state;
+    if (checking) { return; }
+
+    this.setState({
+      checking: true,
+    });
     callApi(`/lists/${this.props.routeParams.id}/permission`, 'post',
       { password })
       .then((res) => {
+        this.setState({
+          checking: false,
+        });
         if (!res.ok) {
           alert(res.msg);
           console.log(res.err);
@@ -28,7 +38,7 @@ class ManageAuthenticationPage extends Component {
   }
 
   render() {
-    const { password } = this.state;
+    const { password, checking } = this.state;
     return (
       <div className={sListDetailPage.container}>
         <div className={sListDetailPage.detailWrapper}>
@@ -39,11 +49,15 @@ class ManageAuthenticationPage extends Component {
               value={password}
               onChange={(e) => this.setState({ password: e.target.value })}
             />
-            <button
-              onClick={this.checkPassword}
-            >
-              Go
-            </button>
+            {checking ?
+              <LoaderWithText text="Validating" />
+              :
+              <button
+                onClick={this.checkPassword}
+              >
+                Go
+              </button>
+            }
           </div>
         </div>
       </div>
