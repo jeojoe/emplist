@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import callApi from '../../../util/apiCaller';
 
 import AdminHeader from '../../Admin/components/AdminHeader';
-import PasswordBeforeEdit from '../components/PasswordBeforeEdit';
 import { LoaderWithText } from '../../App/components/Loader';
 
 import s from './ListDetailPage.css';
@@ -78,7 +77,7 @@ class ListDetailPage extends Component {
     const Salary = salary.max === 9999999 ? 'Unspecified.' : `${salary.min} - ${salary.max} B`;
 
     return (
-      <div className={s.detailWrapper}>
+      <div>
         <div className={s['image-wrapper']}>
           <img src={company_image} alt={`${company_name}'s logo`} className={s.image} />
         </div>
@@ -128,13 +127,18 @@ class ListDetailPage extends Component {
     const isAdmin = pathname.indexOf('/admin/request/') >= 0;
     return (
       <div className="container">
-        {isAdmin ?
-          <AdminHeader list={list} /> : ''
-        }
-        {this.renderList(list)}
-        {!isAdmin &&
-          <PasswordBeforeEdit list_id={id} />
-        }
+        <div className={s.detailWrapper}>
+          {isAdmin ?
+            <AdminHeader list={list} /> : ''
+          }
+          {this.renderList(list)}
+          {
+            !isAdmin &&
+              <Link to={`/el/${id}/auth`} style={{ float: 'right' }}>
+                Manage
+              </Link>
+          }
+        </div>
       </div>
     );
   }

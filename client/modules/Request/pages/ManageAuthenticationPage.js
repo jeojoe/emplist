@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import callApi from '../../../util/apiCaller';
 import { setToken } from '../../Admin/authToken';
+import sListDetailPage from '../../List/pages/ListDetailPage.css';
 
-class PasswordBeforeEdit extends Component {
+class ManageAuthenticationPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShow: false,
       password: '',
     };
   }
 
   checkPassword = () => {
     const { password } = this.state;
-    callApi(`/lists/${this.props.list_id}/permission`, 'post',
+    callApi(`/lists/${this.props.routeParams.id}/permission`, 'post',
       { password })
       .then((res) => {
         if (!res.ok) {
@@ -23,27 +23,19 @@ class PasswordBeforeEdit extends Component {
           return;
         }
         setToken(res.token);
-        this.props.router.push(`/el/${this.props.list_id}/edit`);
+        this.props.router.push(`/el/${this.props.routeParams.id}/edit`);
       });
   }
 
   render() {
-    const { isShow, password } = this.state;
+    const { password } = this.state;
     return (
-      <div>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({ isShow: true });
-          }}
-        >
-          Edit
-        </a>
-        {isShow &&
+      <div className={sListDetailPage.container}>
+        <div className={sListDetailPage.detailWrapper}>
+          <p>Insert password to manage this list</p>
           <div>
             <input
-              type="password" placeholder="insert password"
+              type="password" placeholder="Your password"
               value={password}
               onChange={(e) => this.setState({ password: e.target.value })}
             />
@@ -53,15 +45,14 @@ class PasswordBeforeEdit extends Component {
               Go
             </button>
           </div>
-        }
+        </div>
       </div>
     );
   }
 }
 
-PasswordBeforeEdit.propTypes = {
-  list_id: React.PropTypes.string,
+ManageAuthenticationPage.propTypes = {
   router: React.PropTypes.func,
 };
 
-export default withRouter(PasswordBeforeEdit);
+export default withRouter(ManageAuthenticationPage);
