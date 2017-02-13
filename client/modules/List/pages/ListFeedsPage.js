@@ -90,7 +90,7 @@ class ListFeedsPage extends Component {
     const { isAtTheEndOfFeed, lists, filter } = this.state;
     const isBangkok = filter === 'bangkok';
 
-    const LoaderComponent = <LoaderWithText text="Loading your opportunities" center className={s['bottom-div']} />;
+    const LoaderComponent = <LoaderWithText text="Loading your opportunities" centerInDiv className={s['bottom-div']} />;
 
     return (
       <div className="container">

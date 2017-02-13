@@ -18,8 +18,11 @@ Loader.propTypes = {
   borderWidth: React.PropTypes.string,
 };
 
-const LoaderWithText = ({ text, center = false }) => (
-  <div className={s['loader-inline-wrapper']} style={{ textAlign: center ? 'center' : 'initial' }}>
+const LoaderWithText = ({ text, centerInDiv = false, centerInPage = false }) => (
+  <div
+    className={c(s['loader-inline-wrapper'], { [s['center-in-page']]: centerInPage })}
+    style={{ textAlign: centerInDiv ? 'center' : 'initial' }}
+  >
     <Loader size="28px" borderWidth="4px" />
     <div style={{ marginLeft: '8px' }}> {text}</div>
   </div>
@@ -27,7 +30,8 @@ const LoaderWithText = ({ text, center = false }) => (
 
 LoaderWithText.propTypes = {
   text: React.PropTypes.string.isRequired,
-  center: React.PropTypes.bool,
+  centerInDiv: React.PropTypes.bool,
+  centerInPage: React.PropTypes.bool,
 };
 
 export default Loader;
