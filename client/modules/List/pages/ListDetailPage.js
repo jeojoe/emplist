@@ -70,7 +70,6 @@ class ListDetailPage extends Component {
       details,
       how_to_apply,
     } = list;
-    console.log(list);
     const Tags = skills.map((skill, i) => <span className={sSkill.skill} key={i}>{skill}</span>);
 
     const Location = `${company_location.city}, ${company_location.country}`;
