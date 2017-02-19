@@ -240,7 +240,7 @@ class EditListPage extends Component {
               {' '}
               <a href="https://nuuneoi.com/blog/blog.php?read_id=909" target="__blank">คำแนะนำ</a></p>
             <DetailsEditor
-              details pathname={pathname}
+              details={details} pathname={pathname}
             />
           </div>
           {/*
