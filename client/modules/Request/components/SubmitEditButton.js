@@ -75,12 +75,16 @@ class SubmitEditButton extends Component {
   }
 
   submitEdited = () => {
-    // Resize image
+    const { password } = this.state;
+    if (!password) {
+      alert('Please enter password.');
+      return;
+    }
     const { submitting, setSubmitState, list_id } = this.props;
     if (submitting) return;
     setSubmitState(true);
 
-    callApi(`/lists/${list_id}/permission`, 'post', { password: this.state.password })
+    callApi(`/lists/${list_id}/permission`, 'post', { password })
     .then((res) => {
       if (!res.ok) {
         alert('Something is not right about password..');
@@ -154,17 +158,21 @@ class SubmitEditButton extends Component {
     const { password } = this.state;
     return (
       <div>
-        <input
-          type="password" value={password}
-          placeholder="enter password again"
-          onChange={(e) => this.setState({ password: e.target.value })}
-        />
-        <button
-          className={c('button-primary', buttonStyle)}
-          onClick={this.submitEdited}
-        >
-          {submitting ? 'Submitting..' : 'Submit edit request'}
-        </button>
+        <div>
+          <input
+            type="password" value={password}
+            placeholder="Enter password again"
+            onChange={(e) => this.setState({ password: e.target.value })}
+          />
+        </div>
+        <div>
+          <button
+            className={c('button-primary', buttonStyle)}
+            onClick={this.submitEdited}
+          >
+            {submitting ? 'Submitting..' : 'Submit edit request'}
+          </button>
+        </div>
       </div>
     );
   }

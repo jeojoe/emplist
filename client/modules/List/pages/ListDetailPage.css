@@ -19,3 +19,9 @@
   margin-top: 40px;
   margin-left: 20px;
 }
+
+#content {
+  color: #000000;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 14px;
+}

@@ -124,8 +124,9 @@ class EditListPage extends Component {
 
     return (
       <div className="container">
-        <ChangePasswordSection list_id={this.props.params.id} />
         <div className={s.wrapper}>
+          <ChangePasswordSection list_id={this.props.params.id} />
+          <hr />
           {/*
             Title
           */}
@@ -343,7 +344,7 @@ class EditListPage extends Component {
               setSubmitState={this.setSubmitState}
               list_id={this.props.params.id}
             />
-            <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT LIST REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<Link to="/">Terms</Link>.
+            <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT EDIT REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our <a>Terms</a>.
             </p>
           </div>
         </div>
