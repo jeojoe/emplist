@@ -70,43 +70,38 @@ class ListDetailPage extends Component {
       details,
       how_to_apply,
     } = list;
-
+    console.log(list);
     const Tags = skills.map((skill, i) => <span className={sSkill.skill} key={i}>{skill}</span>);
 
-    const Location = `${company_location.city}, ${company_location.city}`;
-    const Salary = salary.max === 9999999 ? 'Unspecified.' : `${salary.min} - ${salary.max} B`;
+    const Location = `${company_location.city}, ${company_location.country}`;
+    const Salary = salary.max === 9999999 ? 'Unspecified' : `${salary.min} - ${salary.max} THB`;
 
     return (
-      <div>
-        <div className={s['image-wrapper']}>
-          <img src={company_image} alt={`${company_name}'s logo`} className={s.image} />
+      <div id={s.content}>
+        <div className={s.companyWrapper}>
+          <img src={company_image} alt={`${company_name}'s logo`} />
+          <span>{company_name}</span>
         </div>
-        <div>
-          <p>Company: <strong>{company_name}</strong></p>
+        <div className={s.companyDetailRow}>
+          <strong>Location :</strong> {Location}
         </div>
-
-        <div>
-          <p>Location: {Location}</p>
+        <div className={s.companyDetailRow}>
+          <strong>Skills :</strong> {Tags}
         </div>
-
-        <div>
-          <p>Sklls: {Tags}</p>
-        </div>
-
-        <div>
-          <p>Salary: {Salary}</p>
+        <div className={s.companyDetailRow}>
+          <strong>Salary :</strong> {Salary}
           {/*
             FOR AUNNNNN
             if company didn't insert salary detail i made default min, max salary to 0 and 9999999 respectively (for analytic purpose). So if you need to check whether company has specified salary or not you need to check max salary is equal to 9999999 or not.
           */}
         </div>
 
-        <div id={s.content}>
+        <div className={s.detailWrapper}>
           <div dangerouslySetInnerHTML={{ __html: details }} />
         </div>
 
-        <div>
-          <strong>How to apply</strong>
+        <div className={s.howWrapper}>
+          <h5>How to apply</h5>
           <p>{how_to_apply}</p>
         </div>
       </div>
@@ -127,17 +122,24 @@ class ListDetailPage extends Component {
     const isAdmin = pathname.indexOf('/admin/request/') >= 0;
     return (
       <div className="container">
-        <div className={s.detailWrapper}>
+        <div>
           {isAdmin ?
             <AdminHeader list={list} /> : ''
           }
-          {this.renderList(list)}
-          {
-            !isAdmin &&
-              <Link to={`/el/${id}/auth`} style={{ float: 'right' }}>
-                Manage
-              </Link>
-          }
+          <div id={s.titleWrapper}>
+            <h4 className={s.title}>{list.title}</h4>
+          </div>
+          <div id={s.wrapper}>
+            {this.renderList(list)}
+            {
+              !isAdmin &&
+                <Link to={`/el/${id}/auth`}>
+                  Manage
+                </Link>
+            }
+            <div className={s.divider} />
+            <sub style={{ color: '#999' }}>All jobs on this site disregard of gender, age, ethnic and disability.</sub>
+          </div>
         </div>
       </div>
     );

@@ -40,8 +40,8 @@ class ManageAuthenticationPage extends Component {
   render() {
     const { password, checking } = this.state;
     return (
-      <div className={sListDetailPage.container}>
-        <div className={sListDetailPage.detailWrapper}>
+      <div className="container">
+        <div>
           <p>Insert password to manage this list</p>
           <div>
             <input

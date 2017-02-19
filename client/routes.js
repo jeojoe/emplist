@@ -25,6 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Request/pages/RequestListPage');
   require('./modules/Request/pages/DoneRequestListPage');
   require('./modules/Request/pages/DoneEditListPage');
+  require('./modules/Request/pages/ManageAuthenticationPage');
   require('./modules/Admin/pages/AdminLogin');
   require('./modules/Admin/pages/AdminHome');
   require('./modules/App/pages/Page404');
