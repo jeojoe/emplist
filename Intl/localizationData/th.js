@@ -1,7 +1,7 @@
 export default {
   locale: 'th',
   messages: {
-    headerDescription: 'รวมบริษัทสายเทคฯไว้ในที่เดียว ! หาบริษัทที่วัฒนธรรม สภาพแวดล้อมการทำงานเหมาะกับคุณ แล้วสมัครตำแหน่งงานที่บริษัทกำลังเปิดรับอยู่ ** ตอนนี้มีเพียงบริษัทในกรุงเทพฯเท่านั้น ! ** ',
+    headerDescription: 'รวมบริษัทสายเทคฯไว้ในที่เดียว ค้นหาสภาพแวดล้อมการทำงานและวัฒนธรรมของบริษัทที่เหมาะกับคุณ แล้วสมัครตำแหน่งงานที่บริษัทกำลังเปิดรับอยู่ ** ตอนนี้มีเพียงบริษัทสายเทคฯในกรุงเทพฯเท่านั้น ** ',
     requestListButton: 'สร้าง emplist ให้บริษัทของคุณ',
     requestListHeader: 'คนเก่งใส่ใจกับบรรยากาศการทำงานที่ดี และวัฒนธรรมที่ทำงานที่เข้ากับพวกเค้า. ทำให้คนเก่งเหล่านั้นได้รู้จักกับบริษัทคุณ และทำให้รู้ว่าทำไมถึงต้องมาทำงานกับคุณ. 1 บริษัท มี 1 emplist ได้ฟรี และลิสจะถูกแสดงบนเว็บไซต์ราตลอดกาล. มาช่วยทำให้การหางานและคนทำงานดีขึ้นเพื่อทุกคนกัน !',
     rlp_titleDesc: 'ใช้ความคิดสร้างสรรค์ได้เต็มที่ในการสร้าง title ให้กับ emplist คุณ ! (มากสุด 140 ตัวอักษร)',
@@ -14,7 +14,7 @@ export default {
     rlp_emailDesc: 'ในกรณีที่เราต้องติดต่อคุณ !',
     rlp_passwordDesc: 'สำหรับการจัดการ emplist ของคุณ',
     doneRequestDesc1: 'Successfully sending request ! we will send you checking result via your email in 24 hours.',
-    doneRequestDesc2: 'We want to make finding jobs and talents easier for everyone, inspire kids how great tech workplace and its environment are so they will work hard to get in their dream workplace and hopefully overcome talents shortage problem in Thai tech industry. So please suggest Emplist to your colleagues so that more people can find the right workplace easier. (which increase your chance of finding the right candidate too!)',
+    doneRequestDesc2: 'We want to make finding jobs and talents easier for everyone and also hopefully inspire kids how great tech workplace and its environment are so they will work hard to get in their dream workplace and finally contribute to fighting talents shortage problem in Thai tech industry. So please suggest Emplist to your colleagues so that more people can find the right workplace easier. (which increase your chance of finding the right candidate too!)',
     drlp_completing: 'กำลังส่งคำร้องขอ..',
     drlp_err: 'โอ๊ะ! ดูเหมือนว่าจะมีข้อผิดพลาด.. กรุณาติดต่อมาที่ hi.emplist@gmail.com เพื่อที่เราจะได้แก้ปัญหานี้ให้กับคุณ !',
   },

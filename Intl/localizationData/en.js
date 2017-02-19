@@ -5,7 +5,7 @@
 export default {
   locale: 'en',
   messages: {
-    headerDescription: 'All tech companies in one place. Find company\'s culture and working environment that suit you. Then apply to jobs they’re opening right now. ** Now only in Bangkok, Thailand **',
+    headerDescription: 'All tech companies in one place. Find company\'s culture and working environment that suit you. Then apply to jobs they’re opening right now. ** Now only tech jobs in Bangkok, Thailand **',
     requestListButton: 'Request your company’s list',
     requestListHeader: 'Great talents care about great working environment and culture that suit them. Let them know more about your company and why they should work with you. One company can have one emplist for free and it will be listing on our website forever. Let\'s make finding jobs and talents better for everyone !',
     rlp_titleDesc: 'Use your creativity freely on company’s emplist title ! (up to 140 chars.)',
@@ -18,7 +18,7 @@ export default {
     rlp_emailDesc: 'In case we need to contact you !',
     rlp_passwordDesc: 'For managing your company\'s emplist.',
     doneRequestDesc1: 'Successfully sending request ! we will send you checking result via your email in 24 hours.',
-    doneRequestDesc2: 'We want to make finding jobs and talents easier for everyone, inspire kids how great tech workplace and its environment are so they will work hard to get in their dream workplace and hopefully overcome talents shortage problem in Thai tech industry. So please suggest Emplist to your colleagues so that more people can find the right workplace easier. (which increase your chance of finding the right candidate too!)',
+    doneRequestDesc2: 'We want to make finding jobs and talents easier for everyone and also hopefully inspire kids how great tech workplace and its environment are so they will work hard to get in their dream workplace and finally contribute to fighting talents shortage problem in Thai tech industry. So please suggest Emplist to your colleagues so that more people can find the right workplace easier. (which increase your chance of finding the right candidate too!)',
     drlp_completing: 'Completing request.',
     drlp_err: 'Oops! something\'s wrong.. please contact hi.emplist@gmail.com so that we can fix it right away !',
   },

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 const HeaderText = (props) => (
   <div>
     <p><FormattedMessage id="requestListHeader" /></p>
-    <p className={s.hilight}>You can post in Thai and English but English is recommended for broader audience. If you need any further assistance, please contact contact hi.emplist@gmail.com !</p>
+    <p className={s.hilight}>You can post in Thai and English but English is recommended for broader audience. If you need any further assistance, please contact hi.emplist@gmail.com !</p>
   </div>
 );
 
