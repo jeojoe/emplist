@@ -29,7 +29,7 @@ class ManageAuthenticationPage extends Component {
         });
         if (!res.ok) {
           alert(res.msg);
-          console.log(res.err);
+          // console.log(res.err);
           return;
         }
         setToken(res.token);

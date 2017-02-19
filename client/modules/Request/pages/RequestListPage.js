@@ -80,7 +80,7 @@ class RequestListPage extends Component {
       });
     };
 
-    console.log(`logo change ${file.type}`);
+    // console.log(`logo change ${file.type}`);
     reader.readAsDataURL(file);
   }
 

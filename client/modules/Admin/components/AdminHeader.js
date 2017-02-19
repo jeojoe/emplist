@@ -20,7 +20,7 @@ class AdminHeader extends Component {
       .then((res) => {
         if (!res.ok) {
           alert(res.msg);
-          console.log(res.err);
+          // console.log(res.err);
         } else {
           this.setState({ list_id_after_approve: res.data.list_id });
           alert('Done yo !');
@@ -31,7 +31,7 @@ class AdminHeader extends Component {
       .then((res) => {
         if (!res.ok) {
           alert(res.msg);
-          console.log(res.err);
+          // console.log(res.err);
         } else {
           this.setState({ list_id_after_approve: res.data.list_id });
           alert('Done yo !');

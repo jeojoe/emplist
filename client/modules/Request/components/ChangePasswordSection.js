@@ -32,7 +32,7 @@ class ChangePasswordSection extends Component {
     .then(res => {
       if (!res.ok) {
         alert(res.msg);
-        console.log(res.err);
+        // console.log(res.err);
         this.setState({ changing: false });
         return;
       }

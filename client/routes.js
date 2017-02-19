@@ -57,7 +57,7 @@ function requireEditAuth(nextState, replaceState, cb) {
     callApi(`/users/permission/edit/${nextState.params.id}?token=${token}`)
       .then((res) => {
         if (!res.ok) {
-          console.log(res.msg);
+          // console.log(res.msg);
           replaceState({ nextPathname: nextState.location.pathname }, '/');
           cb();
         } else {

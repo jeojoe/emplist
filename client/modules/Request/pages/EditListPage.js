@@ -46,7 +46,7 @@ class EditListPage extends Component {
     const { id } = this.props.params;
     callApi(`/list/${id}`, 'get').then((res, err) => {
       if (err) {
-        console.log(err);
+        // console.log(err);
       } else {
         const { title, company_name, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = res.list;
         const tags = skills.map((skill, i) => {
@@ -98,7 +98,7 @@ class EditListPage extends Component {
       });
     };
 
-    console.log(`logo change ${file.type}`);
+    // console.log(`logo change ${file.type}`);
     reader.readAsDataURL(file);
   }
 

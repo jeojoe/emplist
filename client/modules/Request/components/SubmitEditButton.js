@@ -138,7 +138,7 @@ class SubmitEditButton extends Component {
           },
         }).then(res1 => {
           setSubmitState(false);
-          console.log(res1);
+          // console.log(res1);
           if (!res1.ok) {
             alert('Something went wrong! (err code: 2), please contact hi.emplist@gmail.com');
             return;

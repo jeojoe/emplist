@@ -15,10 +15,10 @@ class DoneEditListPage extends Component {
   componentWillMount() {
     const { id } = this.props.params;
     callApi(`/requests/check/${id}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (!res.ok) {
         this.setState({ fetching: false, is_error: true });
-        console.log(res.err);
+        // console.log(res.err);
       } else {
         this.setState({
           fetching: false,

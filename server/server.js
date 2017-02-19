@@ -40,7 +40,7 @@ import ListRequestsRoutes from './routes/ListRequests.routes';
 import UsersRoutes from './routes/Users.routes';
 import CompaniesRoutes from './routes/Companies.routes';
 
-import dummyData from './dummyData';
+// import dummyData from './dummyData';
 import serverConfig from './config';
 
 // Set native promises as mongoose promise
@@ -169,7 +169,7 @@ app.use((req, res, next) => {
 app.listen(serverConfig.port, (error) => {
   if (!error) {
     // feed some dummy data in DB.
-    dummyData();
+    // dummyData();
     console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
   }
 });

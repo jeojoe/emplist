@@ -10,17 +10,13 @@ class RequestListButton extends Component {
       fetching: false,
     };
   }
-  componentWillUnmount() {
-    console.log('will go');
-  }
   render() {
     const { fetching } = this.state;
     return (
       <Link
         to="/request" className="button button-primary"
         onClick={() => {
-          console.log('click');
-          this.setState({ fetching: true }, ()=> console.log('yo'));
+          this.setState({ fetching: true });
         }}
       >
         {fetching &&
