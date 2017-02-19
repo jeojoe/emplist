@@ -11,7 +11,6 @@ import routes from './routes';
 
 // Base stylesheet
 import './App.css';
-import './editor.raw.css';
 
 export default function App(props) {
   return (
