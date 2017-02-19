@@ -105,10 +105,10 @@ class RequestListPage extends Component {
             Title
           */}
           <div className={s.row}>
-            <label className={s.label} htmlFor="exampleEmailInput">Title<span className={s.requiredSign}>*</span></label>
+            <label className={s.label} htmlFor="exampleEmailInput">Emplist Title<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}><FormattedMessage id="rlp_titleDesc" /></p>
             <input
-              className="u-full-width" type="text" maxLength={120}
+              className="u-full-width" type="text" maxLength={140}
               value={title}
               onChange={(e) => this.setState({ title: e.target.value })}
             />
@@ -125,91 +125,88 @@ class RequestListPage extends Component {
               setTagsState={this.setTagsState}
             />
           </div>
-          <div style={{ height: '150px' }}>
-            {/*
-              Experience
-            */}
-            <div className="six columns">
-              <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
-              <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
-              <select
-                value={exp_condition}
-                onChange={(e) => this.setState({ exp_condition: e.target.value })}
-                className={s['exp-dropdown']}
-              >
-                <option value="no">No minimum</option>
-                <option value="between">Between</option>
-                <option value="more_than">More than</option>
-              </select>
-              {exp_condition === 'between' &&
-                <div className={s.inline}>
-                  <input
-                    type="number" min={0} max={99} placeholder="Min"
-                    className={s['num-input']}
-                    value={exp_between_min}
-                    onChange={(e) => this.setState({ exp_between_min: e.target.value })}
-                  />
-                  -
-                  <input
-                    type="number" min={0} max={99} placeholder="Max"
-                    className={s['num-input']}
-                    value={exp_between_max}
-                    onChange={(e) => this.setState({ exp_between_max: e.target.value })}
-                  />
-                  years
-                </div>
-              }
-              {exp_condition === 'more_than' &&
-                <div className={s.inline}>
-                  <input
-                    type="number" min={0} max={99}
-                    className={s['num-input']}
-                    value={exp_more_than}
-                    onChange={(e) => this.setState({ exp_more_than: e.target.value })}
-                  />
-                  years
-                </div>
-              }
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={intern_check}
-                    onChange={(e) => this.setState({ intern_check: e.target.checked })}
-                  />
-                  <span className="label-body">Internship opening</span>
-                </label>
-              </div>
-            </div>
-            {/*
-              Salary
-            */}
-            <div className="six columns">
-              <label className={s.label}>Salary Range</label>
-              <p className={s['sub-label']}><FormattedMessage id="rlp_salaryDesc" /></p>
-              <div>
+          {/*
+            Experience
+          */}
+          <div className={s.row}>
+            <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
+            <select
+              value={exp_condition}
+              onChange={(e) => this.setState({ exp_condition: e.target.value })}
+              className={s['exp-dropdown']}
+            >
+              <option value="no">No minimum</option>
+              <option value="between">Between</option>
+              <option value="more_than">More than</option>
+            </select>
+            {exp_condition === 'between' &&
+              <div className={s.inline} style={{ marginRight: '20px' }}>
                 <input
-                  type="number" min={0} max={9999999} placeholder="Min"
-                  className={c(s['salary-input'], s.fix)}
-                  value={salary_min}
-                  onChange={(e) => this.setState({ salary_min: e.target.value })}
+                  type="number" min={0} max={99} placeholder="Min"
+                  className={s['num-input']}
+                  value={exp_between_min}
+                  onChange={(e) => this.setState({ exp_between_min: e.target.value })}
                 />
                 -
                 <input
-                  type="number" min={0} max={9999999} placeholder="Max"
-                  className={s['salary-input']}
-                  value={salary_max}
-                  onChange={(e) => this.setState({ salary_max: e.target.value })}
+                  type="number" min={0} max={99} placeholder="Max"
+                  className={s['num-input']}
+                  value={exp_between_max}
+                  onChange={(e) => this.setState({ exp_between_max: e.target.value })}
                 />
-                THB
+                years
               </div>
+            }
+            {exp_condition === 'more_than' &&
+              <div className={s.inline} style={{ marginRight: '20px' }}>
+                <input
+                  type="number" min={0} max={99}
+                  className={s['num-input']}
+                  value={exp_more_than}
+                  onChange={(e) => this.setState({ exp_more_than: e.target.value })}
+                />
+                years
+              </div>
+            }
+            <label style={{ display: 'inline-block' }}>
+              <input
+                type="checkbox"
+                checked={intern_check}
+                onChange={(e) => this.setState({ intern_check: e.target.checked })}
+              />
+              <span className="label-body">Internship opening</span>
+            </label>
+          </div>
+          {/*
+            Salary
+          */}
+          <div className={s.row}>
+            <label className={s.label}>Salary Range</label>
+            <p className={s['sub-label']}><FormattedMessage id="rlp_salaryDesc" /></p>
+            <div>
+              <input
+                type="number" min={0} max={9999999} placeholder="Min"
+                className={c(s['salary-input'], s.fix)}
+                value={salary_min}
+                onChange={(e) => this.setState({ salary_min: e.target.value })}
+              />
+              -
+              <input
+                type="number" min={0} max={9999999} placeholder="Max"
+                className={s['salary-input']}
+                value={salary_max}
+                onChange={(e) => this.setState({ salary_max: e.target.value })}
+              />
+              THB
             </div>
           </div>
+          <hr />
           {/*
             Details - Draft.js
           */}
-          <div style={{ paddingBottom: '30px' }}>
-            <label className={s.label}>Details<span className={s.requiredSign}>*</span></label>
+          <div className="row" style={{ paddingBottom: '30px' }}>
+            <label className={s.label}>Company & Jobs Details<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}><FormattedMessage id="rlp_detailsDesc" /></p>
             <DetailsEditor
               details pathname={pathname}
@@ -276,7 +273,7 @@ class RequestListPage extends Component {
             <div className={s.city}>
               <label className={s.label}>City (Province)</label>
               <p>Bangkok</p>
-              <p className={s['sub-label']}>Outside Bangkok and other countries soon!</p>
+              <p className={s['sub-label']}>More cities soon !</p>
             </div>
             <div>
               <label className={s.label}>Location Detail<span className={s.requiredSign}>*</span></label>
@@ -338,7 +335,7 @@ class RequestListPage extends Component {
               buttonStyle={s.submitButton}
               setSubmitState={this.setSubmitState}
             />
-            <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT LIST REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<Link to="/">Terms</Link>.
+            <p className={c(s['sub-label'], s.coc)}>By clicking "SUBMIT LIST REQUEST" button you agree that your job(s) disregard(s) of gender, disability, ethnic and you also agree to our&nbsp;<a>Terms</a>.
             </p>
           </div>
         </div>

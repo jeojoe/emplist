@@ -133,7 +133,7 @@ class EditListPage extends Component {
             <label className={s.label} htmlFor="exampleEmailInput">List title<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}><FormattedMessage id="rlp_titleDesc" /></p>
             <input
-              className="u-full-width" type="text" maxLength={120}
+              className="u-full-width" type="text" maxLength={140}
               value={title}
               onChange={(e) => this.setState({ title: e.target.value })}
             />
