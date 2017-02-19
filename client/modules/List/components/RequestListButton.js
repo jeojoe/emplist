@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import Loader from '../../App/components/Loader';
 import s from './RequestListButton.css';
 
@@ -23,7 +24,8 @@ class RequestListButton extends Component {
           <div className={s.loaderWrapper}>
             <Loader size="25px" />
           </div>
-        }Request your list
+        }
+        <FormattedMessage id="requestListButton" />
       </Link>
     );
   }
