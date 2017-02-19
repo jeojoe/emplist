@@ -45,7 +45,9 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
         {/* Salary */}
         {salary.max !== 9999999 &&
           <div className={s.detail}>
-            {salary.min}-{salary.max} <span className={s.baht}>฿</span>
+            {salary.min > 999 ? `${salary.min / 1000}K` : salary.min}
+            -
+            {salary.max > 999 ? `${salary.max / 1000}K` : salary.max} <span className={s.baht}>THB</span>
           </div>
         }
 
