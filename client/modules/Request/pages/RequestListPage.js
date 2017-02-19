@@ -206,8 +206,14 @@ class RequestListPage extends Component {
             Details - Draft.js
           */}
           <div className="row" style={{ paddingBottom: '30px' }}>
-            <label className={s.label}>Company & Jobs Details<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}><FormattedMessage id="rlp_detailsDesc" /></p>
+            <label className={s.label}>
+              Company & Jobs Details
+              <span className={s.requiredSign}>*</span>
+            </label>
+            <p className={s['sub-label']}>
+              <FormattedMessage id="rlp_detailsDesc" />
+              {' '}
+              <a href="https://nuuneoi.com/blog/blog.php?read_id=909" target="__blank">คำแนะนำ</a></p>
             <DetailsEditor
               details pathname={pathname}
             />
