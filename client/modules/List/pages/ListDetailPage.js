@@ -73,7 +73,9 @@ class ListDetailPage extends Component {
     const Tags = skills.map((skill, i) => <span className={sSkill.skill} key={i}>{skill}</span>);
 
     const Location = `${company_location.city}, ${company_location.country}`;
-    const Salary = salary.max === 9999999 ? 'Unspecified' : `${salary.min} - ${salary.max} THB`;
+
+    const formatCurrency = (num) => parseInt(num, 10).toLocaleString();
+    const Salary = salary.max === 9999999 ? 'Unspecified' : `${formatCurrency(salary.min)} - ${formatCurrency(salary.max)} THB`;
 
     return (
       <div id={s.content}>
