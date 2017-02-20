@@ -92,6 +92,8 @@ class ListFeedsPage extends Component {
 
     const LoaderComponent = <LoaderWithText text="Loading your opportunities" centerInDiv className={s['bottom-div']} />;
 
+    const listCount = lists.length;
+    const BottomDescription = listCount === 0 ? 'Great Companies are coming soon!' : `We have ${listCount} ${listCount > 1 ? 'companies.' : 'company.'}`;
     return (
       <div className="container">
         <HeaderDescription />
@@ -117,7 +119,7 @@ class ListFeedsPage extends Component {
 
         {/* main feed*/}
         <ListFeedsWrapper lists={lists} />
-        {!isAtTheEndOfFeed ? LoaderComponent : <div className={s['bottom-div']}>We have {lists.length} jobs.</div>}
+        {!isAtTheEndOfFeed ? LoaderComponent : <div className={s['bottom-div']}>{BottomDescription}</div>}
       </div>
     );
   }
