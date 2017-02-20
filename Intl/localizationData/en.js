@@ -5,7 +5,7 @@
 export default {
   locale: 'en',
   messages: {
-    headerDescription: 'All tech companies in one place. Find company\'s culture and working environment that suit you. Then apply to jobs they’re opening right now. ** Now only tech jobs in Bangkok, Thailand **',
+    headerDescription: 'Top tech companies in Bangkok. Learn about their working environments and cultures here.',
     requestListButton: 'Request your company’s list',
     requestListHeader: 'Great talents care about great working environment and culture that suit them. Let them know more about your company and why they should work with you. One company can have one emplist for free and it will be listing on our website forever. Let\'s make finding jobs and talents better for everyone !',
     rlp_titleDesc: 'Use your creativity freely on company’s emplist title ! (up to 140 chars.)',
