@@ -207,7 +207,7 @@ class RequestListPage extends Component {
           */}
           <div className="row" style={{ paddingBottom: '30px' }}>
             <label className={s.label}>
-              Company & Jobs Details
+              Company & Jobs Detail
               <span className={s.requiredSign}>*</span>
             </label>
             <p className={s['sub-label']}>
