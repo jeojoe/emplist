@@ -40,7 +40,7 @@ import ListRequestsRoutes from './routes/ListRequests.routes';
 import UsersRoutes from './routes/Users.routes';
 import CompaniesRoutes from './routes/Companies.routes';
 
-// import dummyData from './dummyData';
+// import dummyData from './dummy/dummyData';
 import serverConfig from './config';
 
 // Set native promises as mongoose promise
