@@ -17,18 +17,6 @@
     "slate": "rimraf node_modules && npm install",
     "lint": "eslint client server"
   },
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Hashnode/mern-starter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Hashnode/mern-starter/issues"
-  },
-  "homepage": "https://github.com/Hashnode/mern-starter#readme",
   "author": "Jirat Onaree <jirat.onaree@gmail.com>, Wirawit Reuopas",
   "dependencies": {
     "aws-sdk": "^2.7.15",
@@ -122,7 +110,7 @@
     "webpack-manifest-plugin": "^1.0.1"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "ava": {
     "files": [
