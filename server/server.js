@@ -43,8 +43,11 @@ import CompaniesRoutes from './routes/Companies.routes';
 // import dummyData from './dummy/dummyData';
 import serverConfig from './config';
 
-// Set native promises as mongoose promise
-mongoose.Promise = global.Promise;
+// Set bluebird promises as mongoose promise
+//
+// bluebird seems to be faster than native...
+// --> http://stackoverflow.com/a/41837255/6666165
+mongoose.Promise = require('bluebird');
 
 // MongoDB Connection
 mongoose.connect(serverConfig.mongoURL,
