@@ -1,9 +1,9 @@
-import sanitizeHtml from 'sanitize-html';
 import ListRequests from '../models/ListRequests';
 import Lists from '../models/Lists';
 import Companies from '../models/Companies';
 import { tempPassword } from '../../secret_config.json';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
 
 
 function bcryptPassword(password) {
@@ -67,7 +67,7 @@ export function getListRequest(req, res) {
  */
 export function insertListRequest(req, res) {
   const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, email, password, additional_note, details, country, city, location_detail } = req.body.list_request;
-  console.log(!title || !tags || !company_name || !country || !city || !location_detail || !email || !password);
+  // console.log(!title || !tags || !company_name || !country || !city || !location_detail || !email || !password);
   if (!title || !tags || !company_name || !country || !city || !location_detail || !email || !password) {
     res.status(403).send({
       ok: false, msg: '31',
@@ -177,59 +177,69 @@ export function approveNewListRequest(req, res) {
   if (password !== tempPassword) {
     res.json({
       ok: false,
-      msg: 'whoa calm down mann. can\'t we be cool?',
+      msg: 'who the fuck are you? get outta here...',
     });
-  } else {
-    ListRequests.findOne(
-      { _id: list_request_id },
-      (err, list_request) => {
-        if (err) {
-          res.json({
-            ok: false,
-            msg: 'Error : finding list request',
-            err,
-          });
-        }
-        if (!list_request) {
-          res.json({
-            ok: false,
-            msg: 'Not found',
-          });
-        } else {
-          // Annoying js delete bug made me do this..
-          const {
-            company_id, company_image, company_email, company_name, company_location, password: listPassword, allow_remote, skills, title, exp, salary, details, how_to_apply,
-          } = list_request;
-          const saveList = new Lists({
-            company_id, company_image, company_email, company_name, company_location, password: listPassword, allow_remote, skills, title, exp, salary, details, how_to_apply,
-          });
-          saveList.save((err1, saved) => {
-            if (err1) {
-              res.json({
-                ok: false,
-                msg: err1,
-              });
-            } else {
-              res.json({
-                ok: true,
-                msg: 'Done approve request !',
-                data: { list_id: saved._id },
-              });
-              ListRequests.update(
-                { _id: list_request_id },
-                {
-                  $set: {
-                    is_approved: true,
-                    list_id: saved._id,
-                  },
-                }
-              );
-            }
-          });
-        }
-      }
-    );
+    return;
   }
+  ListRequests
+    .findOne({ _id: list_request_id })
+    .exec((err, list_request) => {
+      if (err) {
+        res.json({
+          ok: false,
+          msg: 'Error: finding list request',
+          err,
+        });
+        return;
+      }
+      if (!list_request) {
+        res.json({
+          ok: false,
+          msg: 'Not found',
+          err,
+        });
+        return;
+      }
+
+      // do this first else we can't delete the properties...
+      const cloned = list_request.toObject();
+      // remove irrelevant fields
+      delete cloned._id;
+      delete cloned.request_type;
+      delete cloned.is_approved;
+      delete cloned.list_id;
+      delete cloned.additional_note;
+      delete cloned.request_promote;
+      delete cloned.created_at;
+      delete cloned.updated_at;
+      delete cloned.__v;
+
+      // make new list
+      const newList = new Lists(cloned);
+
+      newList.save((err1, saved_list) => {
+        if (err1) {
+          res.json({
+            ok: false,
+            msg: 'Saving new list',
+            err1,
+          });
+          return;
+        }
+
+        ListRequests
+          .where({ _id: list_request_id })
+          .update({ is_approved: true, list_id: saved_list._id })
+          .exec();
+
+        res.json({
+          ok: true,
+          msg: 'Done approve request!',
+          data: { list_id: saved_list._id },
+        });
+        return;
+      });
+    });
 }
 
 /**
@@ -243,95 +253,94 @@ export function approveEditListRequest(req, res) {
   if (password !== tempPassword) {
     res.json({
       ok: false,
-      msg: 'whoa calm down mann. can\'t we be cool?',
+      msg: 'who the fuck are you? get outta here...',
     });
-  } else {
-    ListRequests.findOne(
-      { _id: list_request_id },
-      (err, list_request) => {
-        if (err) {
-          res.json({
-            ok: false,
-            msg: 'Internal Error',
-            err,
-          });
-        }
-        if (!list_request) {
-          res.json({
-            ok: false,
-            msg: 'Not found',
-          });
-        } else {
-          const { list_id, company_name, title, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = list_request;
-
-          Companies.update(
-            company_id,
-            {
-              $set: {
-                company_image, company_name,
-                allow_remote,
-                'company_location.country': company_location.country,
-                'company_location.city': company_location.city,
-                'company_location.detail': company_location.detail,
-                updated_at: new Date(),
-              },
-            },
-            (err1) => {
-              if (err1) {
-                res.json({
-                  ok: false, msg: err1.message, err: err1,
-                });
-              } else {
-                Lists.update(
-                  { _id: list_id },
-                  {
-                    $set: {
-                      company_name, title, details, how_to_apply,
-                      'salary.min': salary.min,
-                      'salary.max': salary.max,
-                      'exp.condition': exp.condition,
-                      'exp.has_intern': exp.has_intern,
-                      'exp.min': exp.min,
-                      'exp.max': exp.max,
-                      skills,
-                      allow_remote: exp.allow_remote,
-                      company_image,
-                      'company_location.country': company_location.country,
-                      'company_location.city': company_location.city,
-                      'company_location.detail': company_location.detail,
-                      updated_at: new Date(),
-                    },
-                  },
-                  (err2) => {
-                    if (err2) {
-                      res.json({
-                        ok: false, msg: err2.message, err: err2,
-                      });
-                    } else {
-                      res.json({
-                        ok: true,
-                        msg: 'Done approve request !',
-                        data: { list_id },
-                      });
-                      ListRequests.update(
-                        { _id: list_request_id },
-                        {
-                          $set: {
-                            is_approved: true,
-                            list_id,
-                          },
-                        }
-                      ).exec();
-                    }
-                  }
-                );
-              }
-            }
-          );
-        }
-      }
-    );
   }
+  ListRequests
+    .findOne({ _id: list_request_id })
+    .exec((err, list_request) => {
+      if (err) {
+        res.json({
+          ok: false,
+          msg: 'Internal Error',
+          err,
+        });
+        return;
+      }
+      if (!list_request) {
+        res.json({
+          ok: false,
+          msg: 'Not found',
+        });
+        return;
+      }
+      const { list_id, company_name, title, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = list_request;
+
+      Companies.update(
+        company_id,
+        {
+          $set: {
+            company_image, company_name,
+            allow_remote,
+            'company_location.country': company_location.country,
+            'company_location.city': company_location.city,
+            'company_location.detail': company_location.detail,
+            updated_at: new Date(),
+          },
+        },
+        (err1) => {
+          if (err1) {
+            res.json({
+              ok: false, msg: err1.message, err: err1,
+            });
+          } else {
+            Lists.update(
+              { _id: list_id },
+              {
+                $set: {
+                  company_name, title, details, how_to_apply,
+                  'salary.min': salary.min,
+                  'salary.max': salary.max,
+                  'exp.condition': exp.condition,
+                  'exp.has_intern': exp.has_intern,
+                  'exp.min': exp.min,
+                  'exp.max': exp.max,
+                  skills,
+                  allow_remote: exp.allow_remote,
+                  company_image,
+                  'company_location.country': company_location.country,
+                  'company_location.city': company_location.city,
+                  'company_location.detail': company_location.detail,
+                  updated_at: new Date(),
+                },
+              },
+              (err2) => {
+                if (err2) {
+                  res.json({
+                    ok: false, msg: err2.message, err: err2,
+                  });
+                } else {
+                  res.json({
+                    ok: true,
+                    msg: 'Done approve request !',
+                    data: { list_id },
+                  });
+                  ListRequests.update(
+                    { _id: list_request_id },
+                    {
+                      $set: {
+                        is_approved: true,
+                        list_id,
+                      },
+                    }
+                  ).exec();
+                }
+              }
+            );
+          }
+        }
+      );
+    });
 }
 
 /**
