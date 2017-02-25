@@ -1,4 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
+import moment from 'moment';
+
 import ListFeedsWrapper from '../../List/components/ListFeedsWrapper';
 import DynamicSegmentedControl from './DynamicSegmentedControl';
 import callApi from '../../../util/apiCaller';
@@ -88,11 +91,23 @@ export default class AdminApprovementPanel extends React.Component {
     );
 
     const list = allLists[filterIndex] || [];
+
+    const groups = _.groupBy(list, (obj) => {
+      return moment(obj.created_at).startOf('day').format('DD/MM/YYYY');
+    });
+    const GroupOfLists = _.map(groups, (group, day) => {
+      return (
+        <div>
+          <h5><strong>{day}</strong></h5>
+          <ListFeedsWrapper lists={group} admin />;
+        </div>
+      );
+    });
     return (
       <div>
         {SegmentedControl}
         {fetching ? 'Fetching...' :
-          list.length === 0 ? 'There is no lists.' : <ListFeedsWrapper lists={list} admin />
+          list.length === 0 ? 'There is no lists.' : GroupOfLists
         }
       </div>
     );
