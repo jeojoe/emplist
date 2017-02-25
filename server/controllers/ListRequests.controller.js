@@ -22,7 +22,7 @@ export function getAllListRequests(req, res) {
   const { request_type } = req.query;
   ListRequests.find({ is_approved: false, request_type })
     .sort('-created_at')
-    .select('_id request_type company_name title salary exp skills allow_remote company_image ')
+    .select('_id request_type company_name title salary exp skills allow_remote company_image created_at')
     .exec((err, requests) => {
       if (err) {
         res.json({
