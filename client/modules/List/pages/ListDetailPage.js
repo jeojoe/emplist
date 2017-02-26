@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
+import moment from 'moment';
+
 import callApi from '../../../util/apiCaller';
 
 import AdminHeader from '../../Admin/components/AdminHeader';
@@ -9,7 +11,6 @@ import s from './ListDetailPage.css';
 import sSkill from '../components/ListItem.css';
 
 import { getToken } from '../../Admin/authToken';
-
 // import HeaderText from '../components/HeaderText';
 
 class ListDetailPage extends Component {
@@ -69,6 +70,7 @@ class ListDetailPage extends Component {
       salary,
       details,
       how_to_apply,
+      updated_at,
     } = list;
     const Tags = skills.map((skill, i) => <span className={sSkill.skill} key={i}>{skill}</span>);
 
@@ -104,6 +106,9 @@ class ListDetailPage extends Component {
         <div className={s.howWrapper}>
           <h5>How to apply</h5>
           <p>{how_to_apply}</p>
+        </div>
+        <div>
+          <p>Updated: {moment(updated_at).fromNow()}</p>
         </div>
       </div>
     );

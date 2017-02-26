@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import callApi from '../client/util/apiCaller';
-import ListRequests from './models/ListRequests';
-import Lists from './models/Lists';
-import Companies from './models/Companies';
+import callApi from '../../client/util/apiCaller';
+import ListRequests from '../models/ListRequests';
+import Lists from '../models/Lists';
+import Companies from '../models/Companies';
 import Promise from 'bluebird';
-import secretConfig from '../secret_config.json';
+import secretConfig from '../../secret_config.json';
 
 function insertDummyData() {
   const req1 = {
@@ -101,9 +101,10 @@ function insertDummyData() {
           console.log('Count error', err2);
           return;
         }
-        const randoms = _.range(16).map(() => Math.floor(Math.random() * count));
+        const randoms = _.uniq(_.range(16).map(() => Math.floor(Math.random() * count)));
         const randomListRequests = randoms.map(rand => ListRequests.findOne().skip(rand));
 
+        console.log(randoms);
         // Randomly approve listRequests
         Promise.all(randomListRequests)
         .then(resRandom => {
@@ -115,7 +116,7 @@ function insertDummyData() {
           return Promise.all(allPendingApprovals);
         })
         .then(resApproval => {
-          console.log(`Did randomly approve ${resApproval.length} list requests.`);
+          console.log(`... Finished (${resApproval.length}). ${JSON.stringify(resApproval[0])}`);
         })
         .catch(errApproval => {
           console.log('Error while randomly approve: ', errApproval);

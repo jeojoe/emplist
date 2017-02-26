@@ -1,4 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
+import moment from 'moment';
+
 import ListFeedsWrapper from '../../List/components/ListFeedsWrapper';
 import DynamicSegmentedControl from './DynamicSegmentedControl';
 import callApi from '../../../util/apiCaller';
@@ -14,19 +17,20 @@ export default class AdminApprovementPanel extends React.Component {
     super(props);
     this.state = {
       fetching: true,
-      lists: [],
+      allLists: {}, // keep all lists for all filters
       filterIndex: 0,
       cacheListCount: [null, null],
     };
   }
 
+  // load data once
   componentDidMount() {
-    this.fetchDataForFilterIndex(this.state.filterIndex);
+    this.fetchDataForFilterIndex(0);
+    this.fetchDataForFilterIndex(1);
   }
 
   onClickForFilterIndex = (filterIndex) => () => {
     this.setState({ filterIndex });
-    this.fetchDataForFilterIndex(filterIndex);
   }
 
   requestTypeForIndex(index) {
@@ -56,7 +60,6 @@ export default class AdminApprovementPanel extends React.Component {
     }
     this.setState({
       fetching: true,
-      lists: [],
     });
     callApi(`/requests?token=${token}&request_type=${request_type}`, 'get').then((res) => {
       if (!res.ok) {
@@ -66,12 +69,14 @@ export default class AdminApprovementPanel extends React.Component {
       }
       const cacheListCount = this.state.cacheListCount;
       cacheListCount[filterIndex] = res.requests.length;
-      this.setState({ fetching: false, lists: res.requests, cacheListCount });
+      const newAllLists = this.state.allLists;
+      newAllLists[filterIndex] = res.requests;
+      this.setState({ fetching: false, allLists: newAllLists, cacheListCount });
     });
   }
 
   render() {
-    const { fetching, lists, cacheListCount } = this.state;
+    const { fetching, allLists, cacheListCount, filterIndex } = this.state;
     const filteringSegments = [
       { title: this.filterTitleForIndex(0, cacheListCount[0]), onClick: this.onClickForFilterIndex(0) },
       { title: this.filterTitleForIndex(1, cacheListCount[1]), onClick: this.onClickForFilterIndex(1) },
@@ -85,11 +90,24 @@ export default class AdminApprovementPanel extends React.Component {
       />
     );
 
+    const list = allLists[filterIndex] || [];
+
+    const groups = _.groupBy(list, (obj) => {
+      return moment(obj.created_at).startOf('day').format('DD/MM/YYYY');
+    });
+    const GroupOfLists = _.map(groups, (group, day) => {
+      return (
+        <div>
+          <h5><strong>{day}</strong></h5>
+          <ListFeedsWrapper lists={group} admin />;
+        </div>
+      );
+    });
     return (
       <div>
         {SegmentedControl}
         {fetching ? 'Fetching...' :
-          <ListFeedsWrapper lists={lists} admin />
+          list.length === 0 ? 'There is no lists.' : GroupOfLists
         }
       </div>
     );
