@@ -93,6 +93,8 @@ const renderFullPage = (html, initialState) => {
         ${head.script.toString()}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="google-site-verification" content="2vjAlFV_HN6QWysSom046BOF4zyvr2bl0zaL3QWWeCs" />
+        <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-16x16.png" sizes="16x16" />
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
       </head>
