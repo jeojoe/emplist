@@ -26,12 +26,12 @@ const List = ({ list: { _id, title, company_image, company_name,  allow_remote, 
         }
         {/* Internship */}
         {has_intern &&
-          <div className={`${s.detail} ${s.green}`}>
+          <div className={c(s.detail, s.green)}>
             &#10004; Internship
           </div>
         }
         {has_equity &&
-          <div className={`${s.detail} ${s.green}`}>
+          <div className={c(s.detail, s.purple)}>
             &#10004; Equity
           </div>
         }

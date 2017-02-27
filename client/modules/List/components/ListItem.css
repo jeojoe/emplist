@@ -76,6 +76,15 @@
   color: #2ecc71;
 }
 
+.purple {
+  font-weight: 600;
+  color: #8e44ad;
+}
+
+.red {
+  font-weight: 600;
+  color: #c0392b;
+}
 .baht {
   font-size: 10px;
 }
