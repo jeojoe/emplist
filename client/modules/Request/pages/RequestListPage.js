@@ -111,6 +111,7 @@ class RequestListPage extends Component {
               className="u-full-width" type="text" maxLength={140}
               value={title}
               onChange={(e) => this.setState({ title: e.target.value })}
+              autoFocus
             />
           </div>
           {/*

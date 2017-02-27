@@ -1,9 +1,8 @@
+import bcrypt from 'bcrypt';
 import ListRequests from '../models/ListRequests';
 import Lists from '../models/Lists';
 import Companies from '../models/Companies';
 import { tempPassword } from '../../secret_config.json';
-import bcrypt from 'bcrypt';
-import _ from 'lodash';
 
 
 function bcryptPassword(password) {
@@ -344,17 +343,17 @@ export function approveEditListRequest(req, res) {
 }
 
 /**
- * Request promote
+ * Request promote - Legacy
  */
-export function requestPromote(req, res) {
-  const { list_request_id } = req.params;
-  ListRequests.update(
-    { _id: list_request_id },
-    { $set: { request_promote: true },
-  }, (err) => {
-    if (err) {
-      res.json({ ok: false, msg: 'Something went wrong !', err });
-    }
-    res.json({ ok: true });
-  });
-}
+// export function requestPromote(req, res) {
+//   const { list_request_id } = req.params;
+//   ListRequests.update(
+//     { _id: list_request_id },
+//     { $set: { request_promote: true },
+//   }, (err) => {
+//     if (err) {
+//       res.json({ ok: false, msg: 'Something went wrong !', err });
+//     }
+//     res.json({ ok: true });
+//   });
+// }
