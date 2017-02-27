@@ -127,7 +127,9 @@ class RequestListPage extends Component {
                 checked={intern_check}
                 onChange={(e) => this.setState({ intern_check: e.target.checked })}
               />
-              <span className="label-body">Internship opening</span>
+              <span className="label-body">
+                <FormattedMessage id="rlp_internDesc" />
+              </span>
             </label></div>
           </div>
           {/*
@@ -158,7 +160,9 @@ class RequestListPage extends Component {
                 checked={equity_check}
                 onChange={(e) => this.setState({ equity_check: e.target.checked })}
               />
-              <span className="label-body">Provide Equity</span>
+              <span className="label-body">
+                <FormattedMessage id="rlp_equityDesc" />
+              </span>
             </label></div>
           </div>
           <hr />
@@ -256,7 +260,9 @@ class RequestListPage extends Component {
                 type="checkbox" checked={remote_check}
                 onChange={(e) => this.setState({ remote_check: e.target.checked })}
               />
-              <span className="label-body">Remote working allowed</span>
+              <span className="label-body">
+                <FormattedMessage id="rlp_remoteDesc" />
+              </span>
             </label>
           </div>
           <hr />
