@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Link } from 'react-router';
 import s from './ListItem.css';
 import c from 'classnames';
 // import moment from 'moment';
 
-const List = ({ list: { _id, title, company_image, company_name, company_location, allow_remote, exp, salary, created_at, skills, request_type }, admin }) => (
+const List = ({ list: { _id, title, company_image, company_name,  allow_remote, salary, has_intern, has_equity, skills, request_type }, admin }) => (
   <div className={s.item}>
     <div className={s['image-wrapper']}>
       <Link to={admin ? `/admin/request/${_id}` : `/el/${_id}`} params={{ id: _id }} className={s.link}>
@@ -24,22 +24,15 @@ const List = ({ list: { _id, title, company_image, company_name, company_locatio
             &#10004; Remote
           </div>
         }
-        {/* Experience */}
-        {exp.condition !== 'no' &&
-          <div className={s.detail}>
-            exp.
-            {exp.condition === 'more_than' &&
-              ` > ${exp.min} ${exp.min <= 1 ? 'year' : 'years'}`
-            }
-            {exp.condition === 'between' &&
-              ` ${exp.min}-${exp.max} ${exp.max <= 1 ? 'year' : 'years'}`
-            }
-          </div>
-        }
         {/* Internship */}
-        {exp.has_intern &&
+        {has_intern &&
           <div className={`${s.detail} ${s.green}`}>
             &#10004; Internship
+          </div>
+        }
+        {has_equity &&
+          <div className={`${s.detail} ${s.green}`}>
+            &#10004; Equity
           </div>
         }
         {/* Salary */}

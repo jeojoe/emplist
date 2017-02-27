@@ -73,20 +73,12 @@ class SubmitRequestButton extends Component {
     if (submitting) return;
 
     setSubmitState(true);
-    const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city, location_detail } = this.props; //eslint-disable-line
+    const { title, tags, intern_check, equity_check, salary_min, salary_max, editorState, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, email, password, password_confirm, additional_note, country, city, location_detail } = this.props; //eslint-disable-line
     const details = tinymce.get('mytextarea').getContent(); //eslint-disable-line
 
     if (!title || !tags) {
       setSubmitState(false);
       alert('Please check Title or Skills field again.');
-      return;
-    } else if (exp_condition === 'between' && (!exp_between_min || !exp_between_max)) {
-      setSubmitState(false);
-      alert('Please check Experience field again (errors on "Between" condition).');
-      return;
-    } else if (exp_condition === 'more_than' && (!exp_more_than)) {
-      setSubmitState(false);
-      alert('Please check Experience field again (errors on "More than" condition).');
       return;
     } else if (!details) {
       setSubmitState(false);
@@ -132,7 +124,7 @@ class SubmitRequestButton extends Component {
 
       callApi('/requests', 'post', {
         list_request: {
-          title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, email, password, password_confirm, additional_note, details, country, city, location_detail,
+          title, tags, intern_check, equity_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, email, password, password_confirm, additional_note, details, country, city, location_detail,
         },
       }).then((res) => {
         setSubmitState(false);

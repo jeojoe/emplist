@@ -27,16 +27,8 @@ const requestSchema = new Schema({
   allow_remote: { type: Boolean, default: false, required: true },
   skills: { type: [String], default: [] },
   title: { type: String, required: true },
-  exp: {
-    condition: {
-      type: String,
-      enum: ['more_than', 'between', 'no'],
-      required: true,
-    },
-    min: { type: Number, default: 0 },
-    max: { type: Number, default: 99 },
-    has_intern: { type: Boolean, default: false },
-  },
+  has_intern: { type: Boolean, default: false },
+  has_equity: { type: Boolean, default: false },
   salary: {
     min: { type: Number, default: 0 },
     max: { type: Number, default: 9999999 },

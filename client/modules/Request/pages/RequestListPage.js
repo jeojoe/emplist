@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import SkillTagsInput from '../components/SkillTagsInput';
@@ -18,11 +17,8 @@ class RequestListPage extends Component {
       title: '',
       tags: [],
       suggestions: [],
-      exp_condition: 'no',
-      exp_between_min: null,
-      exp_between_max: null,
-      exp_more_than: null,
       intern_check: false,
+      equity_check: false,
       salary_min: null,
       salary_max: null,
       how_to_apply: '',
@@ -93,7 +89,7 @@ class RequestListPage extends Component {
   }
 
   render() {
-    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, email, password, password_confirm, additional_note } = this.state;
+    const { title, tags, suggestions, intern_check, equity_check, salary_min, salary_max, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, email, password, password_confirm, additional_note } = this.state;
     const { pathname } = this.props.location;
 
     const notSamePassword = password !== password_confirm;
@@ -115,7 +111,7 @@ class RequestListPage extends Component {
             />
           </div>
           {/*
-            Skills
+            Skills & Internship
           */}
           <div className={s.row}>
             <label className={s.label}>Skills<span className={s.requiredSign}>*</span></label>
@@ -125,59 +121,14 @@ class RequestListPage extends Component {
               suggestions={suggestions}
               setTagsState={this.setTagsState}
             />
-          </div>
-          {/*
-            Experience
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
-            <select
-              value={exp_condition}
-              onChange={(e) => this.setState({ exp_condition: e.target.value })}
-              className={s['exp-dropdown']}
-            >
-              <option value="no">No minimum</option>
-              <option value="between">Between</option>
-              <option value="more_than">More than</option>
-            </select>
-            {exp_condition === 'between' &&
-              <div className={s.inline} style={{ marginRight: '20px' }}>
-                <input
-                  type="number" min={0} max={99} placeholder="Min"
-                  className={s['num-input']}
-                  value={exp_between_min}
-                  onChange={(e) => this.setState({ exp_between_min: e.target.value })}
-                />
-                -
-                <input
-                  type="number" min={0} max={99} placeholder="Max"
-                  className={s['num-input']}
-                  value={exp_between_max}
-                  onChange={(e) => this.setState({ exp_between_max: e.target.value })}
-                />
-                years
-              </div>
-            }
-            {exp_condition === 'more_than' &&
-              <div className={s.inline} style={{ marginRight: '20px' }}>
-                <input
-                  type="number" min={0} max={99}
-                  className={s['num-input']}
-                  value={exp_more_than}
-                  onChange={(e) => this.setState({ exp_more_than: e.target.value })}
-                />
-                years
-              </div>
-            }
-            <label style={{ display: 'inline-block' }}>
+            <div><label style={{ display: 'inline-block' }}>
               <input
                 type="checkbox"
                 checked={intern_check}
                 onChange={(e) => this.setState({ intern_check: e.target.checked })}
               />
               <span className="label-body">Internship opening</span>
-            </label>
+            </label></div>
           </div>
           {/*
             Salary
@@ -201,6 +152,14 @@ class RequestListPage extends Component {
               />
               THB
             </div>
+            <div><label style={{ display: 'inline-block' }}>
+              <input
+                type="checkbox"
+                checked={equity_check}
+                onChange={(e) => this.setState({ equity_check: e.target.checked })}
+              />
+              <span className="label-body">Provide Equity</span>
+            </label></div>
           </div>
           <hr />
           {/*
