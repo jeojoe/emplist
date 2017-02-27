@@ -17,8 +17,8 @@ class SubmitRequestButton extends Component {
     // Resize image
     const mainCanvas = document.createElement('canvas');
     const img = document.getElementById('logo-preview');
-    mainCanvas.width = 100;
-    mainCanvas.height = 100;
+    mainCanvas.width = 256;
+    mainCanvas.height = 256;
     const ctx = mainCanvas.getContext('2d');
     ctx.drawImage(img, 0, 0, mainCanvas.width, mainCanvas.height);
 
