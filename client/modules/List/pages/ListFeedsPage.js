@@ -44,7 +44,9 @@ class ListFeedsPage extends Component {
 
   handleScroll() {
     // if reach bottom, load more
-    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+
+    // +1 is important here!
+    if ((window.innerHeight + window.scrollY + 1) >= document.body.scrollHeight) {
       this.fetchLists(this.state.lastIndex + 1, NUM_ITEMS_PER_FETCH);
     }
   }
