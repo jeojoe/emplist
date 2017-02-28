@@ -27,11 +27,12 @@ class ListFeedsPage extends Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = _.throttle(this.handleScroll, 250);
+
     this.fetchLists = this.fetchLists.bind(this);
   }
 
   componentDidMount() {
-    this.fetchLists = _.throttle(this.fetchLists, 1000);
     window.addEventListener('scroll', this.handleScroll);
 
     // initial fetch
@@ -44,7 +45,8 @@ class ListFeedsPage extends Component {
 
   handleScroll() {
     // if reach bottom, load more
-    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+    // console.log(`scroll ${window.scrollY} + ${window.innerHeight} ${window.innerHeight + window.scrollY} >= ${document.body.scrollHeight}`);
+    if ((window.innerHeight + window.scrollY) >= document.body.clientHeight) {
       this.fetchLists(this.state.lastIndex + 1, NUM_ITEMS_PER_FETCH);
     }
   }
