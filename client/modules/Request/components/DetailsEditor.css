@@ -7,7 +7,21 @@
   display: none;
 }
 
-:global(.mce-fullscreen .mce-container-body) {
-  max-width: 700px;
+:global(.mce-fullscreen .mce-toolbar .mce-container-body) {
+  max-width: 1000px;
+  margin-left: auto;
+}
+
+:global(.mce-fullscreen .mce-toolbar-grp .mce-container-body) {
+  max-width: 1000px;
   margin: 0 auto;
+}
+
+:global(.mce-fullscreen .mce-statusbar .mce-container-body) {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+:global(.mce-fullscreen .mce-edit-area) {
+  padding: 0 8px;
 }
