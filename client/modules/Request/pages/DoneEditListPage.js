@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import callApi from '../../../util/apiCaller';
 
 class DoneEditListPage extends Component {
@@ -56,6 +58,8 @@ class DoneEditListPage extends Component {
         <p>
           Posting list is complete free. but it has a problem of ถูกดันลงไป. So we'd like to know the needs of this feature. If you'd like to have this feature on your list please click the button below..
         </p>
+        {/* Steal from Done Edit List Page lol */}
+        <Link to="/"><FormattedMessage id="drlp_back" /></Link>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import LocalizedMessage from '../../App/components/LocalizedMessage';
 import callApi from '../../../util/apiCaller';
@@ -80,6 +81,7 @@ class DoneRequestListPage extends Component {
           {!requesting && !done && `${company_name} requests promote listing`}
           {!requesting && done && 'You have requested, Thank you !'}
         </button>*/}
+        <Link to="/"><FormattedMessage id="drlp_back" /></Link>
       </div>
     );
   }
