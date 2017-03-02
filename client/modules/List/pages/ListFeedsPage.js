@@ -27,11 +27,12 @@ class ListFeedsPage extends Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = _.throttle(this.handleScroll, 250);
+
     this.fetchLists = this.fetchLists.bind(this);
   }
 
   componentDidMount() {
-    this.fetchLists = _.throttle(this.fetchLists, 1000);
     window.addEventListener('scroll', this.handleScroll);
 
     // initial fetch
