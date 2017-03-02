@@ -99,7 +99,7 @@ class ListDetailPage extends Component {
           */}
         </div>
 
-        <div className={s.detailWrapper}>
+        <div id={s.detailWrapper}>
           <div dangerouslySetInnerHTML={{ __html: details }} />
         </div>
 
