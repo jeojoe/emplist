@@ -6,3 +6,8 @@
 :global(#mytextarea) {
   display: none;
 }
+
+:global(.mce-fullscreen .mce-container-body) {
+  max-width: 700px;
+  margin: 0 auto;
+}
