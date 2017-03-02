@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
+import LocalizedMessage from '../../App/components/LocalizedMessage';
 import callApi from '../../../util/apiCaller';
 
 class DoneRequestListPage extends Component {
@@ -67,12 +68,10 @@ class DoneRequestListPage extends Component {
 
     return (
       <div className="container">
-        <p>
-          <FormattedMessage id="doneRequestDesc1" />
-        </p>
-        <p>
-          <FormattedMessage id="doneRequestDesc2" />
-        </p>
+        <h5>
+          <FormattedMessage id="doneNewRequestMsgTitle" />
+        </h5>
+        <LocalizedMessage id="doneNewRequestMsgDescription" />
         {/*<button
           className={done || requesting ? 'button' : 'button-primary'}
           onClick={this.sendPromoteRequest}

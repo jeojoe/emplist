@@ -24,8 +24,8 @@ class SubmitEditButton extends Component {
     // Resize image
     const mainCanvas = document.createElement('canvas');
     const img = document.getElementById('logo-preview');
-    mainCanvas.width = 200;
-    mainCanvas.height = 200;
+    mainCanvas.width = 256;
+    mainCanvas.height = 256;
     const ctx = mainCanvas.getContext('2d');
     ctx.drawImage(img, 0, 0, mainCanvas.width, mainCanvas.height);
 
@@ -91,20 +91,12 @@ class SubmitEditButton extends Component {
         setSubmitState(false);
         return;
       }
-      const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, additional_note, company_id } = this.props; // eslint-disable-line
+      const { title, tags, intern_check, equity_check, salary_min, salary_max, how_to_apply, company_name, logo_image_file, logo_preview_url, remote_check, country, city, location_detail, additional_note, company_id } = this.props; // eslint-disable-line
       const details = tinymce.get('mytextarea').getContent(); //eslint-disable-line
 
       if (!title || !tags) {
         setSubmitState(false);
         alert('Please check Title or Skills field again.');
-        return;
-      } else if (exp_condition === 'between' && (!exp_between_min || !exp_between_max)) {
-        setSubmitState(false);
-        alert('Please check Experience field again (errors on "Between" condition).');
-        return;
-      } else if (exp_condition === 'more_than' && (!exp_more_than)) {
-        setSubmitState(false);
-        alert('Please check Experience field again (errors on "More than" condition).');
         return;
       } else if (!details) {
         setSubmitState(false);
@@ -138,7 +130,7 @@ class SubmitEditButton extends Component {
 
         callApi(`/lists/${list_id}`, 'post', {
           list: {
-            _id: list_id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, additional_note, company_id,
+            _id: list_id, title, tags, intern_check, equity_check, salary_min, salary_max, how_to_apply, company_name, company_image: image_url, remote_check, details, country, city, location_detail, additional_note, company_id,
           },
         }).then(res1 => {
           setSubmitState(false);

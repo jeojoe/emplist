@@ -5,15 +5,14 @@ import * as ListRequestsController from '../controllers/ListRequests.controller'
 
 const router = new Router();
 
-
 // Post Request
 router.route('/requests').post(ListRequestsController.insertListRequest);
 
-// Make promote request
-router.route('/requests/promote/:list_request_id').get(ListRequestsController.requestPromote);
-
 // Check if request exists
 router.route('/requests/check/:list_request_id').get(ListRequestsController.checkListRequest);
+
+// Make promote request - Legacy
+// router.route('/requests/promote/:list_request_id').get(ListRequestsController.requestPromote);
 
 // Authenticated-API Middleware
 // All APIs below this line are expected to receive 'token' either from body or query, which is retrieved upon admin's login.
@@ -40,16 +39,16 @@ router.use((req, res, next) => {
   }
 });
 
-// Get all list requests
+// For Admin - Get all list requests
 router.route('/requests').get(ListRequestsController.getAllListRequests);
 
-// Get one List request
+// For Admin - Get one List request
 router.route('/requests/:list_request_id').get(ListRequestsController.getListRequest);
 
-// Approve new List request
+// For Admin - Approve new List request
 router.route('/requests/approve/new/:list_request_id').put(ListRequestsController.approveNewListRequest);
 
-// Approve edit List request
+// For Admin - Approve edit List request
 router.route('/requests/approve/edit/:list_request_id').put(ListRequestsController.approveEditListRequest);
 
 export default router;

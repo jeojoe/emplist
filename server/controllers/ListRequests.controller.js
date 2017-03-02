@@ -1,9 +1,8 @@
+import bcrypt from 'bcrypt';
 import ListRequests from '../models/ListRequests';
 import Lists from '../models/Lists';
 import Companies from '../models/Companies';
 import { tempPassword } from '../../secret_config.json';
-import bcrypt from 'bcrypt';
-import _ from 'lodash';
 
 
 function bcryptPassword(password) {
@@ -22,7 +21,7 @@ export function getAllListRequests(req, res) {
   const { request_type } = req.query;
   ListRequests.find({ is_approved: false, request_type })
     .sort('-created_at')
-    .select('_id request_type company_name title salary exp skills allow_remote company_image created_at')
+    .select('_id request_type company_name title salary skills has_intern has_equity allow_remote company_image created_at')
     .exec((err, requests) => {
       if (err) {
         res.json({
@@ -66,7 +65,7 @@ export function getListRequest(req, res) {
  * @returns void
  */
 export function insertListRequest(req, res) {
-  const { title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, email, password, additional_note, details, country, city, location_detail } = req.body.list_request;
+  const { title, tags, intern_check, equity_check, salary_min, salary_max, how_to_apply, company_name, company_image, remote_check, email, password, additional_note, details, country, city, location_detail } = req.body.list_request;
   // console.log(!title || !tags || !company_name || !country || !city || !location_detail || !email || !password);
   if (!title || !tags || !company_name || !country || !city || !location_detail || !email || !password) {
     res.status(403).send({
@@ -91,18 +90,6 @@ export function insertListRequest(req, res) {
     })
     .then((company) => {
       const company_id = company._id;
-      let min = 0;
-      let max = 0;
-      if (exp_condition === 'between') {
-        min = exp_between_min;
-        max = exp_between_max;
-      } else if (exp_condition === 'more_than') {
-        min = exp_more_than;
-        max = 99;
-      } else {
-        min = 0;
-        max = 99;
-      }
       const skills = tags.map((tag) => tag.text);
 
       // 2. Insert List Request
@@ -115,7 +102,8 @@ export function insertListRequest(req, res) {
         allow_remote: remote_check,
         skills,
         title,
-        exp: { condition: exp_condition, min, max, has_intern: intern_check },
+        has_intern: intern_check,
+        has_equity: equity_check,
         salary: {
           min: salary_min || 0,
           max: salary_max || 9999999,
@@ -274,7 +262,7 @@ export function approveEditListRequest(req, res) {
         });
         return;
       }
-      const { list_id, company_name, title, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = list_request;
+      const { list_id, company_name, title, details, how_to_apply, salary, skills, has_intern, has_equity, allow_remote, company_location, company_image, company_id } = list_request;
 
       Companies.update(
         company_id,
@@ -301,12 +289,10 @@ export function approveEditListRequest(req, res) {
                   company_name, title, details, how_to_apply,
                   'salary.min': salary.min,
                   'salary.max': salary.max,
-                  'exp.condition': exp.condition,
-                  'exp.has_intern': exp.has_intern,
-                  'exp.min': exp.min,
-                  'exp.max': exp.max,
                   skills,
-                  allow_remote: exp.allow_remote,
+                  allow_remote,
+                  has_intern,
+                  has_equity,
                   company_image,
                   'company_location.country': company_location.country,
                   'company_location.city': company_location.city,
@@ -344,17 +330,17 @@ export function approveEditListRequest(req, res) {
 }
 
 /**
- * Request promote
+ * Request promote - Legacy
  */
-export function requestPromote(req, res) {
-  const { list_request_id } = req.params;
-  ListRequests.update(
-    { _id: list_request_id },
-    { $set: { request_promote: true },
-  }, (err) => {
-    if (err) {
-      res.json({ ok: false, msg: 'Something went wrong !', err });
-    }
-    res.json({ ok: true });
-  });
-}
+// export function requestPromote(req, res) {
+//   const { list_request_id } = req.params;
+//   ListRequests.update(
+//     { _id: list_request_id },
+//     { $set: { request_promote: true },
+//   }, (err) => {
+//     if (err) {
+//       res.json({ ok: false, msg: 'Something went wrong !', err });
+//     }
+//     res.json({ ok: true });
+//   });
+// }

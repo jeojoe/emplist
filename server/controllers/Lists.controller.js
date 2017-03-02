@@ -59,24 +59,11 @@ export function getListDetail(req, res) {
   Edit List
 */
 export function sendEditListRequest(req, res) {
-  const { _id, title, tags, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, company_image, company_id, remote_check, additional_note, details, country, city, location_detail } = req.body.list;
+  const { _id, title, tags, intern_check, equity_check, salary_min, salary_max, how_to_apply, company_name, company_image, company_id, remote_check, additional_note, details, country, city, location_detail } = req.body.list;
 
   if (!title || !tags || !company_name || !country || !city || !location_detail) {
     res.json({ ok: false, msg: 'no required fields' });
   } else {
-    let min = 0;
-    let max = 0;
-    if (exp_condition === 'between') {
-      min = exp_between_min;
-      max = exp_between_max;
-    } else if (exp_condition === 'more_than') {
-      min = exp_more_than;
-      max = 99;
-    } else {
-      min = 0;
-      max = 99;
-    }
-
     const skills = tags.map((skill) => skill.text);
 
     const newListRequest = new ListRequests({
@@ -87,7 +74,8 @@ export function sendEditListRequest(req, res) {
       allow_remote: remote_check,
       skills,
       title,
-      exp: { condition: exp_condition, min, max, has_intern: intern_check },
+      has_intern: intern_check,
+      has_equity: equity_check,
       salary: {
         min: salary_min || 0,
         max: salary_max || 9999999,

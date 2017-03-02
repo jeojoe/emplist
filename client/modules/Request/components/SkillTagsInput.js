@@ -44,6 +44,7 @@ class SkillTagsInput extends Component {
           remove: s.remove,
           tagInput: tags.length >= 7 ? s['hide-input'] : 'ReactTags__tagInput',
         }}
+        autofocus={false}
       />
     );
   }

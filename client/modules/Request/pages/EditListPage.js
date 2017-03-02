@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import SkillTagsInput from '../components/SkillTagsInput';
@@ -18,11 +18,8 @@ class EditListPage extends Component {
       title: '',
       tags: [],
       suggestions: [],
-      exp_condition: 'no',
-      exp_between_min: null,
-      exp_between_max: null,
-      exp_more_than: null,
       intern_check: false,
+      equity_check: false,
       salary_min: null,
       salary_max: null,
       how_to_apply: '',
@@ -48,14 +45,14 @@ class EditListPage extends Component {
       if (err) {
         // console.log(err);
       } else {
-        const { title, company_name, details, how_to_apply, salary, exp, skills, allow_remote, company_location, company_image, company_id } = res.list;
+        const { title, company_name, details, how_to_apply, salary, has_intern, has_equity, skills, allow_remote, company_location, company_image, company_id } = res.list;
         const tags = skills.map((skill, i) => {
           return { id: i + 1, text: skill };
         });
 
         this.setState({
           fetching: false,
-          title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, exp_condition: exp.condition, exp_between_min: exp.min, exp_between_max: exp.max, exp_more_than: exp.min, intern_check: exp.has_intern, tags, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image, company_id, details,
+          title, company_name, how_to_apply, salary_min: salary.min, salary_max: salary.max, intern_check: has_intern, equity_check: has_equity, tags, remote_check: allow_remote, country: company_location.country, city: company_location.city, location_detail: company_location.detail, logo_preview_url: company_image, logo_resized_url: company_image, company_id, details,
         });
       }
     });
@@ -119,7 +116,7 @@ class EditListPage extends Component {
         </div>
       );
     }
-    const { title, tags, suggestions, exp_condition, exp_between_min, exp_between_max, exp_more_than, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, additional_note, details } = this.state;
+    const { title, tags, suggestions, equity_check, intern_check, salary_min, salary_max, how_to_apply, company_name, logo_preview_url, location_detail, remote_check, additional_note, details } = this.state;
     const { pathname } = this.props.location;
 
     return (
@@ -137,10 +134,11 @@ class EditListPage extends Component {
               className="u-full-width" type="text" maxLength={140}
               value={title}
               onChange={(e) => this.setState({ title: e.target.value })}
+              autoFocus
             />
           </div>
           {/*
-            Skills
+            Skills & Internship
           */}
           <div className={s.row}>
             <label className={s.label}>Skills<span className={s.requiredSign}>*</span></label>
@@ -150,59 +148,16 @@ class EditListPage extends Component {
               suggestions={suggestions}
               setTagsState={this.setTagsState}
             />
-          </div>
-          {/*
-            Experience
-          */}
-          <div className={s.row}>
-            <label className={s.label}>Experience<span className={s.requiredSign}>*</span></label>
-            <p className={s['sub-label']}><FormattedMessage id="rlp_expDesc" /></p>
-            <select
-              value={exp_condition}
-              onChange={(e) => this.setState({ exp_condition: e.target.value })}
-              className={s['exp-dropdown']}
-            >
-              <option value="no">No minimum</option>
-              <option value="between">Between</option>
-              <option value="more_than">More than</option>
-            </select>
-            {exp_condition === 'between' &&
-              <div className={s.inline} style={{ marginRight: '20px' }}>
-                <input
-                  type="number" min={0} max={99} placeholder="Min"
-                  className={s['num-input']}
-                  value={exp_between_min}
-                  onChange={(e) => this.setState({ exp_between_min: e.target.value })}
-                />
-                -
-                <input
-                  type="number" min={0} max={99} placeholder="Max"
-                  className={s['num-input']}
-                  value={exp_between_max}
-                  onChange={(e) => this.setState({ exp_between_max: e.target.value })}
-                />
-                years
-              </div>
-            }
-            {exp_condition === 'more_than' &&
-              <div className={s.inline} style={{ marginRight: '20px' }}>
-                <input
-                  type="number" min={0} max={99}
-                  className={s['num-input']}
-                  value={exp_more_than}
-                  onChange={(e) => this.setState({ exp_more_than: e.target.value })}
-                />
-                years
-              </div>
-            }
-            <label style={{ display: 'inline-block' }}>
+            <div><label style={{ display: 'inline-block' }}>
               <input
                 type="checkbox"
                 checked={intern_check}
                 onChange={(e) => this.setState({ intern_check: e.target.checked })}
               />
-              <span className="label-body">Internship opening</span>
-            </label>
+              <span className="label-body">
+                <FormattedMessage id="rlp_internDesc" />
+              </span>
+            </label></div>
           </div>
           {/*
             Salary
@@ -226,6 +181,16 @@ class EditListPage extends Component {
               />
               THB
             </div>
+            <div><label style={{ display: 'inline-block' }}>
+              <input
+                type="checkbox"
+                checked={equity_check}
+                onChange={(e) => this.setState({ equity_check: e.target.checked })}
+              />
+              <span className="label-body">
+                <FormattedMessage id="rlp_equityDesc" />
+              </span>
+            </label></div>
           </div>
           <hr />
           {/*
@@ -322,7 +287,9 @@ class EditListPage extends Component {
                 type="checkbox" checked={remote_check}
                 onChange={(e) => this.setState({ remote_check: e.target.checked })}
               />
-              <span className="label-body">Remote working allowed</span>
+              <span className="label-body">
+                <FormattedMessage id="rlp_remoteDesc" />
+              </span>
             </label>
           </div>
 
