@@ -44,9 +44,9 @@ const List = ({ list: { _id, title, company_image, company_name,  allow_remote, 
           </div>
         }
 
-        <div className={s.detail}>
+        <div style={{ display: 'inline-block' }}>
           {skills.map((skill, i) =>
-          <span className={s.skill} key={i}>{skill}</span>)}
+            <div className={s.skill} key={i}>{skill}</div>)}
         </div>
 
       </div>
