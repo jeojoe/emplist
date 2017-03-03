@@ -33,7 +33,7 @@
   font-size: 16px;
   text-decoration: none;
   letter-spacing: 0.04rem;
-  font-family: 'Kanit', sans-serif;
+  // font-family: 'Kanit', sans-serif;
   // color: #0A9FCD;
   &:hover {
     text-decoration: underline;

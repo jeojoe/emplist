@@ -99,7 +99,6 @@ const renderFullPage = (html, initialState) => {
         <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-16x16.png" sizes="16x16" />
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
-        <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
       </head>
       <body>
         <div id="root">${html}</div>
