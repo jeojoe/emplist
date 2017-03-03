@@ -564,7 +564,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   // font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-family: 'Kanit', sans-serif;
+  // font-family: 'Kanit', sans-serif;
+  font-family: sans-serif;
   letter-spacing: 0.3px;
   color: #222; }
 
