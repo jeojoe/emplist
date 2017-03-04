@@ -141,7 +141,7 @@ class EditListPage extends Component {
             Skills & Internship
           */}
           <div className={s.row}>
-            <label className={s.label}>Skills<span className={s.requiredSign}>*</span></label>
+            <label className={s.label}>Skills you are looking for<span className={s.requiredSign}>*</span></label>
             <p className={s['sub-label']}><FormattedMessage id="rlp_skillsDesc" /></p>
             <SkillTagsInput
               tags={tags}
