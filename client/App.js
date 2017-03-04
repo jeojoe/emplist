@@ -12,6 +12,11 @@ import routes from './routes';
 // Base stylesheet
 import './App.css';
 
+browserHistory.listen(location => {
+  window.ga('set', 'page', location.pathname + location.search);
+  window.ga('send', 'pageview');
+});
+
 export default function App(props) {
   return (
     <Provider store={props.store}>

@@ -96,6 +96,15 @@ const renderFullPage = (html, initialState) => {
         ${head.script.toString()}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="google-site-verification" content="2vjAlFV_HN6QWysSom046BOF4zyvr2bl0zaL3QWWeCs" />
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-92973622-1', 'auto');
+          ga('send', 'pageview');
+        </script>
         <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-16x16.png" sizes="16x16" />
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
