@@ -1,0 +1,15 @@
+.footer {
+  font-size: 12px;
+  color: #999;
+  padding: 20px 0 30px;
+}
+
+.contact {
+  float: right;
+  text-decoration: none;
+  color: #999;
+  &:hover {
+    text-decoration: underline;
+    color: #555;
+  }
+}

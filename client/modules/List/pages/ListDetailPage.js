@@ -118,7 +118,7 @@ class ListDetailPage extends Component {
     const { list, err } = this.state;
     if (!list) {
       return (
-        <div className="container">
+        <div className="container" style={{ height: '500px' }}>
           {err ? <div>{err}</div> : <LoaderWithText text="Loading" centerInPage />}
         </div>
       );

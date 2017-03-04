@@ -30,9 +30,10 @@
   margin: 0;
   padding: 0 10px;
   color: #1EAEDB;
-  text-decoration: underline;
+  text-decoration: none;
   &:hover {
     color: #0FA0CE;
+    text-decoration: underline;
   }
   &.active {
     cursor: default;

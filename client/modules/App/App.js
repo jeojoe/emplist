@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 // Import Style
 // Import Actions
 
@@ -43,6 +44,7 @@ export class App extends Component {
           <div>
             {this.props.children}
           </div>
+          <Footer />
         </div>
       </div>
     );
