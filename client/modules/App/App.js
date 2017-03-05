@@ -41,7 +41,7 @@ export class App extends Component {
             ]}
           />
           <Navbar />
-          <div>
+          <div style={{ minHeight: '500px' }}>
             {this.props.children}
           </div>
           <Footer />

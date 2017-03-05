@@ -75,28 +75,32 @@ class ListDetailPage extends Component {
     const Tags = skills.map((skill, i) => <span className={sSkill.skill} key={i}>{skill}</span>);
 
     const Location = `${company_location.city}, ${company_location.country}`;
+    const LocationDetail = company_location.detail;
 
     const formatCurrency = (num) => parseInt(num, 10).toLocaleString();
     const Salary = salary.max === 9999999 ? 'Unspecified' : `${formatCurrency(salary.min)} - ${formatCurrency(salary.max)} THB`;
 
     return (
       <div id={s.content}>
+
         <div className={s.companyWrapper}>
-          <img src={company_image} alt={`${company_name}'s logo`} />
-          <span>{company_name}</span>
-        </div>
-        <div className={s.companyDetailRow}>
-          <strong>Location :</strong> {Location}
-        </div>
-        <div className={s.companyDetailRow}>
-          <strong>Skills :</strong> {Tags}
-        </div>
-        <div className={s.companyDetailRow}>
-          <strong>Salary :</strong> {Salary}
-          {/*
-            FOR AUNNNNN
-            if company didn't insert salary detail i made default min, max salary to 0 and 9999999 respectively (for analytic purpose). So if you need to check whether company has specified salary or not you need to check max salary is equal to 9999999 or not.
-          */}
+          <div className={s.companyNameWrapper}>
+            <img src={company_image} alt={`${company_name}'s logo`} />
+            <span>{company_name}</span>
+          </div>
+          <div className={s.companyDetailRow}>
+            <strong>Location : </strong> {Location} <span className={s.subDetail}>({LocationDetail})</span>
+          </div>
+          <div className={s.companyDetailRow}>
+            <strong>Skills Wanted : </strong> {Tags}
+          </div>
+          <div className={s.companyDetailRow}>
+            <strong>Salary Offered : </strong> {Salary}
+            {/*
+              FOR AUNNNNN
+              if company didn't insert salary detail i made default min, max salary to 0 and 9999999 respectively (for analytic purpose). So if you need to check whether company has specified salary or not you need to check max salary is equal to 9999999 or not.
+            */}
+          </div>
         </div>
 
         <div id={s.detailWrapper}>
@@ -118,7 +122,7 @@ class ListDetailPage extends Component {
     const { list, err } = this.state;
     if (!list) {
       return (
-        <div className="container" style={{ height: '500px' }}>
+        <div className="container">
           {err ? <div>{err}</div> : <LoaderWithText text="Loading" centerInPage />}
         </div>
       );
