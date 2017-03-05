@@ -23,6 +23,6 @@ export default {
     doneNewRequestMsgDescription: 'Today developers look for challeges, environment for learning and growth, and also a reasonable compensation. This website helps them search for that easily.\nMorever, you just already helped them!',
     drlp_completing: 'Completing request.',
     drlp_err: 'Oops! something\'s wrong.. please contact hi.emplist@gmail.com so that we can fix it right away !',
-    drlp_back: '< Back to Homepage',
+    drlp_back: 'Back to Homepage',
   },
 };

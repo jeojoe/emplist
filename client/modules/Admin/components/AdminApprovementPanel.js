@@ -99,7 +99,7 @@ export default class AdminApprovementPanel extends React.Component {
       return (
         <div>
           <h5><strong>{day}</strong></h5>
-          <ListFeedsWrapper lists={group} admin />;
+          <ListFeedsWrapper lists={group} admin />
         </div>
       );
     });
