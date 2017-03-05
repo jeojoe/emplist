@@ -37,7 +37,7 @@ class DoneEditListPage extends Component {
     if (fetching) {
       return (
         <div className="container">
-          <p>Completing request..</p>
+          <p><FormattedMessage id="drlp_completing" /></p>
         </div>
       );
     }
@@ -45,20 +45,16 @@ class DoneEditListPage extends Component {
     if (is_error) {
       return (
         <div className="container">
-          <p>Oops we have a problem ! please send you company name to <a>hi.emplist@gmail.com</a> so that we can figure it out !</p>
+          <p><FormattedMessage id="drlp_err" /></p>
         </div>
       );
     }
 
     return (
       <div className="container">
-        <p>
-          Sending request done ! we will let you know via your email if your list passes checking.
-        </p>
-        <p>
-          Posting list is complete free. but it has a problem of ถูกดันลงไป. So we'd like to know the needs of this feature. If you'd like to have this feature on your list please click the button below..
-        </p>
-        {/* Steal from Done Edit List Page lol */}
+        <h5>
+          <FormattedMessage id="doneNewRequestMsgTitle" />
+        </h5>
         <Link to="/"><FormattedMessage id="drlp_back" /></Link>
       </div>
     );
