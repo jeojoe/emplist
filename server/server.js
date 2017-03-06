@@ -102,7 +102,7 @@ const renderFullPage = (html, initialState) => {
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
           })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-92973622-1', 'auto');
+          ga('create', ${process.env.NODE_ENV === 'production' ? 'UA-92973622-2' : 'UA-92973622-1'}, 'auto');
           ga('send', 'pageview');
         </script>
         <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/testemplist/site/favicon-32x32.png" sizes="32x32" />
