@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import scriptLoader from 'react-async-script-loader';
 import Loader from '../../App/components/Loader';
-import isMobile from '../../../util/mobile-detect.js';
 // import c from 'classnames';
-import s from './DetailsEditor.css';
 // import _ from 'lodash';
 
 
