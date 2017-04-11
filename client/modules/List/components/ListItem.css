@@ -1,5 +1,6 @@
 .item {
   margin: 0 0 30px;
+  max-width: 620px;
 }
 
 .image-wrapper {
