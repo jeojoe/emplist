@@ -1,4 +1,6 @@
 .item {
+  max-width: 630px;
+  // background-color: red;
   margin: 0 0 30px;
 }
 

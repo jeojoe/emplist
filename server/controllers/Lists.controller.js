@@ -1,12 +1,13 @@
+import bcrypt from 'bcrypt';
+import Promise from 'bluebird';
+import jwt from 'jsonwebtoken';
 import Lists from '../models/Lists';
 import ListRequests from '../models/ListRequests';
 import Companies from '../models/Companies';
 import { signToken } from '../util/jwt-helpers';
-import jwt from 'jsonwebtoken';
+
 import config from '../config.js';
 import secret_config from '../../secret_config.json';
-import bcrypt from 'bcrypt';
-import Promise from 'bluebird';
 
 // import Companies from '../models/Companies';
 // import cuid from 'cuid';
