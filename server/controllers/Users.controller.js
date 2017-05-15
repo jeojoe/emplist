@@ -62,19 +62,25 @@ export function login(req, res) {
   if (!username || !password) {
     res.status(403).end();
   } else {
+    Users.findOne({ _id: '59191b1007c794f2fca2e9da' }).exec((err, user) => {
+      console.log(user);
+      console.log("^^ FUCKKKK")
+    });
     Users.findOne({ username }, (err, user) => {
+      console.log(err);
+      console.log("^^^ err");
       if (err) {
         res.status(500).send({
           msg: err,
         });
       }
       console.log(user);
-      console.log("^^^ user")
+      console.log("^^^ user");
       console.log(password);
-      console.log("^^^ password")
-      console.log(user.password);
-      console.log("^^^ user.password")
-      if (!user || password !== user.password) {
+      console.log("^^^ password");
+      // console.log(user.password);
+      // console.log("^^^ user.password");
+      if (user || password !== user.password) {
         res.json({
           ok: false,
           msg: 'what? calm down mannn.',
