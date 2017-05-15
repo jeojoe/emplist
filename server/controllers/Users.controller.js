@@ -64,7 +64,9 @@ export function login(req, res) {
           msg: err,
         });
       }
-
+      console.log(user);
+      console.log(password);
+      console.log(user.password);
       if (!user || password !== user.password) {
         res.json({
           ok: false,
