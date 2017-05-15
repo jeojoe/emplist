@@ -55,6 +55,10 @@ export function validateAdminToken(req, res) {
 
 export function login(req, res) {
   const { username, password } = req.body;
+  console.log(username)
+  console.log("//")
+  console.log(password)
+  console.log("================")
   if (!username || !password) {
     res.status(403).end();
   } else {
@@ -65,8 +69,11 @@ export function login(req, res) {
         });
       }
       console.log(user);
+      console.log("^^^ user")
       console.log(password);
+      console.log("^^^ password")
       console.log(user.password);
+      console.log("^^^ user.password")
       if (!user || password !== user.password) {
         res.json({
           ok: false,
