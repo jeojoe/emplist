@@ -80,7 +80,8 @@ export function login(req, res) {
       console.log("^^^ password");
       // console.log(user.password);
       // console.log("^^^ user.password");
-      if (user || password !== user.password) {
+      // if (!user || password !== user.password) {
+      if (user) {
         res.json({
           ok: false,
           msg: 'what? calm down mannn.',
